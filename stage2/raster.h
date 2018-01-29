@@ -3,6 +3,7 @@
 
 #include "types.h"
 
-void plot_pixel(UINT16* base, int x, int y);
+void plot_pixel(UINT8* base, int x, int y);
+void plot_vertical_line(UINT8* base, int x, int y1, int y2);
 
 #endif
