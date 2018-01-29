@@ -34,6 +34,35 @@ void plot_horizontal_line(UINT8* base, int x1, int x2, int y) {
   }
 }
 
+void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
+  int delta_x = x2 - x1;
+  int delta_y = y2 - y1;
+
+  int sx = x1 < x2 ? 1 : -1;
+  int sy = y1 < y2 ? 1 : -1;
+
+
+  int err = (delta_x > delta_y ? delta_x : -delta_y) / 2;
+  int e2; 
+
+  for (;;) {
+    plot_pixel(base, x1, y1);
+    if (x1 == x2 && y1 == y2)
+      break;
+   
+    e2 = err; 
+    if (e2 > -delta_x) {
+      err -= delta_y;
+      x1 += sx;
+    }
+
+    if (e2 < delta_y) {
+      err += delta_x;
+      y1 += sy;
+    }
+  }
+}
+
 /*
  * todo: make more generic
  */
