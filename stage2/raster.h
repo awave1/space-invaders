@@ -5,5 +5,6 @@
 
 void plot_pixel(UINT8* base, int x, int y);
 void plot_vertical_line(UINT8* base, int x, int y1, int y2);
+void plot_horizontal_line(UINT8* base, int x1, int x2, int y);
 
 #endif
