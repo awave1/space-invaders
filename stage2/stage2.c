@@ -3,16 +3,6 @@
 
 int main() {
 	void *base = Physbase();
-	int i = 0;
-
-	plot_pixel(base, 40, 40);
-	plot_pixel(base, 41, 41);
-	plot_pixel(base, 42, 42);
-
-	for (i = 0; i < 100; i++) {
-	}
-
-	clear_screen();
-
+	plot_vertical_line(base, 40, 40, 350);
 	return 0;
 }

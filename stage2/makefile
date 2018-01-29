@@ -1,8 +1,8 @@
 stage2exe: stage2.o raster.o rast_asm.o
-	cc68x -g tst_rast.o raster.o rast_asm.o -o tst_rast
+	cc68x -g stage2.o raster.o rast_asm.o -o stage2exe
 
 stage2.o: stage2.c raster.h
-	cc68x -g -c tst_rast.c
+	cc68x -g -c stage2.c
 
 raster.o: raster.c raster.h
 	cc68x -g -c raster.c
