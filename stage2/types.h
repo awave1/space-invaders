@@ -3,6 +3,7 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 400
+#define NULL_CH '\0'
 
 #define in_bounds(x, y) (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 

@@ -1,4 +1,6 @@
 #include "raster.h"
+#include "font.h"
+
 
 /*
 * Some magick is happening here
@@ -29,5 +31,28 @@ void plot_horizontal_line(UINT8* base, int x1, int x2, int y) {
     for (i = x1; i != x2; i++) {
       plot_pixel(base, i, y);
     }
+  }
+}
+
+/*
+ * todo: make more generic
+ */
+void print_char(UINT8* base, int x, int y, char ch) {
+  int i = 0;
+  /*
+   * start font from given char
+   */
+  UINT8* char_hex = GLYPH_START(ch);
+  for (i = 0; i < 8; i++, char_hex++) {
+    *(base + (y + i) * 80 + (x >> 3)) = *char_hex;
+  }
+}
+
+void print_string(UINT8* base, int x, int y, char* str) {
+  int i = 0;
+  while(str[i] != '\0') {
+    print_char(base, x, y, str[i]);
+    i++;
+    x += 8;
   }
 }
