@@ -1,5 +1,5 @@
-stage2exe: stage2.o raster.o font.o rast_asm.o
-	cc68x -g stage2.o raster.o font.o rast_asm.o -o stage2exe
+stage2.tos: stage2.o raster.o font.o rast_asm.o
+	cc68x -g stage2.o raster.o font.o rast_asm.o -o stage2.tos
 
 stage2.o: stage2.c raster.h
 	cc68x -g -c stage2.c
