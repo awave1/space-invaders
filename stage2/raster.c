@@ -56,3 +56,23 @@ void print_string(UINT8* base, int x, int y, char* str) {
     x += 8;
   }
 }
+
+void print_num(UINT8* base, int x, int y, UINT16 num) {
+  char a, b, c, d; 
+
+  d = (num % 10) + '0';
+  num /= 10;
+
+  c = (num % 10) + '0';
+  num /= 10;
+
+  b = (num % 10) + '0';
+  num /= 10;
+  
+  a = (num % 10) + '0';
+
+  print_char(base, x, y, a);
+  print_char(base, x + 8, y, b);
+  print_char(base, x + 16, y, c);
+  print_char(base, x + 24, y, d);
+}
