@@ -53,6 +53,10 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
   }
 }
 
+void plot_bitmap(UINT8* base, int x, int y, UINT16* bitmap, int height) {
+  int i = 0;
+}
+
 /*
  * todo: make more generic
  */
