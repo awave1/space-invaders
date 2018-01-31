@@ -53,8 +53,18 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
   }
 }
 
-void plot_bitmap(UINT8* base, int x, int y, UINT16* bitmap, int height) {
+
+void plot_bitmap_8(UINT8* base, int x, int y, UINT8* bitmap, int height) {
   int i = 0;
+}
+
+void plot_bitmap_16(UINT16* base, int x, int y, UINT16* bitmap, int height) {
+  int i = 0;
+  UINT16* location = base + y * 40 + (x >> 4);
+  for (i = 0; i < height; i++) {
+    *location |= *(bitmap++);
+    location += 40;
+  }
 }
 
 /*
