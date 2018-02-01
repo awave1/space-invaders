@@ -72,8 +72,8 @@ void print_string(UINT8* base, int x, int y, char* str);
  */
 void print_num(UINT8* base, int x, int y, UINT16 num);
 
-/* todo: docs
- *
+/*
+ * Clears the entire screen
  */
 void clear_screen(UINT32* base);
 
