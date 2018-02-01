@@ -1,27 +1,39 @@
 #include "raster.h"
 #include "font.h"
-
+#include <stdio.h>
 
 /*
-* Some magick is happening here
-*/
+ * Description: 
+ *      1. x >> 3 (x / 8)     - gets the byte where the required bit will be activated
+ *      2. x & 7  (x % 8)     - gets which bit inside that byte will be activated
+ *      3. 1 << (7 - (x & 7)) - results in binary representing selected byte
+ * 
+ */
 void plot_pixel(UINT8* base, int x, int y) {
   if (in_bounds(x, y))
-    *(base + y * 80 + (x >> 3)) |= 1 << (7 - (x & 7));
+    *(base + (y * 80) + (x >> 3)) |= 1 << (7 - (x & 7));
 }
 
 /*
  * Assume y2 > y1
+ * 
+ * works faster than calling plot_line
  */ 
-void plot_vertical_line(UINT8* base, int x, int y1, int y2) {
-  plot_line(base, x, y1, x, y2);
+void plot_vertical_line(UINT8* base, int x, int y, int height) {
+  int i = 0;
+  for (i = 0; i < height; i++)
+    *(base + ((y + i) * 80) + (x >> 3)) |= 1 << 7 - (x & 7);
 }
 
 /*
  * Assume x2 > x1
+ * 
+ * works faster than calling plot_line
  */ 
-void plot_horizontal_line(UINT8* base, int x1, int x2, int y) {
-  plot_line(base, x1, y, x2, y);
+void plot_horizontal_line(UINT8* base, int x, int y, int width) {
+  int i = 0;
+  for (i = 0; i < width; i++)
+    *(base + (y * 80) + ((x + i) >> 3)) |= 1 << 7 - ((x + i) & 7);
 }
 
 void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
@@ -53,14 +65,32 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
   }
 }
 
+void plot_rectangle(UINT8* base, int x, int y, int width, int height) {
+  int i = 0;
+  UINT8* _base = base;
+  for (i = 0; i < height; i++) {
+    plot_horizontal_line(_base, x, y, width);
+    _base += 80;
+  }
+}
 
 void plot_bitmap_8(UINT8* base, int x, int y, UINT8* bitmap, int height) {
   int i = 0;
+  UINT8* location = base + (y * 80) + (x >> 3);
+  for (i = 0; i < height; i++) {
+    *location |= *(bitmap++);
+    location += 80;
+  }
 }
 
+/*
+ * Plot 16x16 bitmap
+ * 
+ * Note: (x >> 4) = (x / 16)
+ */
 void plot_bitmap_16(UINT16* base, int x, int y, UINT16* bitmap, int height) {
   int i = 0;
-  UINT16* location = base + y * 40 + (x >> 4);
+  UINT16* location = base + (y * 40) + (x >> 4);
   for (i = 0; i < height; i++) {
     *location |= *(bitmap++);
     location += 40;
@@ -108,4 +138,16 @@ void print_num(UINT8* base, int x, int y, UINT16 num) {
   print_char(base, x + 8, y, b);
   print_char(base, x + 16, y, c);
   print_char(base, x + 24, y, d);
+}
+
+/*
+ * Clear screen (each longword (640 / 32) portion of the screen) 
+ */
+void clear_screen(UINT32* base) {
+  int x, y;
+  for (x = 0; x < 20; x++) {
+    for (y = 0; y < 399; y++) {
+      *(base + (y * 20) + x) = 0x0000;
+    }
+  }
 }
