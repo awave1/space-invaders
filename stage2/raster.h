@@ -47,33 +47,39 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2);
  */
 void plot_rectangle(UINT8* base, int x, int y, int width, int height);
 
-/* Plots 8 bit Bitmap
+/* Plots 8 by height Bitmap todo: idk if this is correct
  * Requires top left coordinate the bitmap will placed at
  * and which to use
- * todo: finish
+ * Height specifies the height of the bitmap
  */
 void plot_bitmap_8(UINT8* base, int x, int y, UINT8* bitmap, int height);
 
-/* todo: docs
- *
+/* Plots an 16 by height sized bitmap todo: idk if this is correct
+ * Requires top left coordinate the bitmap will placed at
+ * and which to use
+ * Height specifies the height of the bitmap
  */
 void plot_bitmap_16(UINT16* base, int x, int y, UINT16* bitmap, int height);
 
-/* todo: docs
- *
+/* Prints a character
+ * prints a specified character at given x,y coordinates
  */
 void print_char(UINT8* base, int x, int y, char ch);
 
-/* todo: docs
+/* Prints a string (array of char)
+ * Prints an array of char at specified x,y coordinates
  */
 void print_string(UINT8* base, int x, int y, char* str);
 
-/* todo: docs
+/* Prints a number
+ * Prints number or numbers at specified x,y coordinates
+ * Limitations:
+ *  No negative or decimal numbers - only natural numbers
  */
 void print_num(UINT8* base, int x, int y, UINT16 num);
 
-/* todo: docs
- *
+/*
+ * Clears the entire screen
  */
 void clear_screen(UINT32* base);
 
