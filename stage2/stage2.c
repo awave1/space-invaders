@@ -3,8 +3,11 @@
 #include "bitmap.h"
 
 int main() {
-	void *base = Physbase();
-  plot_bitmap(base, 623, 367, bitmap, BITMAP_HEIGHT);
+	void* base = Physbase();
+
+	plot_rectangle(base, 0, 0, 640, 400);
+	clear_screen(base);
+
 	return 0;
 }
 
