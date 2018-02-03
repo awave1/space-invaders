@@ -32,8 +32,20 @@ void plot_vertical_line(UINT8* base, int x, int y, int height) {
  */ 
 void plot_horizontal_line(UINT8* base, int x, int y, int width) {
   int i = 0;
-  for (i = 0; i < width; i++)
-    *(base + (y * 80) + ((x + i) >> 3)) |= 1 << 7 - ((x + i) & 7);
+  int x_count = width >> 3;
+  UINT8* draw = base + (y * 80) + (x >> 3);
+
+  for (i = 0; i < x_count; i++)
+    *(draw++) |= 0xff;
+}
+
+void plot_horizontal_line__inverse(UINT8* base, int x, int y, int width) {
+  int i = 0;
+  int x_count = width >> 3;
+  UINT8* draw = base + (y * 80) + (x >> 3);
+
+  for (i = 0; i < x_count; i++)
+    *(draw++) &= 0x00;
 }
 
 void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
@@ -66,10 +78,19 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2) {
 }
 
 void plot_rectangle(UINT8* base, int x, int y, int width, int height) {
-  int i = 0;
+  register int i = 0;
   UINT8* _base = base;
   for (i = 0; i < height; i++) {
     plot_horizontal_line(_base, x, y, width);
+    _base += 80;
+  }
+}
+
+void plot_rectangle__inverse(UINT8* base, int x, int y, int width, int height) {
+  int i = 0;
+  UINT8* _base = base;
+  for (i = 0; i < height; i++) {
+    plot_horizontal_line__inverse(_base, x, y, width);
     _base += 80;
   }
 }

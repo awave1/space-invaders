@@ -30,6 +30,8 @@ void plot_vertical_line(UINT8* base, int x, int y, int height);
  *
  */
 void plot_horizontal_line(UINT8* base, int x, int y, int width);
+void plot_horizontal_line__inverse(UINT8* base, int x, int y, int width);
+
 
 /* Plot line
  * Require starting x,y coordinates (x1,y2)
@@ -46,6 +48,7 @@ void plot_line(UINT8* base, int x1, int y1, int x2, int y2);
  *
  */
 void plot_rectangle(UINT8* base, int x, int y, int width, int height);
+void plot_rectangle__inverse(UINT8* base, int x, int y, int width, int height);
 
 /* Plots 8 by height Bitmap todo: idk if this is correct
  * Requires top left coordinate the bitmap will placed at
