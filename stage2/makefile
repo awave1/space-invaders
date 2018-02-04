@@ -1,17 +1,20 @@
-stage2.tos: stage2.o raster.o font.o bitmap.o rast_asm.o
-	cc68x -g stage2.o raster.o font.o bitmap.o rast_asm.o -o stage2.tos
+OBJ_FILES=bin\stage2.o bin\raster.o bin\font.o bin\bitmap.o bin\rast_asm.o
+EXE_NAME=stage2
 
-stage2.o: stage2.c raster.h bitmap.h
-	cc68x -g -c stage2.c
+$(EXE_NAME).tos: $(OBJ_FILES)
+	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
-raster.o: font.o raster.c raster.h
-	cc68x -g -c raster.c
+bin\stage2.o: src\stage2.c src\include\raster.h src\include\bitmap.h
+	cc68x -g -c src\stage2.c -o bin\stage2.o
 
-bitmap.o: bitmap.c bitmap.h
-	cc68x -g -c bitmap.c
+bin\raster.o: bin\font.o src\raster.c src\include\raster.h
+	cc68x -g -c src\raster.c -o bin\raster.o
 
-font.o: font.c font.h
-	cc68x -g -c font.c
+bin\bitmap.o: src\bitmap.c src\include\bitmap.h
+	cc68x -g -c src\bitmap.c -o bin\bitmap.o
 
-rast_asm.o: rast_asm.s
-	gen -D -L2 rast_asm.s
+bin\font.o: src\font.c src\include\font.h
+	cc68x -g -c src\font.c -o bin\font.o
+
+bin\rast_asm.o: src\rast_asm.s
+	gen -D -L2 src\rast_asm.s -obin\rast_asm.o 
