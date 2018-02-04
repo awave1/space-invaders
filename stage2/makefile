@@ -1,7 +1,8 @@
 OBJ_FILES=bin\stage2.o bin\raster.o bin\font.o bin\bitmap.o bin\rast_asm.o
+EXE_NAME=stage2
 
-stage2.tos: $(OBJ_FILES)
-	cc68x -g $(OBJ_FILES) -o stage2.tos
+$(EXE_NAME).tos: $(OBJ_FILES)
+	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
 bin\stage2.o: src\stage2.c src\include\raster.h src\include\bitmap.h
 	cc68x -g -c src\stage2.c -o bin\stage2.o
