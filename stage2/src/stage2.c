@@ -1,7 +1,6 @@
 #include <osbind.h>
 #include <stdio.h>
-#include "raster.h"
-#include "bitmap.h"
+#include "include\raster.h"
 
 /*
  * raster lib test driver
@@ -21,7 +20,7 @@ int main() {
 	 */
 	for (i = 0; i < 5; i++) {
 		for (j = 0; j < 8; j++) {
-			plot_r(base, x, y, 16, 16);
+			plot_rectangle__inverse(base, x, y, 16, 16);
 			x += 32;
 		}
 		x = x_start;
@@ -31,7 +30,7 @@ int main() {
 	/*
 	 * Plot approx location of the player's ship
 	 */
-	plot_r(base, 312, 368, 16, 16);
+	plot_rectangle__inverse(base, 312, 368, 16, 16);
 	
 	getchar();
 	clear_screen(base);
