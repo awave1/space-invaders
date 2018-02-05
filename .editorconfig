@@ -1,0 +1,13 @@
+# top-most EditorConfig file
+root = true
+
+[*.{c, h}]
+indent_style = space
+indent_size = 2
+
+[*.s]
+indent_style = tab
+indent_size = 8
+
+[makefile]
+indent_style = tab

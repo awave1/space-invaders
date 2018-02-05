@@ -1,4 +1,4 @@
-#ifndef SPACE_INVADERS_EVENT_H
-#define SPACE_INVADERS_EVENT_H
+#ifndef EVENT_H
+#define EVENT_H
 
-#endif /* SPACE_INVADERS_EVENT_H */
+#endif /* EVENT_H */
