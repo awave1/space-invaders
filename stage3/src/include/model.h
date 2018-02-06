@@ -12,7 +12,7 @@
 #define SPACESHIP_MOVE_RIGHT 1
 #define SPACESHIP_LASER 0
 
-const uint16* SPACESHIP_BMP;
+const uint16 *SPACESHIP_BMP;
 
 /*
  * Aliens constants
@@ -25,55 +25,65 @@ const uint16* SPACESHIP_BMP;
 #define ALIEN_C_SCORE 30
 #define ALIEN_BOMB 1
 
-const uint16* ALIEN_A_BMP; /* 10 point alien */
-const uint16* ALIEN_B_BMP; /* 20 point alien */
-const uint16* ALIEN_C_BMP; /* 30 point alien */
+const uint16 *ALIEN_A_BMP; /* 10 point alien */
+const uint16 *ALIEN_B_BMP; /* 20 point alien */
+const uint16 *ALIEN_C_BMP; /* 30 point alien */
 
 
-typedef struct {
-  uint16 x;
-} spaceship;
+typedef struct Spaceship {
+    uint16 x;
+    uint16 direction;
+} Spaceship;
 
 /* spaceship specific functions */
 /* todo */
 /* **************************** */
 
-typedef struct {
-  uint16 row;
-  uint16 col;
-  uint16 score_val;
-} alien;
+typedef struct Alien {
+    uint16 row;
+    uint16 col;
+    uint16 score_val;
+} Alien;
 
 /* single alien specific functions */
 /* todo */
 /* ******************************* */
 
 
-typedef struct {
-  alien aliens[ALIENS_ROWS][ALIENS_COLS];
-} armada;
+typedef struct Armada {
+    Alien aliens[ALIENS_ROWS][ALIENS_COLS];
+} Armada;
 
 /* armada specific functions */
 /* todo */
 /* ************************* */
 
-typedef struct {
-  uint16 x;
-  uint16 y;
-  int shot_type; /* can be 0 or 1 (player or alien) */
-} shot;
+typedef struct Shot {
+    uint16 x;
+    uint16 y;
+    bool isAlien; /* can be 0 or 1 (player or alien) */
+    bool isActive;
+} Shot;
 
 /* shot specific functions */
 /* todo */
 /* *********************** */
 
-typedef struct {
-  spaceship player;
-  armada armada;
+typedef struct Model {
+    Spaceship player;
+    Armada armada;
 } Model;
 
 /* model specific functions */
 /* todo */
 /* ************************ */
+
+typedef struct Scoreboard {
+    uint16 x;
+    uint16 y;
+    uint32 score;
+    const uint32 maxScore = 9999;
+    char *scoreString;
+} Scoreboard;
 
 #endif /* SPACE_INVADERS_MODEL_H */
