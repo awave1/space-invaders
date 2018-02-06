@@ -123,8 +123,8 @@ void plot_bitmap_16(UINT16* base, int x, int y, UINT16* bitmap, int height) {
 void print_char(UINT8* base, int x, int y, char ch) {
   int i = 0;
   /*
-   * start font from given char
-   */
+  * start font from given char
+  */
   UINT8* char_hex = GLYPH_START(ch);
   for (i = 0; i < 8; i++, char_hex++) {
     *(base + (y + i) * 80 + (x >> 3)) = *char_hex;
