@@ -11,7 +11,17 @@ typedef unsigned char uint8;
 typedef unsigned int  uint16;
 typedef unsigned long uint32;
 
-typedef uint8 shot_type;
-typedef uint8 bool;
+typedef char* string;
+
+typedef enum { true, false } bool;
+typedef enum { left, right, stop } direction_t;
+typedef enum { alien_bomb, player_laser } shot_t;
+
+typedef struct {
+  uint16 x;
+  uint16 y;
+  uint16 width;
+  uint16 height;
+} hitbox_t;
 
 #endif

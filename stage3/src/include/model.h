@@ -7,10 +7,6 @@
  * Spaceship / Player constants
  */
 #define SPACESHIP_Y_POS 40
-#define SPACESHIP_MOVE_LEFT -1
-#define SPACESHIP_MOVE_STOP 0
-#define SPACESHIP_MOVE_RIGHT 1
-const shot_type SPACESHIP_LASER = 0;
 
 const uint16 *SPACESHIP_BMP;
 
@@ -23,7 +19,6 @@ const uint16 *SPACESHIP_BMP;
 #define ALIEN_A_SCORE 10
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
-const shot_type ALIEN_BOMB = 1;
 
 const uint16 *ALIEN_A_BMP; /* 10 point alien */
 const uint16 *ALIEN_B_BMP; /* 20 point alien */
@@ -40,21 +35,22 @@ const uint32 MAX_SCORE = 9999;
 
 
 typedef struct Spaceship {
-    uint16 x;
-    uint16 direction;
+  uint16 x;
+  direction_t direction;
+  hitbox_t hitbox;
 } Spaceship;
 
 /* spaceship specific functions */
 void spaceship_shoot(Spaceship* spaceship);
-void move_spaceship(Spaceship* spaceship);
+void move_spaceship(Spaceship* spaceship, direction_t direction);
 
 
 /* **************************** */
 
 typedef struct Alien {
-    uint16 row;
-    uint16 col;
-    uint16 score_val;
+  uint16 row;
+  uint16 col;
+  uint16 score_val;
 } Alien;
 
 /* single alien specific functions */
@@ -76,7 +72,7 @@ void move_armada(Armada *armada);
 typedef struct Shot {
     uint16 x;
     uint16 y;
-    shot_type isAlien; /* can be 0 or 1 (player or alien) */
+    shot_t isAlien; /* can be 0 or 1 (player or alien) */
     bool isActive;
 } Shot;
 
@@ -88,8 +84,8 @@ void shot_hit_player(Shot* player_shot, Spaceship* alien);
 /* *********************** */
 
 typedef struct Scorebox {
-    uint32 score;
-    char* scoreString;
+  uint32 score;
+  string score_str;
 } Scorebox;
 
 /* model specific functions */
@@ -99,8 +95,9 @@ void update_scorebox(Scorebox* score);
 
 
 typedef struct Model {
-    Spaceship player;
-    Armada armada;
+  Spaceship player;
+  Armada armada;
+  Scorebox scorebox;
 } Model;
 
 /* model specific functions */

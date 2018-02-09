@@ -1,13 +1,13 @@
-#include "include\model.h"
+#include "include/model.h"
 
 /*
  * Spaceship functions
  */
-void spaceship_shoot(Spaceship *spaceship) {
-
+void move_spaceship(Spaceship *spaceship, direction_t direction) {
+  spaceship->x 
 }
 
-void move_spaceship(Spaceship *spaceship) {
+void spaceship_shoot(Spaceship *spaceship) {
 
 }
 
