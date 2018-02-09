@@ -10,7 +10,7 @@
 #define SPACESHIP_MOVE_LEFT -1
 #define SPACESHIP_MOVE_STOP 0
 #define SPACESHIP_MOVE_RIGHT 1
-#define SPACESHIP_LASER 0
+const shot_type SPACESHIP_LASER = 0;
 
 const uint16 *SPACESHIP_BMP;
 
@@ -23,11 +23,20 @@ const uint16 *SPACESHIP_BMP;
 #define ALIEN_A_SCORE 10
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
-#define ALIEN_BOMB 1
+const shot_type ALIEN_BOMB = 1;
 
 const uint16 *ALIEN_A_BMP; /* 10 point alien */
 const uint16 *ALIEN_B_BMP; /* 20 point alien */
 const uint16 *ALIEN_C_BMP; /* 30 point alien */
+
+/*
+ * Scorebox constants
+ */
+#define SCOREBOX_X 0
+#define SCOREBOX_Y 40
+
+const uint32 MAX_SCORE = 9999;
+
 
 
 typedef struct Spaceship {
@@ -36,7 +45,10 @@ typedef struct Spaceship {
 } Spaceship;
 
 /* spaceship specific functions */
-/* todo */
+void spaceship_shoot(Spaceship* spaceship);
+void move_spaceship(Spaceship* spaceship);
+
+
 /* **************************** */
 
 typedef struct Alien {
@@ -46,7 +58,9 @@ typedef struct Alien {
 } Alien;
 
 /* single alien specific functions */
-/* todo */
+void alien_shoot(Alien *alien);
+void alien_collide(Alien *alien);
+
 /* ******************************* */
 
 
@@ -55,19 +69,34 @@ typedef struct Armada {
 } Armada;
 
 /* armada specific functions */
-/* todo */
+void move_armada(Armada *armada);
+
 /* ************************* */
 
 typedef struct Shot {
     uint16 x;
     uint16 y;
-    bool isAlien; /* can be 0 or 1 (player or alien) */
+    shot_type isAlien; /* can be 0 or 1 (player or alien) */
     bool isActive;
 } Shot;
 
 /* shot specific functions */
-/* todo */
+void move_shot(Shot* shot);
+void shot_hit_alien(Shot* player_shot, Alien* alien);
+void shot_hit_player(Shot* player_shot, Spaceship* alien);
+
 /* *********************** */
+
+typedef struct Scorebox {
+    uint32 score;
+    char* scoreString;
+} Scorebox;
+
+/* model specific functions */
+void update_scorebox(Scorebox* score);
+
+/* ************************ */
+
 
 typedef struct Model {
     Spaceship player;
@@ -78,12 +107,5 @@ typedef struct Model {
 /* todo */
 /* ************************ */
 
-typedef struct Scoreboard {
-    uint16 x;
-    uint16 y;
-    uint32 score;
-    const uint32 maxScore = 9999;
-    char *scoreString;
-} Scoreboard;
 
 #endif /* SPACE_INVADERS_MODEL_H */

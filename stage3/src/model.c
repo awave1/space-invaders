@@ -1,28 +1,47 @@
 #include "include\model.h"
 
-void scorebox_update(Scorebox *scorebox) {
-}
-
-//shooting
+/*
+ * Spaceship functions
+ */
 void spaceship_shoot(Spaceship *spaceship) {
+
 }
 
+void move_spaceship(Spaceship *spaceship) {
+
+}
+
+
+/*
+ * Alien functions
+ */
 void alien_shoot(Alien *alien) {
-}
-
-//movement
-void spaceship_move(Spaceship *spaceship) {
-}
-
-void armada_move(Armada *armada) {
-}
-
-void shot_move(Shot *shot) {
-}
-
-//collision
-void shot_hit(Shot *shot, Model *model) {
+  /* todo */
 }
 
 void alien_collide(Alien *alien) {
 }
+
+
+/*
+ * Armada functions
+ */
+void move_armada(Armada *armada) {
+}
+
+
+/*
+ * Shot functions
+ */
+void move_shot(Shot *shot) {
+
+}
+
+
+/*
+ * Scorebox functions
+ */
+void update_scorebox(Scorebox *scorebox) {
+  /* todo */
+}
+
