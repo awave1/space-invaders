@@ -10,8 +10,8 @@
  * note: these are temporary, todo: need to figure out how to swap
  * so we can get for example instead of 0x004b0000 -> 0x4b
  */
-const unsigned long LEFT_KEY =  0x004b0000;
-const unsigned long RIGHT_KEY = 0x004d0000;
+const unsigned long LEFT_KEY =  0x4b;
+const unsigned long RIGHT_KEY = 0x4d;
 const unsigned long SPACE_KEY = 0x00390020;
 
 

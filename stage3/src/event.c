@@ -9,6 +9,7 @@ void on_spaceship_move(Spaceship* spaceship) {
 
   do {
     input = Cnecin();
+    input = input >> 16;
 
     if (input == LEFT_KEY) {
       printf("left\n");
