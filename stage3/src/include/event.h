@@ -1,13 +1,24 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-//todo:review these function and determine required params
-//Asynchronous Events
+/* todo: rename event function to on_<event> format, like on_spaciship_move */
+
+#include <osbind.h>
+#include "model.h"
+
+/* 
+ * note: these are temporary, todo: need to figure out how to swap
+ * so we can get for example instead of 0x004b0000 -> 0x4b
+ */
+const unsigned long LEFT_KEY =  0x004b0000;
+const unsigned long RIGHT_KEY = 0x004d0000;
+const unsigned long SPACE_KEY = 0x00390020;
+
+
 void shoot_weapon();
 
-void move_spaceship();
+void on_spaceship_move(Spaceship* spaceship);
 
-//Synchronous Events
 void laser_moves();
 
 void bomb_moves();
@@ -16,7 +27,6 @@ void armada_moves();
 
 void alien_shoots();
 
-//condition based events
 void laser_hit_alien();
 
 void laser_hit_boundary();

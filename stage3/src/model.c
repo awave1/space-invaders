@@ -1,10 +1,26 @@
 #include "include/model.h"
+#include <stdio.h>
 
 /*
  * Spaceship functions
  */
+
+/*
+ * note: value of 10 was choosen randomly, might need to change
+ */
 void move_spaceship(Spaceship *spaceship, direction_t direction) {
-  spaceship->x 
+  switch (direction) {
+    case left:
+      if (in_bounds(spaceship->x - 10, SPACESHIP_Y_POS))
+        spaceship->x -= 10;
+      break;
+    case right:
+      if (in_bounds(spaceship->x + 10, SPACESHIP_Y_POS))
+        spaceship->x += 10;
+      break;
+    default:
+      break;
+  }
 }
 
 void spaceship_shoot(Spaceship *spaceship) {

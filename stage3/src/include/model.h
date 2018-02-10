@@ -35,7 +35,7 @@ const uint32 MAX_SCORE = 9999;
 
 
 typedef struct Spaceship {
-  uint16 x;
+  int x;
   direction_t direction;
   hitbox_t hitbox;
 } Spaceship;
