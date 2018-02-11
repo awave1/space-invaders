@@ -11,8 +11,10 @@ void game_loop() {
   Scorebox* scorebox = malloc(sizeof *scorebox);
   int score = 10;
 
-  spaceship->x = 208;
-  populate_armada(armada);
+  spaceship->x = SPACESHIP_START_X;
+  spaceship->shot_count = 0;
+  init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
+  init_armada(armada);
   scorebox->score = 0;
 
   /*

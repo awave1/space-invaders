@@ -8,8 +8,11 @@ const bool MODEL_DEBUG = true;
 /* 
  * Spaceship / Player constants
  */
-#define SPACESHIP_Y_POS 40
+#define SPACESHIP_START_X 312
+#define SPACESHIP_START_Y 368
 #define SPACESHIP_LASER_SPEED 4
+#define SPACESHIP_MAX_LASERS 1
+
 
 const uint16 *SPACESHIP_BMP;
 
@@ -23,6 +26,7 @@ const uint16 *SPACESHIP_BMP;
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
 #define ALIEN_BOMB_SPEED 6
+#define ALIEN_MAX_BOMBS 3
 
 /* alien box size (not hitbox but space box) */
 #define ALIEN_BOX_SIZE 32
@@ -44,10 +48,20 @@ const uint16 *ALIEN_C_BMP; /* 30 point alien */
 const uint32 MAX_SCORE = 9999;
 
 
+typedef struct Shot {
+  uint16 x;
+  uint16 y;
+  shot_t type; /* can be 0 or 1 (player or alien) */
+  bool is_active;
+  bool is_out_of_bounds;
+} Shot;
+
 typedef struct Spaceship {
   int x;
   direction_t direction;
   hitbox_t hitbox;
+  Shot shots[SPACESHIP_MAX_LASERS];
+  int shot_count;
 } Spaceship;
 
 /* spaceship specific functions */
@@ -63,11 +77,10 @@ typedef struct Alien {
   uint16 x;
   uint16 y;
   uint16 score_val;
-  bool isAlive;
+  bool is_alive;
 } Alien;
 
 /* single alien specific functions */
-void alien_shoot(Alien *alien);
 void alien_collide(Alien *alien);
 
 /* ******************************* */
@@ -80,26 +93,22 @@ typedef struct Armada {
   int bottom_right_x;
   int bottom_right_y;
   direction_t move_direction;
+  Shot shots[ALIEN_MAX_BOMBS];
+  int shot_count;
 } Armada;
 
 /* armada specific functions */
 void move_armada(Armada *armada);
-void populate_armada(Armada *armada);
+void alien_shoot(Armada *armada);
+void init_armada(Armada *armada);
 
 /* ************************* */
-
-typedef struct Shot {
-  uint16 x;
-  uint16 y;
-  shot_t type; /* can be 0 or 1 (player or alien) */
-  bool isActive;
-} Shot;
 
 /* shot specific functions */
 void move_shot(Shot* shot);
 void shot_hit_alien(Shot* player_shot, Alien* alien);
 void shot_hit_player(Shot* player_shot, Spaceship* alien);
-
+void init_shots(Shot shots[], shot_t type, int max_shots);
 /* *********************** */
 
 typedef struct Scorebox {
@@ -119,7 +128,6 @@ typedef struct Model {
 } Model;
 
 /* model specific functions */
-/* todo */
 /* ************************ */
 
 

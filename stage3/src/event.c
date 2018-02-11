@@ -16,8 +16,11 @@ void on_spaceship_move(Spaceship* spaceship) {
   else if (input == SPACE_KEY)
     spaceship_shoot(spaceship);
 
-  if (EVENT_DEBUG)
+  if (EVENT_DEBUG) {
     printf("event: spaceship x pos: %d\n", spaceship->x);
+    printf("event: spaceship shots: %d\n", spaceship->shot_count);
+    printf("event: spaceship shot pos: %d\n", spaceship->shots[0].y);
+  }
 }
 
 /*
@@ -40,10 +43,10 @@ void bomb_moves(Shot *bomb) {
 }
 
 void laser_hit_alien(Shot *laser, Alien *hit) {
-  laser->isActive = false;
-  hit->isAlive = false;
+  laser->is_active = false;
+  hit->is_alive = false;
 }
 
 void laser_hit_boundary(Shot *laser) {
-  laser->isActive = false;
+  laser->is_active = false;
 }

@@ -14,12 +14,12 @@
  */
 const unsigned long LEFT_KEY =  0x4b;
 const unsigned long RIGHT_KEY = 0x4d;
-const unsigned long SPACE_KEY = 0x00390020;
+const unsigned long SPACE_KEY = 0x39;
 
 const bool EVENT_DEBUG = true;
 
 
-void shoot_weapon();
+void on_shoot();
 
 void on_spaceship_move(Spaceship* spaceship);
 

@@ -11,11 +11,11 @@
 void move_spaceship(Spaceship *spaceship, direction_t direction) {
   switch (direction) {
     case left:
-      if (in_bounds(spaceship->x - 10, SPACESHIP_Y_POS))
+      if (in_bounds(spaceship->x - 10, SPACESHIP_START_Y))
         spaceship->x -= 10;
       break;
     case right:
-      if (in_bounds(spaceship->x + 10, SPACESHIP_Y_POS))
+      if (in_bounds(spaceship->x + 10, SPACESHIP_START_Y))
         spaceship->x += 10;
       break;
     default:
@@ -24,15 +24,55 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
 }
 
 void spaceship_shoot(Spaceship *spaceship) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    /*
+     * we can add more shots when curr count is less than max and current shot IS NOT active
+     */
+    if (spaceship->shot_count == 0 && spaceship->shot_count < SPACESHIP_MAX_LASERS) {
+      if (!spaceship->shots[i].is_active) {
+        spaceship->shots[i].is_active = true;
+        spaceship->shot_count += 1;
+      }
+    }
 
+    if (spaceship->shots[i].is_active && !spaceship->shots[i].is_out_of_bounds) {
+      move_shot(&spaceship->shots[i]);
+    }
+    
+    if (spaceship->shots[i].is_out_of_bounds) {
+      spaceship->shots[i].is_out_of_bounds = false;
+      spaceship->shot_count--;
+      spaceship->shots[i].y = SPACESHIP_START_Y;
+    }
+  } 
 }
 
 
 /*
  * Alien functions
  */
-void alien_shoot(Alien *alien) {
-  /* todo */
+void alien_shoot(Armada *armada) {
+  int i;
+  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+    /*
+     * we can add more shots when curr count is less than max and current shot IS NOT active
+     */
+    if (armada->shot_count == 0 && armada->shot_count < SPACESHIP_MAX_LASERS) {
+      if (!armada->shots[i].is_active) {
+        armada->shots[i].is_active = true;
+        armada->shot_count++;
+      }
+    }
+
+    if (armada->shots[i].is_active)
+      move_shot(&armada->shots[i]);
+    
+    if (armada->shots[i].is_out_of_bounds) {
+      armada->shots[i].is_out_of_bounds = false;
+      armada->shot_count--;
+    }
+  } 
 }
 
 void alien_collide(Alien *alien) {
@@ -77,7 +117,7 @@ void move_armada(Armada *armada) {
 /*
  * Populates 2d array of aliens
  */
-void populate_armada(Armada *armada) {
+void init_armada(Armada *armada) {
   int row, col;
   uint16 alien_screen_x = ALIENS_START_X;
   uint16 alien_screen_y = ALIENS_START_Y;
@@ -95,7 +135,7 @@ void populate_armada(Armada *armada) {
       alien.row = row;
       alien.col = col;
       alien.score_val = alien_score;
-      alien.isAlive = true;
+      alien.is_alive = true;
 
       armada->aliens[row][col] = alien;
       alien_screen_x += ALIEN_BOX_SIZE;
@@ -132,10 +172,28 @@ void populate_armada(Armada *armada) {
  * Shot functions
  */
 void move_shot(Shot *shot) {
-  if (shot->type == player_laser)
+  if (shot->type == spaceship_laser)
     shot->y -= SPACESHIP_LASER_SPEED;
   else if (shot->type == alien_bomb)
     shot->y += ALIEN_BOMB_SPEED;
+
+  if (shot->y == 0 || shot->y >= SCREEN_HEIGHT) {
+    shot->is_active = false;
+    shot->is_out_of_bounds = true;
+  }
+}
+
+void init_shots(Shot shots[], shot_t type, int max_shots) {
+  int i;
+  Shot shot;
+  for (i = 0; i < max_shots; i++) {
+    shot.x = 0;
+    shot.y = SPACESHIP_START_Y;
+    shot.type = type;
+    shot.is_active = false;
+    shot.is_out_of_bounds = false;
+    shots[i] = shot;
+  }
 }
 
 

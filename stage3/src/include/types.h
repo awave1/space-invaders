@@ -18,7 +18,7 @@ typedef int bool;
 #define false 0
 
 typedef enum { left, right, down, stop } direction_t;
-typedef enum { alien_bomb, player_laser } shot_t;
+typedef enum { alien_bomb, spaceship_laser } shot_t;
 
 typedef struct {
   uint16 x;
