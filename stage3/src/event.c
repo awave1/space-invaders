@@ -21,3 +21,20 @@ void on_spaceship_move(Spaceship* spaceship) {
     printf("x pos: %d\n", spaceship->x);
   } while (input == LEFT_KEY || input == RIGHT_KEY);
 }
+
+void laser_moves(Shot *laser) {
+  move_shot(laser);
+}
+
+void bomb_moves(Shot *bomb) {
+  move_shot(bomb);
+}
+
+void laser_hit_alien(Shot *laser, Alien *hit) {
+  laser->isActive = false;
+  hit->isAlive = false;
+}
+
+void laser_hit_boundary(Shot *laser) {
+  laser->isActive = false;
+}

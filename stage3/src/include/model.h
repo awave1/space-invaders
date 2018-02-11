@@ -51,6 +51,7 @@ typedef struct Alien {
   uint16 row;
   uint16 col;
   uint16 score_val;
+    bool isAlive;
 } Alien;
 
 /* single alien specific functions */
@@ -89,8 +90,7 @@ typedef struct Scorebox {
 } Scorebox;
 
 /* model specific functions */
-void update_scorebox(Scorebox* score);
-
+void update_scorebox(Scorebox *scorebox, int alien_score);
 /* ************************ */
 
 

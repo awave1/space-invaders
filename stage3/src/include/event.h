@@ -19,17 +19,17 @@ void shoot_weapon();
 
 void on_spaceship_move(Spaceship* spaceship);
 
-void laser_moves();
+void laser_moves(Shot *laser);
 
-void bomb_moves();
+void bomb_moves(Shot *bomb);
 
 void armada_moves();
 
 void alien_shoots();
 
-void laser_hit_alien();
+void laser_hit_alien(Shot *laser, Alien *hit);
 
-void laser_hit_boundary();
+void laser_hit_boundary(Shot *laser);
 
 void bomb_hit_boundary();
 

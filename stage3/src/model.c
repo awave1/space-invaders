@@ -50,14 +50,15 @@ void move_armada(Armada *armada) {
  * Shot functions
  */
 void move_shot(Shot *shot) {
-
+  shot->y += 3;
 }
 
 
 /*
  * Scorebox functions
  */
-void update_scorebox(Scorebox *scorebox) {
-  /* todo */
+void update_scorebox(Scorebox *scorebox, int alien_score) {
+  scorebox->score += alien_score;
+  sprintf(scorebox->score_str, "%d", scorebox->score);
 }
 
