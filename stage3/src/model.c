@@ -36,6 +36,7 @@ void alien_shoot(Alien *alien) {
 }
 
 void alien_collide(Alien *alien) {
+
 }
 
 
@@ -123,8 +124,7 @@ void populate_armada(Armada *armada) {
       }
       printf("\n");
     }
-    printf("armada coords: \n");
-    printf("top: %d,%d, bottom: %d,%d\n", armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
+    printf("initial armada pos top: %d,%d, bottom: %d,%d\n", armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
   }
 }
 
@@ -132,7 +132,10 @@ void populate_armada(Armada *armada) {
  * Shot functions
  */
 void move_shot(Shot *shot) {
-  shot->y += 3;
+  if (shot->type == player_laser)
+    shot->y -= SPACESHIP_LASER_SPEED;
+  else if (shot->type == alien_bomb)
+    shot->y += ALIEN_BOMB_SPEED;
 }
 
 
@@ -140,7 +143,13 @@ void move_shot(Shot *shot) {
  * Scorebox functions
  */
 void update_scorebox(Scorebox *scorebox, int alien_score) {
-  scorebox->score += alien_score;
-  sprintf(scorebox->score_str, "%d", scorebox->score);
+  if (scorebox->score < MAX_SCORE)
+    scorebox->score += alien_score;
+  else
+    scorebox->score = MAX_SCORE;
+  
+  if (MODEL_DEBUG) {
+    printf("int score: %lu\n", scorebox->score);
+  }
 }
 

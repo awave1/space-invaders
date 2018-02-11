@@ -9,6 +9,7 @@ const bool MODEL_DEBUG = true;
  * Spaceship / Player constants
  */
 #define SPACESHIP_Y_POS 40
+#define SPACESHIP_LASER_SPEED 4
 
 const uint16 *SPACESHIP_BMP;
 
@@ -21,6 +22,7 @@ const uint16 *SPACESHIP_BMP;
 #define ALIEN_A_SCORE 10
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
+#define ALIEN_BOMB_SPEED 6
 
 /* alien box size (not hitbox but space box) */
 #define ALIEN_BOX_SIZE 32
@@ -89,7 +91,7 @@ void populate_armada(Armada *armada);
 typedef struct Shot {
   uint16 x;
   uint16 y;
-  shot_t isAlien; /* can be 0 or 1 (player or alien) */
+  shot_t type; /* can be 0 or 1 (player or alien) */
   bool isActive;
 } Shot;
 

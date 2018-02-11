@@ -16,9 +16,8 @@ void on_spaceship_move(Spaceship* spaceship) {
   else if (input == SPACE_KEY)
     spaceship_shoot(spaceship);
 
-  if (EVENT_DEBUG) {
-    printf("event: x pos: %d\n", spaceship->x);
-  }
+  if (EVENT_DEBUG)
+    printf("event: spaceship x pos: %d\n", spaceship->x);
 }
 
 /*
@@ -27,8 +26,7 @@ void on_spaceship_move(Spaceship* spaceship) {
 void on_armada_move(Armada* armada) {
   move_armada(armada);
   if (EVENT_DEBUG) {
-    printf("event: armada coords: \n");
-    printf("event: top: %d,%d, bottom: %d,%d\n", 
+    printf("event: armada top: %d,%d, bottom: %d,%d\n", 
             armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
   }
 }
