@@ -13,8 +13,11 @@ typedef unsigned long uint32;
 
 typedef char* string;
 
-typedef enum { true, false } bool;
-typedef enum { left, right, stop } direction_t;
+typedef int bool;
+#define true 1
+#define false 0
+
+typedef enum { left, right, down, stop } direction_t;
 typedef enum { alien_bomb, player_laser } shot_t;
 
 typedef struct {

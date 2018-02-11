@@ -4,7 +4,9 @@
 /* todo: rename event function to on_<event> format, like on_spaciship_move */
 
 #include <osbind.h>
+#include <stdio.h>
 #include "model.h"
+#include "types.h"
 
 /* 
  * note: these are temporary, todo: need to figure out how to swap
@@ -13,6 +15,8 @@
 const unsigned long LEFT_KEY =  0x4b;
 const unsigned long RIGHT_KEY = 0x4d;
 const unsigned long SPACE_KEY = 0x00390020;
+
+const bool EVENT_DEBUG = true;
 
 
 void shoot_weapon();
@@ -23,7 +27,7 @@ void laser_moves(Shot *laser);
 
 void bomb_moves(Shot *bomb);
 
-void armada_moves();
+void on_armada_move(Armada *armada);
 
 void alien_shoots();
 
