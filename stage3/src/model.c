@@ -12,11 +12,11 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
   switch (direction) {
     case left:
       if (in_bounds(spaceship->x - 10, SPACESHIP_START_Y))
-        spaceship->x -= 10;
+        spaceship->x -= SPACESHIP_MOVE_SPEED;
       break;
     case right:
       if (in_bounds(spaceship->x + 10, SPACESHIP_START_Y))
-        spaceship->x += 10;
+        spaceship->x += SPACESHIP_MOVE_SPEED;
       break;
     default:
       break;
@@ -36,9 +36,10 @@ void spaceship_shoot(Spaceship *spaceship) {
       }
     }
 
-    if (spaceship->shots[i].is_active && !spaceship->shots[i].is_out_of_bounds) {
+/*
+    if (spaceship->shots[i].is_active && !spaceship->shots[i].is_out_of_bounds)
       move_shot(&spaceship->shots[i]);
-    }
+      */
     
     if (spaceship->shots[i].is_out_of_bounds) {
       spaceship->shots[i].is_out_of_bounds = false;
@@ -46,6 +47,14 @@ void spaceship_shoot(Spaceship *spaceship) {
       spaceship->shots[i].y = SPACESHIP_START_Y;
     }
   } 
+}
+
+void init_spaceship(Spaceship* spaceship) {
+  spaceship->x = SPACESHIP_START_X;
+  spaceship->y = SPACESHIP_START_Y;
+  spaceship->shot_count = 0;
+  spaceship->is_alive = true;
+  init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
 
@@ -156,6 +165,8 @@ void init_armada(Armada *armada) {
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 
+  init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
+
   if (true) {
     printf("model: initial positions of aliens:\n");
     for (row = 0; row < ALIENS_ROWS; row++) {
@@ -180,6 +191,10 @@ void move_shot(Shot *shot) {
   if (shot->y == 0 || shot->y >= SCREEN_HEIGHT) {
     shot->is_active = false;
     shot->is_out_of_bounds = true;
+  }
+
+  if (MODEL_DEBUG) {
+    printf("shot moves: y = %d\n", shot->y);
   }
 }
 
@@ -209,5 +224,10 @@ void update_scorebox(Scorebox *scorebox, int alien_score) {
   if (MODEL_DEBUG) {
     printf("int score: %lu\n", scorebox->score);
   }
+}
+
+void init_model(Model* model) {
+  init_armada(&model->armada);
+  init_spaceship(&model->player);
 }
 

@@ -7,8 +7,8 @@ $(EXE_NAME).tos: $(OBJ_FILES)
 bin\stage3.o: src\stage3.c 
 	cc68x -g -c src\stage3.c -o bin\stage3.o
 
-bin\event.o: src\event.c src\include\event.h
+bin\event.o: src\event.c src\include\event.h src\include\const.h
 	cc68x -g -c src\event.c -o bin\event.o
 
-bin\model.o: src\model.c src\include\model.h
+bin\model.o: src\model.c src\include\model.h src\include\const.h
 	cc68x -g -c src\model.c -o bin\model.o

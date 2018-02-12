@@ -6,27 +6,28 @@
 #include "include/event.h"
 
 void game_loop() {
-  Spaceship* spaceship = malloc(sizeof *spaceship);
-  Armada* armada = malloc(sizeof *armada);
-  Scorebox* scorebox = malloc(sizeof *scorebox);
-  int score = 10;
+  Model* model = malloc(sizeof *model);
+  unsigned long input_key;
 
-  spaceship->x = SPACESHIP_START_X;
-  spaceship->shot_count = 0;
-  init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
-  init_armada(armada);
-  scorebox->score = 0;
+  init_model(model);
 
   /*
-   * simple loop, runs everything synchronously
+   * simple loop
    */
   while (true) {
-    on_spaceship_move(spaceship);
-    on_armada_move(armada);
-    update_scorebox(scorebox, score);
-    score += 10;
-    printf("\n");
+
+    if (Cconis()) {
+      input_key = Cnecin();
+      input_key = input_key >> 16;
+      
+      on_spaceship_move(&model->player, input_key);
+    }
+
+    on_armada_move(&model->armada);
+    on_laser_move(&model->player.shots[0]);
   }
+
+  free(model);
 }
 
 int main() {

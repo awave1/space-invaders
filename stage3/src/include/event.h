@@ -1,29 +1,23 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-/* todo: rename event function to on_<event> format, like on_spaciship_move */
-
 #include <osbind.h>
 #include <stdio.h>
 #include "model.h"
 #include "types.h"
+#include "const.h"
 
 /* 
  * note: these are temporary, todo: need to figure out how to swap
  * so we can get for example instead of 0x004b0000 -> 0x4b
  */
-const unsigned long LEFT_KEY =  0x4b;
-const unsigned long RIGHT_KEY = 0x4d;
-const unsigned long SPACE_KEY = 0x39;
-
-const bool EVENT_DEBUG = true;
 
 
 void on_shoot();
 
-void on_spaceship_move(Spaceship* spaceship);
+void on_spaceship_move(Spaceship* spaceship, unsigned long key);
 
-void laser_moves(Shot *laser);
+void on_laser_move(Shot *laser);
 
 void bomb_moves(Shot *bomb);
 

@@ -3,17 +3,13 @@
 /*
  * basic spaceship movement
  */
-void on_spaceship_move(Spaceship* spaceship) {
-  unsigned long input;
+void on_spaceship_move(Spaceship* spaceship, unsigned long key) {
 
-  input = Cnecin();
-  input = input >> 16;
-
-  if (input == LEFT_KEY)
+  if (key == LEFT_KEY)
     move_spaceship(spaceship, left);
-  else if (input == RIGHT_KEY)
+  else if (key == RIGHT_KEY)
     move_spaceship(spaceship, right);
-  else if (input == SPACE_KEY)
+  else if (key == SPACE_KEY)
     spaceship_shoot(spaceship);
 
   if (EVENT_DEBUG) {
@@ -34,8 +30,9 @@ void on_armada_move(Armada* armada) {
   }
 }
 
-void laser_moves(Shot *laser) {
-  move_shot(laser);
+void on_laser_move(Shot *laser) {
+  if (laser->is_active)
+    move_shot(laser);
 }
 
 void bomb_moves(Shot *bomb) {
