@@ -26,6 +26,7 @@ void on_armada_move(Armada* armada) {
   if (armada->bottom_right_y >= SCREEN_HEIGHT) {
     /* todo: call game_over() */
   }
+
   if (EVENT_DEBUG) {
     printf("event: armada top: %d,%d, bottom: %d,%d\n", 
             armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
@@ -86,9 +87,11 @@ void on_game_over(Model* model) {
   stop_game(model);
 }
 
-void _log_event(char* event_name, char* message) {
-  printf("EVENT: %s\n", event_name);
-  printf(message);
-  printf('\n');
+void _log_event(const char* event_name, const char* message) {
+  if (EVENT_DEBUG) {
+    printf("EVENT: %s\n", event_name);
+    printf(message);
+    printf("\n");
+  }
 }
 

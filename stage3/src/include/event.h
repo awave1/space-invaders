@@ -34,7 +34,7 @@ void on_game_start(Model* model);
 void on_game_pause(Model* model);
 void on_game_over(Model* model);
 
-void _log_event(char* event_name, char* message);
+void _log_event(const char* event_name, const char* message);
 
 #endif /* EVENT_H */
 

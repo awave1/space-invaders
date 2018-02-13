@@ -254,3 +254,11 @@ void pause_game(Model* model) {
   model->is_game_over = true;
 }
 
+void _log_model(const char* model_name, const char* message) {
+  if (MODEL_DEBUG) {
+    printf("MODEL: %s\n", model_name);
+    printf(message);
+    printf("\n");
+  }
+}
+
