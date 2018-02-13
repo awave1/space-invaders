@@ -1,5 +1,5 @@
-#include "include\raster.h"
-#include "include\font.h"
+#include "include/raster.h"
+#include "include/font.h"
 
 /*
  * Description: 

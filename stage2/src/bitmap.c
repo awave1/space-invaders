@@ -1,4 +1,4 @@
-#include "include\bitmap.h"
+#include "include/bitmap.h"
 
 const UINT16 bitmap[] = {
   0x0000,

@@ -1,6 +1,6 @@
 #include <osbind.h>
 #include <stdio.h>
-#include "include\raster.h"
+#include "include/raster.h"
 
 /*
  * raster lib test driver
