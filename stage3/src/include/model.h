@@ -96,6 +96,6 @@ void init_model(Model* model);
 void stop_game(Model *model); 
 void pause_game(Model* model);
 
-void _log_model(cosnt char* model_name, const char* message);
+void _log_model(const char* model_name, const char* message);
 
 #endif /* SPACE_INVADERS_MODEL_H */
