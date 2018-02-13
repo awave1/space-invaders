@@ -44,6 +44,35 @@ void laser_hit_alien(Shot *laser, Alien *hit) {
   hit->is_alive = false;
 }
 
+/* todo: write test driver for below functions */
 void laser_hit_boundary(Shot *laser) {
   laser->is_active = false;
+  laser->is_out_of_bounds = true;
+}
+
+void bomb_hit_boundary(Shot *bomb) {
+  bomb->is_active = false;
+  bomb->is_out_of_bounds = true;
+}
+
+void bomb_hit_player(Spaceship *spaceship) {
+  /* todo: end game function */
+  spaceship->is_alive = false;
+}
+
+void alien_hit_bottom(Spaceship *spaceship) {
+  spaceship->is_alive = false;
+}
+
+void alien_hit_side(Armada *armada) {
+  armada->move_direction = -armada->move_direction;
+}
+
+void player_hit_side(Spaceship *spaceship) {
+  spaceship->direction = 0;
+  /* stop direction */
+}
+
+void alien_hit_player(Spaceship *spaceship) {
+  spaceship->is_alive = false;
 }

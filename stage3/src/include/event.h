@@ -29,15 +29,15 @@ void laser_hit_alien(Shot *laser, Alien *hit);
 
 void laser_hit_boundary(Shot *laser);
 
-void bomb_hit_boundary();
+void bomb_hit_boundary(Shot *bomb);
 
-void bomb_hit_player();
+void bomb_hit_player(Spaceship *spaceship);
 
-void alien_hit_bottom();
+void alien_hit_bottom(Spaceship *spaceship);
 
-void alien_hit_side();
+void alien_hit_side(Armada *armada);
 
-void player_hit_side();
+void player_hit_side(Spaceship *spaceship);
 
-void alien_hit_player();
+void alien_hit_player(Spaceship *spaceship);
 #endif /* EVENT_H */
