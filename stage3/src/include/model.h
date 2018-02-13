@@ -83,8 +83,8 @@ void shot_hit_alien(Shot* player_shot, Alien* alien);
 void shot_hit_player(Shot* player_shot, Spaceship* alien);
 void init_shots(Shot shots[], shot_t type, int max_shots);
 
-bool laser_collides_with(Alien* alien, Shot* laser);
-bool bomb_collides_with(Alien* alien, Shot* laser);
+bool laser_collides_with_alien(Alien* alien, Shot* laser);
+bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
 
 /* scorebox functions */
 void set_score(Scorebox* scorebox, uint32 score);
