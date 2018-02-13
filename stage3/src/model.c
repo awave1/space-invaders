@@ -84,10 +84,6 @@ void alien_shoot(Armada *armada) {
   } 
 }
 
-void alien_collide(Alien *alien) {
-
-}
-
 
 /*
  * Armada functions
@@ -212,6 +208,16 @@ void init_shots(Shot shots[], shot_t type, int max_shots) {
 }
 
 
+bool laser_collides_with_alien(Alien* alien, Shot* laser) {
+  return laser->type == spaceship_laser && alien->y == laser->y && alien->x && laser->x;
+}
+
+bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
+  return bomb->type == alien_bomb && spaceship->y == bomb->y && spaceship->x && bomb->x;
+
+}
+
+
 /*
  * Scorebox functions
  */
@@ -220,14 +226,31 @@ void update_scorebox(Scorebox *scorebox, int alien_score) {
     scorebox->score += alien_score;
   else
     scorebox->score = MAX_SCORE;
-  
+
   if (MODEL_DEBUG) {
     printf("int score: %lu\n", scorebox->score);
   }
 }
 
+void init_scorebox(Scorebox* scorebox) {
+  scorebox->score = 0;
+  scorebox->x = SCOREBOX_P1_X;
+  scorebox->y = SCOREBOX_Y;
+}
+
 void init_model(Model* model) {
+  model->is_playing = true;
+  model->is_game_over = false;
   init_armada(&model->armada);
   init_spaceship(&model->player);
+  init_scorebox(&model->scorebox);
+}
+
+void stop_game(Model* model) {
+  model->is_playing = false;
+}
+
+void pause_game(Model* model) {
+  model->is_game_over = true;
 }
 

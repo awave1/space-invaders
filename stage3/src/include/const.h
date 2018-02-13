@@ -43,9 +43,11 @@ const bool MODEL_DEBUG = true;
 /*
  * Scorebox constants
  */
-#define SCOREBOX_X 0
+#define SCOREBOX_P1_X 549
+#define SCOREBOX_P2_X 89
 #define SCOREBOX_Y 40
 
 const uint32 MAX_SCORE = 9999;
 
 #endif /* CONSTANTS_H */
+

@@ -13,31 +13,28 @@
  */
 
 
-void on_shoot();
-
 void on_spaceship_move(Spaceship* spaceship, unsigned long key);
-
-void on_laser_move(Shot *laser);
-
-void bomb_moves(Shot *bomb);
-
 void on_armada_move(Armada *armada);
+void on_laser_move(Shot *laser);
+void on_bomb_move(Shot *bomb);
+
+void on_shoot();
 
 void alien_shoots();
 
-void laser_hit_alien(Shot *laser, Alien *hit);
+void on_alien_hit_bottom(Alien *alien);
 
-void laser_hit_boundary(Shot *laser);
+void on_laser_hit_boundary(Shot *laser);
+void on_bomb_hit_boundary(Shot *bomb);
+void on_laser_hit_alien(Shot *laser, Alien *hit);
+void on_bomb_hit_player(Spaceship *spaceship, Shot* bomb);
 
-void bomb_hit_boundary(Shot *bomb);
 
-void bomb_hit_player(Spaceship *spaceship);
+void on_game_start(Model* model);
+void on_game_pause(Model* model);
+void on_game_over(Model* model);
 
-void alien_hit_bottom(Spaceship *spaceship);
+void _log_event(char* event_name, char* message);
 
-void alien_hit_side(Armada *armada);
-
-void player_hit_side(Spaceship *spaceship);
-
-void alien_hit_player(Spaceship *spaceship);
 #endif /* EVENT_H */
+
