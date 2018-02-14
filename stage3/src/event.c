@@ -21,15 +21,12 @@ void on_spaceship_move(Spaceship* spaceship, unsigned long key) {
 /*
  * todo: not sure if anything else supposed to be here
  */
-void on_armada_move(Armada* armada) {
-  move_armada(armada);
-  if (armada->bottom_right_y >= SCREEN_HEIGHT) {
-    /* todo: call game_over() */
-  }
+void on_armada_move(Model* model) {
+  move_armada(model);
 
   if (EVENT_DEBUG) {
-    printf("event: armada top: %d,%d, bottom: %d,%d\n", 
-            armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
+    _log_event("on_armada_move", "event: armada top: %d,%d, bottom: %d,%d\n", 
+            model->armada.top_left_x, model->armada.top_left_y, model->armada.bottom_right_x, model->armada.bottom_right_y);
   }
 }
 
@@ -81,16 +78,19 @@ void on_game_start(Model* model) {
 
 void on_game_pause(Model* model) {
   /* todo: add functions to halt all movement */ 
+  pause_game(model);
 }
 
 void on_game_over(Model* model) {
-  stop_game(model);
+  game_over(model);
 }
 
-void _log_event(const char* event_name, const char* message) {
+void _log_event(const char* event_name, const char* message, ...) {
+  va_list argptr;
+  va_start(message, argptr);
   if (EVENT_DEBUG) {
     printf("EVENT: %s\n", event_name);
-    printf(message);
+    printf(message, argptr);
     printf("\n");
   }
 }

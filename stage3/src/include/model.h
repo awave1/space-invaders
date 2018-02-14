@@ -10,8 +10,8 @@ const uint16 *ALIEN_B_BMP; /* 20 point alien */
 const uint16 *ALIEN_C_BMP; /* 30 point alien */
 
 typedef struct Shot {
-  uint16 x;
-  uint16 y;
+  int x;
+  int y;
   shot_t type;
   bool is_active;
   bool is_out_of_bounds;
@@ -28,11 +28,11 @@ typedef struct Spaceship {
 } Spaceship;
 
 typedef struct Alien {
-  uint16 row;
-  uint16 col;
-  uint16 x;
-  uint16 y;
-  uint16 score_val;
+  int row;
+  int col;
+  int x;
+  int y;
+  int score_val;
   bool is_alive;
 } Alien;
 
@@ -50,7 +50,7 @@ typedef struct Armada {
 typedef struct Scorebox {
   int x;
   int y;
-  uint32 score;
+  int score;
 } Scorebox;
 
 typedef struct Model {
@@ -73,7 +73,7 @@ void set_spaceship_x(Spaceship* spaceship, uint16 x);
 void alien_collide(Alien *alien);
 
 /* armada functions */
-void move_armada(Armada *armada);
+void move_armada(Model* model);
 void alien_shoot(Armada *armada);
 void init_armada(Armada *armada);
 
@@ -93,9 +93,10 @@ void _update_score_text(Scorebox* scorebox);
 
 /* model functions */
 void init_model(Model* model);
-void stop_game(Model *model); 
+void game_over(Model* model);
 void pause_game(Model* model);
+void resume_game(Model* model);
 
-void _log_model(const char* model_name, const char* message);
+void _log_model(const char* model_name, const char* message, ...);
 
 #endif /* SPACE_INVADERS_MODEL_H */

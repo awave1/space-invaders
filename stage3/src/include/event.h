@@ -14,7 +14,7 @@
 
 
 void on_spaceship_move(Spaceship* spaceship, unsigned long key);
-void on_armada_move(Armada *armada);
+void on_armada_move(Model* model);
 void on_laser_move(Shot *laser);
 void on_bomb_move(Shot *bomb);
 
@@ -34,7 +34,7 @@ void on_game_start(Model* model);
 void on_game_pause(Model* model);
 void on_game_over(Model* model);
 
-void _log_event(const char* event_name, const char* message);
+void _log_event(const char* event_name, const char* message, ...);
 
 #endif /* EVENT_H */
 

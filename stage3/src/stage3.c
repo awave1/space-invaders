@@ -9,12 +9,12 @@ void game_loop() {
   Model* model = malloc(sizeof *model);
   unsigned long input_key;
 
-  init_model(model);
-
+  on_game_start(model);
+  
   /*
    * simple loop
    */
-  while (true) {
+  while (!model->is_game_over) {
 
     if (Cconis()) {
       input_key = Cnecin();
@@ -23,8 +23,7 @@ void game_loop() {
       on_spaceship_move(&model->player, input_key);
     }
 
-    on_armada_move(&model->armada);
-    on_laser_move(&model->player.shots[0]);
+    on_armada_move(model);
   }
 
   free(model);

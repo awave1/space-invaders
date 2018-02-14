@@ -92,25 +92,46 @@ void alien_shoot(Armada *armada) {
  /*
   * Moves armada as a single entity
   */
-void move_armada(Armada *armada) {
+void move_armada(Model* model) {
+  Armada *armada = &model->armada;
+
+  int new_bottom_right_x__right = armada->bottom_right_x + 2;
+  int new_top_left_x__right = armada->top_left_x + 2;
+
+  int new_bottom_right_x__left = armada->bottom_right_x - 2;
+  int new_top_left_x__left = armada->top_left_x - 2;
+
+  int new_bottom_right_y = armada->bottom_right_y + 16;
+  int new_top_left_y = armada->top_left_y + 16;
+
   switch(armada->move_direction) {
     case right:
-      if (armada->bottom_right_x + 2 < SCREEN_WIDTH) {
-        armada->bottom_right_x += 2;
-        armada->top_left_x += 2;
+      if (new_bottom_right_x__right < SCREEN_WIDTH) {
+        armada->bottom_right_x = new_bottom_right_x__right;
+        armada->top_left_x = new_top_left_x__right;
       } else {
-        armada->bottom_right_y += 8;
-        armada->top_left_y += 8;
+
+        if (new_bottom_right_y >= 400) {
+          game_over(model);
+        }
+
+        armada->bottom_right_y = new_bottom_right_y;
+        armada->top_left_y = new_top_left_y;
         armada->move_direction = left;
       }
       break;
     case left:
-      if (armada->top_left_x - 2 >= 0) {
-        armada->bottom_right_x -= 2;
-        armada->top_left_x -= 2;
+      if (new_top_left_x__left >= 0) {
+        armada->bottom_right_x = new_bottom_right_x__left;
+        armada->top_left_x = new_top_left_x__left;
       } else {
-        armada->bottom_right_y += 8;
-        armada->top_left_y += 8;
+
+        if (new_bottom_right_y >= 400) {
+          game_over(model);
+        }
+
+        armada->bottom_right_y = new_bottom_right_y;
+        armada->top_left_y = new_top_left_y;
         armada->move_direction = right;
       }
       break;
@@ -246,18 +267,26 @@ void init_model(Model* model) {
   init_scorebox(&model->scorebox);
 }
 
-void stop_game(Model* model) {
-  model->is_playing = false;
+void resume_game(Model* model) {
+  model->is_playing = true;
 }
 
 void pause_game(Model* model) {
-  model->is_game_over = true;
+  model->is_playing = false;
 }
 
-void _log_model(const char* model_name, const char* message) {
+void game_over(Model* model) {
+  model->is_game_over = true;
+  model->is_playing = false;
+}
+
+void _log_model(const char* model_name, const char* message, ...) {
+  va_list argptr;
+  va_start(message, argptr);
+
   if (MODEL_DEBUG) {
     printf("MODEL: %s\n", model_name);
-    printf(message);
+    printf(message, argptr);
     printf("\n");
   }
 }
