@@ -15,8 +15,8 @@
 
 void on_spaceship_move(Spaceship* spaceship, unsigned long key);
 void on_armada_move(Model* model);
-void on_laser_move(Shot *laser);
-void on_bomb_move(Shot *bomb);
+void on_laser_move(Model *model);
+void on_bomb_move(Model *model);
 
 void on_shoot();
 

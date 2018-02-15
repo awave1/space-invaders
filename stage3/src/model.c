@@ -211,7 +211,7 @@ void move_shot(Shot *shot) {
   }
 
   if (MODEL_DEBUG) {
-    printf("shot moves: y = %d\n", shot->y);
+    printf("y: %d\nis_alive: %d", shot->y, shot->is_active);
   }
 }
 
@@ -279,15 +279,3 @@ void game_over(Model* model) {
   model->is_game_over = true;
   model->is_playing = false;
 }
-
-void _log_model(const char* model_name, const char* message, ...) {
-  va_list argptr;
-  va_start(message, argptr);
-
-  if (MODEL_DEBUG) {
-    printf("MODEL: %s\n", model_name);
-    printf(message, argptr);
-    printf("\n");
-  }
-}
-

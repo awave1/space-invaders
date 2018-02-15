@@ -1,5 +1,5 @@
 #include "include/event.h"
-
+#include <stdarg.h>
 /*
  * basic spaceship movement
  */
@@ -25,18 +25,25 @@ void on_armada_move(Model* model) {
   move_armada(model);
 
   if (EVENT_DEBUG) {
-    _log_event("on_armada_move", "event: armada top: %d,%d, bottom: %d,%d\n", 
+    printf("on_armada_move\n");
+    printf("event: armada top: %d,%d, bottom: %d,%d\n", 
             model->armada.top_left_x, model->armada.top_left_y, model->armada.bottom_right_x, model->armada.bottom_right_y);
   }
 }
 
-void on_laser_move(Shot *laser) {
-  if (laser->is_active)
-    move_shot(laser);
+void on_laser_move(Model *model) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    if (model->player.shots[i].is_active)
+      move_shot(&model->player.shots[i]);
+  }
 }
 
-void on_bomb_move(Shot *bomb) {
-  move_shot(bomb);
+void on_bomb_move(Model *model) {
+  int i;
+  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+    move_shot(&model->armada.shots[i]);
+  }
 }
 
 void on_laser_hit_alien(Shot *laser, Alien *alien) {
@@ -84,14 +91,3 @@ void on_game_pause(Model* model) {
 void on_game_over(Model* model) {
   game_over(model);
 }
-
-void _log_event(const char* event_name, const char* message, ...) {
-  va_list argptr;
-  va_start(message, argptr);
-  if (EVENT_DEBUG) {
-    printf("EVENT: %s\n", event_name);
-    printf(message, argptr);
-    printf("\n");
-  }
-}
-
