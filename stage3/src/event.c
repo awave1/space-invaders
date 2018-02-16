@@ -21,10 +21,11 @@ void on_spaceship_move(Spaceship* spaceship, unsigned long key) {
 /*
  * todo: not sure if anything else supposed to be here
  */
-void on_armada_move(Model* model) {
-  move_armada(model);
+void on_armada_move(Model* model, bool can_move) {
+  if (can_move)
+    move_armada(model);
 
-  if (EVENT_DEBUG) {
+  if (EVENT_DEBUG && can_move) {
     printf("on_armada_move\n");
     printf("event: armada top: %d,%d, bottom: %d,%d\n", 
             model->armada.top_left_x, model->armada.top_left_y, model->armada.bottom_right_x, model->armada.bottom_right_y);
@@ -46,10 +47,20 @@ void on_bomb_move(Model *model) {
   }
 }
 
-void on_laser_hit_alien(Shot *laser, Alien *alien) {
-  if (laser_collides_with_alien(alien, laser)) {
-    laser->is_active = false;
-    alien->is_alive = false;
+void on_laser_hit_alien(Model *model) {
+  int i, j;
+  bool collided = false;
+  for (i = 0; i < model->player.shot_count && !collided; i++) {
+    for (j = 0; j < ALIENS_NUM_OF_ALIENS && !collided; j++) {
+      if (laser_collides_with_alien(model->armada.aliens[j], &model->player.shots[i])) {
+        destroy_alien(model->armada.aliens[j], &model->player.shots[i], &model->armada);
+        if (EVENT_DEBUG) {
+          printf("destroyed (on screen): %d, %d\n", model->armada.aliens[j]->x, model->armada.aliens[j]->y);
+          printf("alien count: %d\n", model->armada.alive_count);
+          collided = true;
+        }
+      } 
+    }
   }
 }
 

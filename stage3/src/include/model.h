@@ -44,6 +44,7 @@ typedef struct Armada {
   int bottom_right_y;
   direction_t move_direction;
   Shot shots[ALIEN_MAX_BOMBS];
+  int alive_count;
   int shot_count;
 } Armada;
 
@@ -71,6 +72,7 @@ void set_spaceship_x(Spaceship* spaceship, uint16 x);
 
 /* alien functions */
 void alien_collide(Alien *alien);
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada);
 
 /* armada functions */
 void move_armada(Model* model);

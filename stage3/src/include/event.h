@@ -14,7 +14,7 @@
 
 
 void on_spaceship_move(Spaceship* spaceship, unsigned long key);
-void on_armada_move(Model* model);
+void on_armada_move(Model* model, bool can_move);
 void on_laser_move(Model *model);
 void on_bomb_move(Model *model);
 
@@ -26,7 +26,7 @@ void on_alien_hit_bottom(Alien *alien);
 
 void on_laser_hit_boundary(Shot *laser);
 void on_bomb_hit_boundary(Shot *bomb);
-void on_laser_hit_alien(Shot *laser, Alien *hit);
+void on_laser_hit_alien(Model* model);
 void on_bomb_hit_player(Spaceship *spaceship, Shot* bomb);
 
 

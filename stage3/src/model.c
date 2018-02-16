@@ -81,9 +81,16 @@ void alien_shoot(Armada *armada) {
       armada->shots[i].is_out_of_bounds = false;
       armada->shot_count--;
     }
-  } 
+  }
 }
 
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
+  if (shot->type == spaceship_laser) {
+    shot->is_active = false;
+    alien->is_alive = false;
+    armada->alive_count -= 1;
+  }
+}
 
 /*
  * Armada functions
@@ -153,6 +160,7 @@ void init_armada(Armada *armada) {
   armada->top_left_x = ALIENS_START_X;
   armada->top_left_y = ALIENS_START_Y;
   armada->move_direction = right;
+  armada->alive_count = ALIENS_NUM_OF_ALIENS;
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
@@ -188,7 +196,7 @@ void init_armada(Armada *armada) {
     printf("model: initial positions of aliens:\n");
     for (row = 0; row < ALIENS_ROWS; row++) {
       for (col = 0; col < ALIENS_COLS; col++) {
-        printf("%d,%d ", armada->aliens[row][col].row, armada->aliens[row][col].col);
+        printf("%d,%d ", armada->aliens[row][col].x, armada->aliens[row][col].y);
       }
       printf("\n");
     }
@@ -200,18 +208,20 @@ void init_armada(Armada *armada) {
  * Shot functions
  */
 void move_shot(Shot *shot) {
-  if (shot->type == spaceship_laser)
-    shot->y -= SPACESHIP_LASER_SPEED;
-  else if (shot->type == alien_bomb)
-    shot->y += ALIEN_BOMB_SPEED;
+  if (shot->is_active) {
+    if (shot->type == spaceship_laser)
+      shot->y -= SPACESHIP_LASER_SPEED;
+    else if (shot->type == alien_bomb)
+      shot->y += ALIEN_BOMB_SPEED;
 
-  if (shot->y == 0 || shot->y >= SCREEN_HEIGHT) {
-    shot->is_active = false;
-    shot->is_out_of_bounds = true;
+    if (shot->y == 0 || shot->y >= SCREEN_HEIGHT) {
+      shot->is_active = false;
+      shot->is_out_of_bounds = true;
+    }
   }
 
   if (MODEL_DEBUG) {
-    printf("y: %d\nis_alive: %d", shot->y, shot->is_active);
+    printf("y: %d\nis_alive: %s\n", shot->y, shot->is_active == true ? "true" : "false");
   }
 }
 
@@ -230,7 +240,7 @@ void init_shots(Shot shots[], shot_t type, int max_shots) {
 
 
 bool laser_collides_with_alien(Alien* alien, Shot* laser) {
-  return laser->type == spaceship_laser && alien->y == laser->y && alien->x && laser->x;
+  return laser->x >= alien->x && alien->y == laser->y;
 }
 
 bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
