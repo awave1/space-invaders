@@ -7,6 +7,8 @@
 #include "include/render.h"
 
 int main() {
-  /* todo: render test drivers */
+  Model model;
+  void *base = Physbase();
+  render(&model, base);
   return 0;
 }

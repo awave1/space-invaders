@@ -1,11 +1,11 @@
-OBJ_FILES=bin\stage3.o bin\event.o bin\model.o bin\render.o
+OBJ_FILES=bin\stage4.o bin\event.o bin\model.o bin\render.o
 EXE_NAME=stage4
 
 $(EXE_NAME).tos: $(OBJ_FILES)
 	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
-bin\stage3.o: src\stage3.c 
-	cc68x -g -c src\stage3.c -o bin\stage3.o
+bin\stage4.o: src\stage4.c
+	cc68x -g -c src\stage4.c -o bin\stage4.o
 
 bin\event.o: src\event.c src\include\event.h src\include\const.h
 	cc68x -g -c src\event.c -o bin\event.o
