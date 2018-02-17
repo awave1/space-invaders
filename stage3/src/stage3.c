@@ -8,8 +8,19 @@
 void game_loop(char choice) {
   Model* model = malloc(sizeof *model);
   unsigned long input_key;
+  int row, col;
 
   on_game_start(model);
+
+
+  printf("model: initial positions of aliens:\n");
+  for (row = 0; row < ALIENS_ROWS; row++) {
+    for (col = 0; col < ALIENS_COLS; col++) {
+      printf("%d,%d ", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
+    }
+    printf("\n");
+  }
+  
 
   switch(choice) {
     case 'a':
@@ -47,8 +58,33 @@ void game_loop(char choice) {
         on_laser_hit_alien(model);
         on_armada_move(model, false);
         if (model->armada.alive_count < ALIENS_NUM_OF_ALIENS) {
+          printf("\n");
+          for (row = 0; row < ALIENS_ROWS; row++) {
+            for (col = 0; col < ALIENS_COLS; col++) {
+              if (model->armada.aliens[row][col].is_alive) {
+                printf("%d,%d ", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
+              } else {
+                 printf("000,000 "); 
+              }
+            }
+            printf("\n");
+          }
           break;
         }
+      }
+      break;
+    case 'e':
+      printf("testing enemy-player shot collision\n");
+      model->armada.shots[0].is_active = true;
+
+      while (!model->is_game_over) {
+        if (Cconis()) {
+          input_key = Cnecin();
+          input_key = input_key >> 16;
+
+          on_spaceship_move(&model->player, input_key);
+        }
+        on_bomb_move(model);
       }
       break;
   }

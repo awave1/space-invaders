@@ -101,4 +101,6 @@ void resume_game(Model* model);
 
 void _log_model(const char* model_name, const char* message, ...);
 
+bool in_range(unsigned int low, unsigned int high, unsigned int x);
+
 #endif /* SPACE_INVADERS_MODEL_H */

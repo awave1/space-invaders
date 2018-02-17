@@ -43,23 +43,27 @@ void on_laser_move(Model *model) {
 void on_bomb_move(Model *model) {
   int i;
   for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
-    move_shot(&model->armada.shots[i]);
+    if (model->armada.shots[i].is_active) {
+      move_shot(&model->armada.shots[i]);
+    }
   }
 }
 
 void on_laser_hit_alien(Model *model) {
-  int i, j;
+  int i, row, col;
   bool collided = false;
   for (i = 0; i < model->player.shot_count && !collided; i++) {
-    for (j = 0; j < ALIENS_NUM_OF_ALIENS && !collided; j++) {
-      if (laser_collides_with_alien(model->armada.aliens[j], &model->player.shots[i])) {
-        destroy_alien(model->armada.aliens[j], &model->player.shots[i], &model->armada);
-        if (EVENT_DEBUG) {
-          printf("destroyed (on screen): %d, %d\n", model->armada.aliens[j]->x, model->armada.aliens[j]->y);
-          printf("alien count: %d\n", model->armada.alive_count);
-          collided = true;
+    for (row = 0; row < ALIENS_ROWS && !collided; row++) {
+      for (col = 0; col < ALIENS_COLS && !collided; col++) {
+        if (laser_collides_with_alien(&model->armada.aliens[row][col], &model->player.shots[i])) {
+          destroy_alien(&model->armada.aliens[row][col], &model->player.shots[i], &model->armada);
+          if (EVENT_DEBUG) {
+            printf("destroyed (on screen): %d, %d\n", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
+            printf("alien count: %d\n", model->armada.alive_count);
+            collided = true;
+          }
         }
-      } 
+      }
     }
   }
 }
@@ -79,10 +83,13 @@ void on_bomb_hit_boundary(Shot *bomb) {
   }
 }
 
-void on_bomb_hit_player(Spaceship *spaceship, Shot *bomb) {
+void on_bomb_hit_player(Model* model) {
   /* todo: end game function */
-  if (bomb_collides_with_spaceship(spaceship, bomb)) {
-    spaceship->is_alive = false;
+  int i;
+  for (i = 0; i < model->armada.shot_count; i++) {
+    if (bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
+      model->player.is_alive = false;
+    }
   }
 }
 

@@ -31,6 +31,7 @@ void spaceship_shoot(Spaceship *spaceship) {
      */
     if (spaceship->shot_count == 0 && spaceship->shot_count < SPACESHIP_MAX_LASERS) {
       if (!spaceship->shots[i].is_active) {
+        spaceship->shots[i].x = spaceship->x;
         spaceship->shots[i].is_active = true;
         spaceship->shot_count += 1;
       }
@@ -57,7 +58,6 @@ void init_spaceship(Spaceship* spaceship) {
   init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
-
 /*
  * Alien functions
  */
@@ -65,7 +65,7 @@ void alien_shoot(Armada *armada) {
   int i;
   for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
     /*
-     * we can add more shots when curr count is less than max and current shot IS NOT active
+     * we can add more shots when curr count is less than max and the current shot IS NOT active
      */
     if (armada->shot_count == 0 && armada->shot_count < SPACESHIP_MAX_LASERS) {
       if (!armada->shots[i].is_active) {
@@ -155,7 +155,6 @@ void init_armada(Armada *armada) {
   uint16 alien_screen_x = ALIENS_START_X;
   uint16 alien_screen_y = ALIENS_START_Y;
   uint16 alien_score = ALIEN_C_SCORE;
-  Alien alien;
 
   armada->top_left_x = ALIENS_START_X;
   armada->top_left_y = ALIENS_START_Y;
@@ -164,6 +163,7 @@ void init_armada(Armada *armada) {
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
+      Alien alien;
       alien.x = alien_screen_x;
       alien.y = alien_screen_y; 
       alien.row = row;
@@ -180,28 +180,12 @@ void init_armada(Armada *armada) {
       alien_score = ALIEN_B_SCORE;
     else
       alien_score = ALIEN_A_SCORE;
-
   }
 
-  /* 
-   * shitcode, but works 
-   * todo: reformat
-   */
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 
   init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
-
-  if (true) {
-    printf("model: initial positions of aliens:\n");
-    for (row = 0; row < ALIENS_ROWS; row++) {
-      for (col = 0; col < ALIENS_COLS; col++) {
-        printf("%d,%d ", armada->aliens[row][col].x, armada->aliens[row][col].y);
-      }
-      printf("\n");
-    }
-    printf("initial armada pos top: %d,%d, bottom: %d,%d\n", armada->top_left_x, armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
-  }
 }
 
 /*
@@ -229,8 +213,12 @@ void init_shots(Shot shots[], shot_t type, int max_shots) {
   int i;
   Shot shot;
   for (i = 0; i < max_shots; i++) {
-    shot.x = 0;
-    shot.y = SPACESHIP_START_Y;
+    if (type == spaceship_laser) {
+      shot.x = SPACESHIP_START_X;
+      shot.y = SPACESHIP_START_Y;
+    } else if (type == alien_bomb) {
+      
+    }
     shot.type = type;
     shot.is_active = false;
     shot.is_out_of_bounds = false;
@@ -238,16 +226,20 @@ void init_shots(Shot shots[], shot_t type, int max_shots) {
   }
 }
 
-
 bool laser_collides_with_alien(Alien* alien, Shot* laser) {
-  return laser->x >= alien->x && alien->y == laser->y;
+  int x_start = alien->x;
+  int x_end = alien->x + 16;
+
+  return alien->y == laser->y && in_range(x_start, x_end, laser->x);
 }
 
 bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
-  return bomb->type == alien_bomb && spaceship->y == bomb->y && spaceship->x && bomb->x;
+  int x_start = spaceship->x;
+  int x_end = spaceship->x + 16;
+
+  return spaceship->y == bomb->y && in_range(x_start, x_end, bomb->x); 
 
 }
-
 
 /*
  * Scorebox functions
@@ -288,4 +280,8 @@ void pause_game(Model* model) {
 void game_over(Model* model) {
   model->is_game_over = true;
   model->is_playing = false;
+}
+
+bool in_range(unsigned int low, unsigned int high, unsigned int x) {
+  return (low <= x  && x <= high);
 }
