@@ -4,10 +4,10 @@
 #include "const.h"
 #include "types.h"
 
-const uint16 *SPACESHIP_BMP;
-const uint16 *ALIEN_A_BMP; /* 10 point alien */
-const uint16 *ALIEN_B_BMP; /* 20 point alien */
-const uint16 *ALIEN_C_BMP; /* 30 point alien */
+/*const uint16 *SPACESHIP_BMP;
+const uint16 *ALIEN_A_BMP; *//* 10 point alien *//*
+const uint16 *ALIEN_B_BMP; *//* 20 point alien *//*
+const uint16 *ALIEN_C_BMP; *//* 30 point alien */
 
 typedef struct Shot {
     int x;
@@ -77,9 +77,7 @@ void alien_collide(Alien *alien);
 
 /* armada functions */
 void move_armada(Model *model);
-
 void alien_shoot(Armada *armada);
-
 void init_armada(Armada *armada);
 
 /* shot functions */
@@ -88,7 +86,6 @@ void move_shot(Shot *shot);
 void shot_hit_alien(Shot *player_shot, Alien *alien);
 
 void shot_hit_player(Shot *player_shot, Spaceship *alien);
-
 void init_shots(Shot shots[], shot_t type, int max_shots);
 
 bool laser_collides_with_alien(Alien *alien, Shot *laser);

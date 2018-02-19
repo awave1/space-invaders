@@ -4,14 +4,15 @@
 #include "types.h"
 
 /* event constants */
-const bool EVENT_DEBUG = true;
-const unsigned long LEFT_KEY = 0x4b;
-const unsigned long RIGHT_KEY = 0x4d;
-const unsigned long SPACE_KEY = 0x39;
+#define EVENT_DEBUG true
+#define LEFT_KEY 0x4b
+#define RIGHT_KEY 0x4D
+#define SPACE_KEY 0x39
 
 
 /* model constants */
-const bool MODEL_DEBUG = true;
+#define MODEL_DEBUG true
+
 
 /* 
  * Spaceship / Player constants

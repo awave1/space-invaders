@@ -5,17 +5,23 @@
 #include "types.h"
 #include "const.h"
 #include "event.h"
+#include "bitmap.h"
+#include "raster.h"
+#include "font.h"
 
-void render(const Model *model, UINT16 *base);
+#include <linea.h>
+#include <osbind.h>
 
-void render_spaceship(const Spaceship *spaceship, UINT16 *base);
+void render(const Model *model, uint16 *base);
 
-void render_armada(const Armada *armada, UINT16 *base);
+void render_spaceship(const Spaceship *spaceship, uint16 *base);
 
-void render_alien(const Alien *alien, UNIT16 *base);
+void render_armada(const Armada *armada, uint16 *base);
 
-void render_shot(const Shot *shot,
-                 UINT16 *base);/*change base size if sprite different*/
-void render_scoreboard(const Scorebox *scorebox, UINT16 *base);
+void render_alien(const Alien *alien, uint16 *base);
+
+void render_shot(const Shot *shot, uint8 *base);
+
+void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 
 #endif /*SPACE_INVADERS_RENDER_H*/

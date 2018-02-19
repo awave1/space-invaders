@@ -1,3 +1,4 @@
+#include <varargs.h>
 #include "include/event.h"
 
 /*
@@ -87,12 +88,12 @@ void on_game_over(Model *model) {
 }
 
 void _log_event(const char *event_name, const char *message, ...) {
-  va_list argptr;
+/*  va_list argptr;
   va_start(message, argptr);
   if (EVENT_DEBUG) {
     printf("EVENT: %s\n", event_name);
     printf(message, argptr);
     printf("\n");
-  }
+  }*/
 }
 

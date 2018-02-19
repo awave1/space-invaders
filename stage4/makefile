@@ -1,4 +1,4 @@
-OBJ_FILES=bin\stage4.o bin\event.o bin\model.o bin\render.o
+OBJ_FILES=bin\stage4.o bin\event.o bin\model.o bin\render.o bin\raster.o bin\font.o bin\bitmap.o bin\rast_asm.o
 EXE_NAME=stage4
 
 $(EXE_NAME).tos: $(OBJ_FILES)
@@ -15,3 +15,15 @@ bin\model.o: src\model.c src\include\model.h src\include\const.h
 
 bin\render.o: src\render.c src\include\render.h src\include\const.h
 	cc68x -g -c src\model.c -o bin\render.o
+
+bin\raster.o: bin\font.o src\raster.c src\include\raster.h
+	cc68x -g -c src\raster.c -o bin\raster.o
+
+bin\bitmap.o: src\bitmap.c src\include\bitmap.h
+	cc68x -g -c src\bitmap.c -o bin\bitmap.o
+
+bin\font.o: src\font.c src\include\font.h
+	cc68x -g -c src\font.c -o bin\font.o
+
+bin\rast_asm.o: src\rast_asm.s
+	gen -D -L2 src\rast_asm.s -o bin\rast_asm.o

@@ -82,7 +82,7 @@ void alien_shoot(Armada *armada) {
       armada->shots[i].is_out_of_bounds = false;
       armada->shot_count--;
     }
-  }
+  } 
 }
 
 
@@ -158,7 +158,7 @@ void init_armada(Armada *armada) {
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
       alien.x = alien_screen_x;
-      alien.y = alien_screen_y;
+      alien.y = alien_screen_y; 
       alien.row = row;
       alien.col = col;
       alien.score_val = alien_score;
@@ -286,13 +286,13 @@ void game_over(Model *model) {
 }
 
 void _log_model(const char *model_name, const char *message, ...) {
-  va_list argptr;
+/*  va_list argptr;
   va_start(message, argptr);
 
   if (MODEL_DEBUG) {
     printf("MODEL: %s\n", model_name);
     printf(message, argptr);
     printf("\n");
-  }
+  }*/
 }
 
