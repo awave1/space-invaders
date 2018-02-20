@@ -1,6 +1,6 @@
 #include "include/bitmap.h"
 
-const UINT16 bitmap[] = {
+const uint16 bitmap[] = {
   0x0000,
   0x0810,
   0x0810,

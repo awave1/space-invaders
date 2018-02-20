@@ -6,6 +6,6 @@
 #define BITMAP_WIDTH 16
 #define BITMAP_HEIGHT 16
 
-extern const UINT16 bitmap[];
+extern const uint16 bitmap[];
 
 #endif
