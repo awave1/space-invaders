@@ -55,7 +55,7 @@ void init_spaceship(Spaceship* spaceship) {
   spaceship->y = SPACESHIP_START_Y;
   spaceship->shot_count = 0;
   spaceship->is_alive = true;
-  init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
+  init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
 /*
@@ -185,7 +185,7 @@ void init_armada(Armada *armada) {
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 
-  init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
+  init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
 }
 
 /*
@@ -205,20 +205,23 @@ void move_shot(Shot *shot) {
   }
 
   if (MODEL_DEBUG) {
+    printf("x: %d\n", shot->x);
     printf("y: %d\nis_alive: %s\n", shot->y, shot->is_active == true ? "true" : "false");
   }
 }
 
-void init_shots(Shot shots[], shot_t type, int max_shots) {
-  int i;
+void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
+  int i, row, col;
   Shot shot;
   for (i = 0; i < max_shots; i++) {
     if (type == spaceship_laser) {
       shot.x = SPACESHIP_START_X;
       shot.y = SPACESHIP_START_Y;
     } else if (type == alien_bomb) {
-      
+      shot.x = armada->aliens[0][0].x;
+      shot.y = armada->aliens[0][0].y;
     }
+
     shot.type = type;
     shot.is_active = false;
     shot.is_out_of_bounds = false;
@@ -237,7 +240,7 @@ bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
   int x_start = spaceship->x;
   int x_end = spaceship->x + 16;
 
-  return spaceship->y == bomb->y && in_range(x_start, x_end, bomb->x); 
+  return bomb->y >= spaceship->y && in_range(x_start, x_end, bomb->x); 
 
 }
 

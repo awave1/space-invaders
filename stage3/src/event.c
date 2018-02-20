@@ -87,8 +87,10 @@ void on_bomb_hit_player(Model* model) {
   /* todo: end game function */
   int i;
   for (i = 0; i < model->armada.shot_count; i++) {
-    if (bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
+    if (model->armada.shots[i].is_active && bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
       model->player.is_alive = false;
+      on_game_over(model);
+      break;
     }
   }
 }

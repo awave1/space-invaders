@@ -75,7 +75,11 @@ void game_loop(char choice) {
       break;
     case 'e':
       printf("testing enemy-player shot collision\n");
+      /* simulate shot */
       model->armada.shots[0].is_active = true;
+      model->armada.shot_count = 1;
+
+      model->player.x = model->armada.aliens[0][0].x;
 
       while (!model->is_game_over) {
         if (Cconis()) {
@@ -85,6 +89,10 @@ void game_loop(char choice) {
           on_spaceship_move(&model->player, input_key);
         }
         on_bomb_move(model);
+        on_bomb_hit_player(model);
+        if (!model->player.is_alive) {
+          printf("player alive? %s\n", model->player.is_alive == true ? "true" : "false");
+        }
       }
       break;
   }

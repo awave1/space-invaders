@@ -83,7 +83,7 @@ void init_armada(Armada *armada);
 void move_shot(Shot* shot);
 void shot_hit_alien(Shot* player_shot, Alien* alien);
 void shot_hit_player(Shot* player_shot, Spaceship* alien);
-void init_shots(Shot shots[], shot_t type, int max_shots);
+void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
 
 bool laser_collides_with_alien(Alien* alien, Shot* laser);
 bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
