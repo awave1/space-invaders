@@ -1,5 +1,5 @@
 #include "include/event.h"
-
+#include <stdarg.h>
 /*
  * basic spaceship movement
  */
@@ -21,28 +21,50 @@ void on_spaceship_move(Spaceship* spaceship, unsigned long key) {
 /*
  * todo: not sure if anything else supposed to be here
  */
-void on_armada_move(Model* model) {
-  move_armada(model);
+void on_armada_move(Model* model, bool can_move) {
+  if (can_move)
+    move_armada(model);
 
-  if (EVENT_DEBUG) {
-    _log_event("on_armada_move", "event: armada top: %d,%d, bottom: %d,%d\n", 
+  if (EVENT_DEBUG && can_move) {
+    printf("on_armada_move\n");
+    printf("event: armada top: %d,%d, bottom: %d,%d\n", 
             model->armada.top_left_x, model->armada.top_left_y, model->armada.bottom_right_x, model->armada.bottom_right_y);
   }
 }
 
-void on_laser_move(Shot *laser) {
-  if (laser->is_active)
-    move_shot(laser);
+void on_laser_move(Model *model) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    if (model->player.shots[i].is_active)
+      move_shot(&model->player.shots[i]);
+  }
 }
 
-void on_bomb_move(Shot *bomb) {
-  move_shot(bomb);
+void on_bomb_move(Model *model) {
+  int i;
+  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+    if (model->armada.shots[i].is_active) {
+      move_shot(&model->armada.shots[i]);
+    }
+  }
 }
 
-void on_laser_hit_alien(Shot *laser, Alien *alien) {
-  if (laser_collides_with_alien(alien, laser)) {
-    laser->is_active = false;
-    alien->is_alive = false;
+void on_laser_hit_alien(Model *model) {
+  int i, row, col;
+  bool collided = false;
+  for (i = 0; i < model->player.shot_count && !collided; i++) {
+    for (row = 0; row < ALIENS_ROWS && !collided; row++) {
+      for (col = 0; col < ALIENS_COLS && !collided; col++) {
+        if (laser_collides_with_alien(&model->armada.aliens[row][col], &model->player.shots[i])) {
+          destroy_alien(&model->armada.aliens[row][col], &model->player.shots[i], &model->armada);
+          if (EVENT_DEBUG) {
+            printf("destroyed (on screen): %d, %d\n", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
+            printf("alien count: %d\n", model->armada.alive_count);
+            collided = true;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -61,10 +83,15 @@ void on_bomb_hit_boundary(Shot *bomb) {
   }
 }
 
-void on_bomb_hit_player(Spaceship *spaceship, Shot *bomb) {
+void on_bomb_hit_player(Model* model) {
   /* todo: end game function */
-  if (bomb_collides_with_spaceship(spaceship, bomb)) {
-    spaceship->is_alive = false;
+  int i;
+  for (i = 0; i < model->armada.shot_count; i++) {
+    if (model->armada.shots[i].is_active && bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
+      model->player.is_alive = false;
+      on_game_over(model);
+      break;
+    }
   }
 }
 
@@ -84,14 +111,3 @@ void on_game_pause(Model* model) {
 void on_game_over(Model* model) {
   game_over(model);
 }
-
-void _log_event(const char* event_name, const char* message, ...) {
-  va_list argptr;
-  va_start(message, argptr);
-  if (EVENT_DEBUG) {
-    printf("EVENT: %s\n", event_name);
-    printf(message, argptr);
-    printf("\n");
-  }
-}
-

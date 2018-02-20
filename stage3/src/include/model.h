@@ -44,6 +44,7 @@ typedef struct Armada {
   int bottom_right_y;
   direction_t move_direction;
   Shot shots[ALIEN_MAX_BOMBS];
+  int alive_count;
   int shot_count;
 } Armada;
 
@@ -71,6 +72,7 @@ void set_spaceship_x(Spaceship* spaceship, uint16 x);
 
 /* alien functions */
 void alien_collide(Alien *alien);
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada);
 
 /* armada functions */
 void move_armada(Model* model);
@@ -81,7 +83,7 @@ void init_armada(Armada *armada);
 void move_shot(Shot* shot);
 void shot_hit_alien(Shot* player_shot, Alien* alien);
 void shot_hit_player(Shot* player_shot, Spaceship* alien);
-void init_shots(Shot shots[], shot_t type, int max_shots);
+void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
 
 bool laser_collides_with_alien(Alien* alien, Shot* laser);
 bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
@@ -98,5 +100,7 @@ void pause_game(Model* model);
 void resume_game(Model* model);
 
 void _log_model(const char* model_name, const char* message, ...);
+
+bool in_range(unsigned int low, unsigned int high, unsigned int x);
 
 #endif /* SPACE_INVADERS_MODEL_H */
