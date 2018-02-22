@@ -112,7 +112,7 @@ void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height) {
   int i = 0;
   uint16 *location = base + (y * 40) + (x >> 4);
   for (i = 0; i < height; i++) {
-    *location |= *(bitmap++);
+    *location &= *(bitmap++);
     location += 40;
   }
 }
@@ -163,11 +163,20 @@ void print_num(uint8 *base, int x, int y, uint16 num) {
 /*
  * Clear screen (each longword (640 / 32) portion of the screen) 
  */
-void clear_screen(uint32 *base) {
+
+void _clear_screen(uint32 *base, bool inverse) {
   int x, y;
   for (x = 0; x < 20; x++) {
     for (y = 0; y < 399; y++) {
-      *(base + (y * 20) + x) = 0x0000;
+      *(base + (y * 20) + x) = !inverse ? 0x00000000 : 0xffffffff;
     }
   }
+}
+
+void clear_screen(uint32 *base) {
+  _clear_screen(base, false);
+}
+
+void clear_screen__inverse(uint32 *base) {
+  _clear_screen(base, true);
 }
