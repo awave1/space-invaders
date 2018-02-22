@@ -102,6 +102,12 @@ void game_loop(char choice) {
 
 int main(int argc, char** argv) {
   char *s;
+
+  /*
+   * Read only single char after dash
+   *   For example: <exe_name> <args>, where arguement can be -a or -ab
+   *    only 'a' will be read or in second case first a then b will be read 
+   */
   while (--argc > 0 && (*++argv)[0] == '-') {
     for(s = argv[0]+1; *s != '\0'; s++)
       game_loop(*s);
