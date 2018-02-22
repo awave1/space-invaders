@@ -112,7 +112,7 @@ void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height) {
   int i = 0;
   uint16 *location = base + (y * 40) + (x >> 4);
   for (i = 0; i < height; i++) {
-    *location |= *(bitmap++);
+    *location &= *(bitmap++);
     location += 40;
   }
 }
