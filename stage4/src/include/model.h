@@ -34,6 +34,7 @@ typedef struct Alien {
     int y;
     int score_val;
     bool is_alive;
+    uint16* bitmap[SPRITE_HEIGHT];
 } Alien;
 
 typedef struct Armada {

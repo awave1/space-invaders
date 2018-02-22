@@ -176,10 +176,6 @@ void init_armada(Armada *armada) {
 
   }
 
-  /* 
-   * shitcode, but works 
-   * todo: reformat
-   */
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 

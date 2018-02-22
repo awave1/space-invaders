@@ -41,12 +41,14 @@
 #define ALIENS_START_X 195
 #define ALIENS_START_Y 40
 
+#define SPRITE_HEIGHT 16
+
 /*
  * Scorebox constants
  */
-#define SCOREBOX_P1_X 549
+#define SCOREBOX_P1_X 559
 #define SCOREBOX_P2_X 89
-#define SCOREBOX_Y 40
+#define SCOREBOX_Y 13
 
 const uint32 MAX_SCORE = 9999;
 

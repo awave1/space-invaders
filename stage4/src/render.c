@@ -21,7 +21,17 @@ void render_armada(const Armada *armada, uint16 *base) {
 }
 
 void render_alien(const Alien *alien, uint16 *base) {
-  plot_bitmap_16(base, alien->x, alien->y, alien1_bitmap, 16);
+  switch (alien->score_val) {
+    case ALIEN_A_SCORE:
+      plot_bitmap_16(base, alien->x, alien->y, alien1_bitmap, SPRITE_HEIGHT);
+      break;
+    case ALIEN_B_SCORE:
+      plot_bitmap_16(base, alien->x, alien->y, alien2_bitmap, SPRITE_HEIGHT);
+      break;
+    case ALIEN_C_SCORE:
+      plot_bitmap_16(base, alien->x, alien->y, alien3_bitmap, SPRITE_HEIGHT);
+      break;
+  }
 }
 
 void render_shot(const Shot *shot, uint16 *base) {
