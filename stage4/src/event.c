@@ -26,7 +26,7 @@ void on_armada_move(Model *model) {
   move_armada(model);
 
   if (EVENT_DEBUG) {
-    _log_event("on_armada_move", "event: armada top: %d,%d, bottom: %d,%d\n",
+    printf("event: armada top: %d,%d, bottom: %d,%d\n",
                model->armada.top_left_x, model->armada.top_left_y,
                model->armada.bottom_right_x, model->armada.bottom_right_y);
   }
@@ -86,14 +86,3 @@ void on_game_pause(Model *model) {
 void on_game_over(Model *model) {
   game_over(model);
 }
-
-void _log_event(const char *event_name, const char *message, ...) {
-/*  va_list argptr;
-  va_start(message, argptr);
-  if (EVENT_DEBUG) {
-    printf("EVENT: %s\n", event_name);
-    printf(message, argptr);
-    printf("\n");
-  }*/
-}
-

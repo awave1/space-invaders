@@ -4,14 +4,14 @@
 #include "types.h"
 
 /* event constants */
-#define EVENT_DEBUG true
+#define EVENT_DEBUG false
 #define LEFT_KEY 0x4b
 #define RIGHT_KEY 0x4D
 #define SPACE_KEY 0x39
 
 
 /* model constants */
-#define MODEL_DEBUG true
+#define MODEL_DEBUG false
 
 
 /* 

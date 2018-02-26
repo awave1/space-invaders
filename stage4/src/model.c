@@ -181,7 +181,7 @@ void init_armada(Armada *armada) {
 
   init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
 
-  if (true) {
+  if (MODEL_DEBUG) {
     printf("model: initial positions of aliens:\n");
     for (row = 0; row < ALIENS_ROWS; row++) {
       for (col = 0; col < ALIENS_COLS; col++) {
@@ -280,15 +280,3 @@ void game_over(Model *model) {
   model->is_game_over = true;
   model->is_playing = false;
 }
-
-void _log_model(const char *model_name, const char *message, ...) {
-/*  va_list argptr;
-  va_start(message, argptr);
-
-  if (MODEL_DEBUG) {
-    printf("MODEL: %s\n", model_name);
-    printf(message, argptr);
-    printf("\n");
-  }*/
-}
-
