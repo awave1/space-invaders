@@ -52,5 +52,8 @@
 
 #define MAX_SCORE 9999
 
+/* System Constants */
+#define SYSTEM_CLOCK 0x462
+
 #endif /* CONSTANTS_H */
 

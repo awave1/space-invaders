@@ -88,6 +88,7 @@ void print_num(uint8 *base, int x, int y, uint16 num);
 /*
  * Clears the entire screen
  */
+void _clear_screen(uint32 *base, bool inverse);
 void clear_screen(uint32 *base);
-
+void clear_screen__inverse(uint32 *base);
 #endif

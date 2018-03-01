@@ -8,6 +8,7 @@
         "font.h": "c",
         "sprites.h": "c",
         "types.h": "c",
-        "const.h": "c"
+        "const.h": "c",
+        "space.h": "c"
     }
 }

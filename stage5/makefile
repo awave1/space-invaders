@@ -4,7 +4,7 @@ EXE_NAME=space
 $(EXE_NAME).tos: $(OBJ_FILES)
 	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
-bin\space.o: src\space.c src\include\model.h src\include\event.h src\include\render.h
+bin\space.o: src\space.c src\include\space.h
 	cc68x -g -c src\space.c -o bin\space.o
 
 bin\event.o: src\event.c src\include\event.h src\include\const.h
@@ -24,6 +24,3 @@ bin\sprites.o: src\sprites.c src\include\sprites.h
 
 bin\font.o: src\font.c src\include\font.h
 	cc68x -g -c src\font.c -o bin\font.o
-
-bin\rast_asm.o: src\rast_asm.s
-	gen -D -L2 src\rast_asm.s -obin\rast_asm.o

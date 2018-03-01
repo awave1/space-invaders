@@ -1,8 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <osbind.h>
 #include "model.h"
-
 
 void on_spaceship_move(Spaceship *spaceship, unsigned long key);
 
@@ -28,6 +28,10 @@ void on_game_start(Model *model);
 void on_game_pause(Model *model);
 
 void on_game_over(Model *model);
+
+bool has_user_input();
+
+unsigned long get_user_input();
 
 #endif /* EVENT_H */
 

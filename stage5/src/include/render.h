@@ -5,7 +5,6 @@
 
 #include "model.h"
 #include "event.h"
-#include "bitmap.h"
 #include "raster.h"
 #include "font.h"
 #include "sprites.h"

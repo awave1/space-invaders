@@ -85,3 +85,11 @@ void on_game_pause(Model *model) {
 void on_game_over(Model *model) {
   game_over(model);
 }
+
+bool has_user_input() {
+  return Cconis();
+}
+
+unsigned long get_user_input() {
+  return Cnecin() >> 16;
+}
