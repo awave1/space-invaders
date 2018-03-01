@@ -1,11 +1,11 @@
-OBJ_FILES=bin\stage4.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o
-EXE_NAME=stage4
+OBJ_FILES=bin\space.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o
+EXE_NAME=space
 
 $(EXE_NAME).tos: $(OBJ_FILES)
 	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
-bin\stage4.o: src\stage4.c src\include\model.h src\include\event.h src\include\render.h
-	cc68x -g -c src\stage4.c -o bin\stage4.o
+bin\space.o: src\space.c src\include\model.h src\include\event.h src\include\render.h
+	cc68x -g -c src\space.c -o bin\space.o
 
 bin\event.o: src\event.c src\include\event.h src\include\const.h
 	cc68x -g -c src\event.c -o bin\event.o

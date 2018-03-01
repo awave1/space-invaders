@@ -50,7 +50,7 @@
 #define SCOREBOX_P2_X 89
 #define SCOREBOX_Y 13
 
-const uint32 MAX_SCORE = 9999;
+#define MAX_SCORE 9999
 
 #endif /* CONSTANTS_H */
 

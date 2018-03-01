@@ -1,4 +1,3 @@
-#include <varargs.h>
 #include "include/event.h"
 
 /*

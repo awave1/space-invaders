@@ -1,9 +1,9 @@
 #include "include/render.h"
 
-void render(Model *model, uint16 *base) {
-  render_spaceship(&model->player, base);
-  render_armada(&model->armada, base);
-  render_scoreboard(&model->scorebox, base);
+void render(Model *model, void* base) {
+  render_spaceship(&model->player, (uint16*) base);
+  render_armada(&model->armada, (uint16*) base);
+  render_scoreboard(&model->scorebox, (uint8*) base);
 }
 
 void render_spaceship(const Spaceship *spaceship, uint16 *base) {
@@ -34,14 +34,14 @@ void render_alien(const Alien *alien, uint16 *base) {
   }
 }
 
-void render_shot(const Shot *shot, uint16 *base) {
+void render_shot(const Shot *shot, uint8 *base) {
   if (shot->is_active) {
     plot_rectangle(base, shot->x, shot->y, 2, 4);
   }
 }
 
 /*change base size if sprite different*/
-void render_scoreboard(const Scorebox *scorebox, uint16 *base) {
+void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
   print_num(base, scorebox->x, scorebox->y, scorebox->score);
 }
 

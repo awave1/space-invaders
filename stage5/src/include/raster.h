@@ -2,6 +2,8 @@
 #define RASTER_H
 
 #include "types.h"
+#include "font.h"
+
 /*
  * For each function you develop, write a short header block comment which specifies:
 1. its purpose, from the caller’s perspective (if not perfectly clear from the name);

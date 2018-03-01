@@ -1,5 +1,13 @@
 {
     "files.associations": {
-        "bitmap.h": "c"
+        "bitmap.h": "c",
+        "render.h": "c",
+        "raster.h": "c",
+        "event.h": "c",
+        "model.h": "c",
+        "font.h": "c",
+        "sprites.h": "c",
+        "types.h": "c",
+        "const.h": "c"
     }
 }

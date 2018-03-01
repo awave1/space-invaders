@@ -1,16 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <osbind.h>
-#include <stdio.h>
 #include "model.h"
-#include "types.h"
-#include "const.h"
-
-/* 
- * note: these are temporary, todo: need to figure out how to swap
- * so we can get for example instead of 0x004b0000 -> 0x4b
- */
 
 
 void on_spaceship_move(Spaceship *spaceship, unsigned long key);

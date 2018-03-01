@@ -1,5 +1,4 @@
 #include "include/model.h"
-#include <stdio.h>
 
 /*
  * Spaceship functions

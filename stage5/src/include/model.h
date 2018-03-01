@@ -1,6 +1,7 @@
 #ifndef SPACE_INVADERS_MODEL_H
 #define SPACE_INVADERS_MODEL_H
 
+#include <stdio.h>
 #include "const.h"
 #include "types.h"
 
