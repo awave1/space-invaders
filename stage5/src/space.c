@@ -26,8 +26,8 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     on_armada_move(model);
-    clear_screen__inverse(base);
     /* clear_region() */
+    render_armada(&model->armada, base);
     time_then = time_now;
   }
 }

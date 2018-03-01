@@ -23,7 +23,7 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
  */
 void on_armada_move(Model *model) {
   move_armada(model);
-
+  
   if (EVENT_DEBUG) {
     printf("event: armada top: %d,%d, bottom: %d,%d\n",
                model->armada.top_left_x, model->armada.top_left_y,

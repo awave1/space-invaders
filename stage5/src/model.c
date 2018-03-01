@@ -95,23 +95,24 @@ void alien_shoot(Armada *armada) {
 void move_armada(Model *model) {
   Armada *armada = &model->armada;
 
-  int new_bottom_right_x__right = armada->bottom_right_x + 2;
-  int new_top_left_x__right = armada->top_left_x + 2;
+  int new_bottom_right_x__right = armada->bottom_right_x + ALIEN_SPEED_X;
+  int new_top_left_x__right = armada->top_left_x + ALIEN_SPEED_X;
 
-  int new_bottom_right_x__left = armada->bottom_right_x - 2;
-  int new_top_left_x__left = armada->top_left_x - 2;
+  int new_bottom_right_x__left = armada->bottom_right_x - ALIEN_SPEED_X;
+  int new_top_left_x__left = armada->top_left_x - ALIEN_SPEED_X;
 
-  int new_bottom_right_y = armada->bottom_right_y + 16;
-  int new_top_left_y = armada->top_left_y + 16;
+  int new_bottom_right_y = armada->bottom_right_y + ALIEN_SPEED_Y;
+  int new_top_left_y = armada->top_left_y + ALIEN_SPEED_Y;
 
   switch (armada->move_direction) {
     case right:
       if (new_bottom_right_x__right < SCREEN_WIDTH) {
+        _update_alien_pos(&model->armada, right);
         armada->bottom_right_x = new_bottom_right_x__right;
         armada->top_left_x = new_top_left_x__right;
       } else {
-
-        if (new_bottom_right_y >= 400) {
+        _update_alien_pos(&model->armada, down);
+        if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
 
@@ -119,14 +120,15 @@ void move_armada(Model *model) {
         armada->top_left_y = new_top_left_y;
         armada->move_direction = left;
       }
-          break;
+      break;
     case left:
       if (new_top_left_x__left >= 0) {
+        _update_alien_pos(&model->armada, left);
         armada->bottom_right_x = new_bottom_right_x__left;
         armada->top_left_x = new_top_left_x__left;
       } else {
-
-        if (new_bottom_right_y >= 400) {
+        _update_alien_pos(&model->armada, down);
+        if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
 
@@ -134,9 +136,24 @@ void move_armada(Model *model) {
         armada->top_left_y = new_top_left_y;
         armada->move_direction = right;
       }
-          break;
+      break;
     default:
       break;
+  }
+}
+
+
+void _update_alien_pos(Armada* armada, direction_t direction) {
+  int row, col;
+  for (row = 0; row < ALIENS_ROWS; row++) {
+    for (col = 0; col < ALIENS_COLS; col++) {
+      if (direction == right)
+        armada->aliens[row][col].x += ALIEN_SPEED_X;
+      else if (direction == left)
+        armada->aliens[row][col].x -= ALIEN_SPEED_X;
+      else if (direction == down)
+        armada->aliens[row][col].y += ALIEN_SPEED_Y;
+    }
   }
 }
 

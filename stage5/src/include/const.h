@@ -19,7 +19,7 @@
  */
 #define SPACESHIP_START_X 312
 #define SPACESHIP_START_Y 368
-#define SPACESHIP_LASER_SPEED 4
+#define SPACESHIP_LASER_SPEED 16
 #define SPACESHIP_MOVE_SPEED 5
 #define SPACESHIP_MAX_LASERS 1
 
@@ -34,10 +34,11 @@
 #define ALIEN_C_SCORE 30
 #define ALIEN_BOMB_SPEED 6
 #define ALIEN_MAX_BOMBS 3
+#define ALIEN_SPEED_X 2
+#define ALIEN_SPEED_Y 4
 
 /* alien box size (not hitbox but space box) */
 #define ALIEN_BOX_SIZE 32
-
 #define ALIENS_START_X 195
 #define ALIENS_START_Y 40
 

@@ -81,6 +81,7 @@ void alien_collide(Alien *alien);
 void move_armada(Model *model);
 void alien_shoot(Armada *armada);
 void init_armada(Armada *armada);
+void _update_alien_pos(Armada* armada, direction_t direction);
 
 /* shot functions */
 void move_shot(Shot *shot);
