@@ -26,7 +26,7 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     on_armada_move(model);
-    /* clear_region() */
+    clear_region(base, model->player.x, model->player.y, 16, 16);
     render_armada(&model->armada, base);
     time_then = time_now;
   }
@@ -46,7 +46,6 @@ void game_loop() {
 
   while (!model.is_game_over) {
     process_async_events(&model, base);
-    process_sync_events(&model, base);
   }
 }
 
