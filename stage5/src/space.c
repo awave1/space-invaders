@@ -18,6 +18,7 @@ void process_async_events(Model* model, void* base) {
 
   if (has_user_input()) {
     input = get_user_input();
+    clear_region(base, model->player.x, model->player.y, 16, 16);
     on_spaceship_move(&model->player, input);
     render_spaceship(&model->player, base);
   }
@@ -50,7 +51,7 @@ void game_loop() {
 
   while (!model.is_game_over) {
     process_async_events(&model, base);
-    process_sync_events(&model, base);
+    /* process_sync_events(&model, base); */
   }
 }
 

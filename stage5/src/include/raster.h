@@ -91,5 +91,7 @@ void print_num(uint8 *base, int x, int y, uint16 num);
 void _clear_screen(uint32 *base, bool inverse);
 void clear_screen(uint32 *base);
 void clear_screen__inverse(uint32 *base);
-void clear_region(void *base, int x, int y, int width, int height);
+
+void clear_region(uint16 *base, int x, int y, int width, int height);
+void clear_hline(uint16 *base, int x, int y, int width);
 #endif

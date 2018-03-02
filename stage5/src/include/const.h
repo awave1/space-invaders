@@ -55,6 +55,7 @@
 
 /* System Constants */
 #define SYSTEM_CLOCK 0x462
+#define SCREEN_BUFFER_SIZE 32825
 
 #endif /* CONSTANTS_H */
 

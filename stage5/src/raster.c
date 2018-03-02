@@ -179,3 +179,21 @@ void clear_screen(uint32 *base) {
 void clear_screen__inverse(uint32 *base) {
   _clear_screen(base, true);
 }
+
+void clear_region(uint16* base, int x, int y, int width, int height) {
+  int i, j;
+  uint16* draw = base;
+  for (i = 0; i < height; i++) {
+    clear_hline(draw, x, y, width);
+    draw += 40;
+  }
+}
+
+void clear_hline(uint16 *base, int x, int y, int width) {
+  int i = 0;
+  int x_count = width >> 3;
+  uint8 *draw = base + (y * 40) + (x >> 4);
+
+  for (i = 0; i < x_count; i++)
+    *(draw++) = 0xffff;
+}

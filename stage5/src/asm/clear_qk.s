@@ -1,3 +1,7 @@
+; Author: Mark
+; 
+; Note: this file was modified to fill fill screen with black color
+; 
 ; quick clear (uses movem to reduce fetch-execute cycle overhead)
 ;
 ; takes about half the number of clock cycles as the code in clear.s, and
