@@ -42,6 +42,7 @@
 #define ALIENS_START_X 195
 #define ALIENS_START_Y 40
 
+#define SPRITE_SIZE 16
 #define SPRITE_HEIGHT 16
 
 /*

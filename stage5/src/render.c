@@ -7,7 +7,7 @@ void render(Model *model, void* base) {
 }
 
 void render_spaceship(const Spaceship *spaceship, uint16 *base) {
-  plot_bitmap_16(base, spaceship->x, spaceship->y, spaceship_bitmap, 16);
+  plot_bitmap_16(base, spaceship->x, spaceship->y, spaceship_bitmap, SPRITE_SIZE);
 }
 
 void render_armada(const Armada *armada, uint16 *base) {
@@ -23,13 +23,13 @@ void render_armada(const Armada *armada, uint16 *base) {
 void render_alien(const Alien *alien, uint16 *base) {
   switch (alien->score_val) {
     case ALIEN_A_SCORE:
-      plot_bitmap_16(base, alien->x, alien->y, alien1_bitmap, SPRITE_HEIGHT);
+      plot_bitmap_16(base, alien->x, alien->y, alien1_bitmap, SPRITE_SIZE);
       break;
     case ALIEN_B_SCORE:
-      plot_bitmap_16(base, alien->x, alien->y, alien2_bitmap, SPRITE_HEIGHT);
+      plot_bitmap_16(base, alien->x, alien->y, alien2_bitmap, SPRITE_SIZE);
       break;
     case ALIEN_C_SCORE:
-      plot_bitmap_16(base, alien->x, alien->y, alien3_bitmap, SPRITE_HEIGHT);
+      plot_bitmap_16(base, alien->x, alien->y, alien3_bitmap, SPRITE_SIZE);
       break;
   }
 }

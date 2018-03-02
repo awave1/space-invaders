@@ -6,7 +6,7 @@ void clear_aliens(Armada* armada, uint16* base) {
     for (j = 0; j < ALIENS_COLS; j++) {
       x = armada->aliens[i][j].x;
       y = armada->aliens[i][j].y;
-      clear_region(base, x, y, 16, 16);
+      clear_region(base, x, y, SPRITE_SIZE, SPRITE_SIZE);
     }
   }
 }
@@ -29,7 +29,7 @@ void process_async_events(Model* model, void* base) {
 
   if (has_user_input()) {
     input = get_user_input();
-    clear_region(base, model->player.x, model->player.y, 16, 16);
+    clear_region(base, model->player.x, model->player.y, SPRITE_SIZE, SPRITE_SIZE);
     on_spaceship_move(&model->player, input);
     render_spaceship(&model->player, base);
   }
