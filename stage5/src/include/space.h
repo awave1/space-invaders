@@ -39,4 +39,6 @@ long get_time();
  */
 void disable_cursor();
 
+void clear_aliens(Armada* armada, uint16* base);
+
 #endif /* SPACE_INVADERS_GAME */

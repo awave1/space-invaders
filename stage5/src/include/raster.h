@@ -92,6 +92,14 @@ void _clear_screen(uint32 *base, bool inverse);
 void clear_screen(uint32 *base);
 void clear_screen__inverse(uint32 *base);
 
-void clear_region(uint16 *base, int x, int y, int width, int height);
-void clear_hline(uint16 *base, int x, int y, int width);
+void clear_region(void *base, int x, int y, int width, int height);
+void clear_region_8(uint8 *base, int x, int y, int width, int height);
+void clear_region_16(uint16 *base, int x, int y, int width, int height);
+void clear_region_32(uint32 *base, int x, int y, int width, int height);
+
+void clear_hline(void *base, int x, int y, int width);
+
+void clear_hline_8(uint8 *base, int x, int y, int width);
+void clear_hline_16(uint16 *base, int x, int y, int width);
+void clear_hline_32(uint32 *base, int x, int y, int width);
 #endif

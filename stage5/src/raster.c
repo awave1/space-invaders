@@ -180,7 +180,26 @@ void clear_screen__inverse(uint32 *base) {
   _clear_screen(base, true);
 }
 
-void clear_region(uint16* base, int x, int y, int width, int height) {
+void clear_region(void* base, int x, int y, int width, int height) {
+  if (width <= 8)
+    clear_region_8(base, x, y, width, height);
+  else if (width <= 16)
+    clear_region_16(base, x, y, width, height);
+  else
+    clear_region_32(base, x, y, width, height);
+
+}
+
+void clear_region_8(uint8* base, int x, int y, int width, int height) {
+  int i, j;
+  uint8* draw = base;
+  for (i = 0; i < height; i++) {
+    clear_hline(draw, x, y, width);
+    draw += 80;
+  }
+}
+
+void clear_region_16(uint16* base, int x, int y, int width, int height) {
   int i, j;
   uint16* draw = base;
   for (i = 0; i < height; i++) {
@@ -189,11 +208,47 @@ void clear_region(uint16* base, int x, int y, int width, int height) {
   }
 }
 
-void clear_hline(uint16 *base, int x, int y, int width) {
+void clear_region_32(uint32* base, int x, int y, int width, int height) {
+  int i, j;
+  uint32* draw = base;
+  for (i = 0; i < height; i++) {
+    clear_hline(draw, x, y, width);
+    draw += 20;
+  }
+}
+
+void clear_hline(void* base, int x, int y, int width) {
+  if (width <= 8)
+    clear_hline_8(base, x, y, width);
+  else if (width <= 16)
+    clear_hline_16(base, x, y, width);
+  else
+    clear_hline_32(base, x, y, width);
+}
+
+void clear_hline_8(uint8* base, int x, int y, int width) {
   int i = 0;
   int x_count = width >> 3;
-  uint8 *draw = base + (y * 40) + (x >> 4);
+  uint8 *draw = base + (y * 80) + (x >> 3);
+
+  for (i = 0; i < x_count; i++)
+    *(draw++) = 0xff;
+}
+
+void clear_hline_16(uint16* base, int x, int y, int width) {
+  int i = 0;
+  int x_count = width >> 4;
+  uint16* draw = base + (y * 40) + (x >> 4);
 
   for (i = 0; i < x_count; i++)
     *(draw++) = 0xffff;
+}
+
+void clear_hline_32(uint32* base, int x, int y, int width) {
+  int i = 0;
+  int x_count = width >> 5;
+  uint32* draw = base + (y * 20) + (x >> 5);
+
+  for (i = 0; i < x_count; i++)
+    *(draw++) = 0xffffffff;
 }

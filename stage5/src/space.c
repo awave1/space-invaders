@@ -1,5 +1,16 @@
 #include "include/space.h"
 
+void clear_aliens(Armada* armada, uint16* base) {
+  int i, j, x, y;
+  for (i = 0; i < ALIENS_ROWS; i++) {
+    for (j = 0; j < ALIENS_COLS; j++) {
+      x = armada->aliens[i][j].x;
+      y = armada->aliens[i][j].y;
+      clear_region(base, x, y, 16, 16);
+    }
+  }
+}
+
 long get_time() {
   long* timer = (long*) SYSTEM_CLOCK;
   long old_ssp = Super(0);
@@ -30,6 +41,7 @@ void process_sync_events(Model* model, void* base) {
   time_now = get_time();
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
+    clear_aliens(&model->armada, base);
     on_armada_move(model);
     render_armada(&model->armada, base);
     time_then = time_now;
@@ -51,7 +63,7 @@ void game_loop() {
 
   while (!model.is_game_over) {
     process_async_events(&model, base);
-    /* process_sync_events(&model, base); */
+    process_sync_events(&model, base);
   }
 }
 

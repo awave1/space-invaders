@@ -195,6 +195,9 @@ void init_armada(Armada *armada) {
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 
+  armada->width = (armada->bottom_right_x + 16) - armada->top_left_x;
+  armada->height = (armada->bottom_right_y + 16) - armada->top_left_y;;
+
   init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
 
   if (MODEL_DEBUG) {

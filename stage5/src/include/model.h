@@ -40,6 +40,8 @@ typedef struct Alien {
 
 typedef struct Armada {
     Alien aliens[ALIENS_ROWS][ALIENS_COLS];
+    int width;
+    int height;
     int top_left_x;
     int top_left_y;
     int bottom_right_x;
