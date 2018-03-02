@@ -38,7 +38,7 @@ void process_sync_events(Model* model, void* base) {
 void setup_game(Model* model, void* base) {
   disable_cursor();
   on_game_start(model);
-  clear_screen__inverse(base);
+  clear_qk(base);
   render(model, base);
 }
 

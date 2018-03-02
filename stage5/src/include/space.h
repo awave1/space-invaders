@@ -6,6 +6,7 @@
 #include "model.h"
 #include "event.h"
 #include "render.h"
+#include "clear_qk.h"
 
 
 /*
@@ -34,7 +35,7 @@ void setup_game(Model* model, void* base);
 long get_time();
 
 /*
- *
+ * TODO: Documentation
  */
 void disable_cursor();
 
