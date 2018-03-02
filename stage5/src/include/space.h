@@ -7,10 +7,6 @@
 #include "event.h"
 #include "render.h"
 
-/*
- * TODO: Documentation
- */
-long get_time();
 
 /*
  * TODO: Documentation
@@ -31,5 +27,15 @@ void process_sync_events(Model* model, void* base);
  * TODO: Documentation
  */
 void setup_game(Model* model, void* base);
+
+/*
+ * TODO: Documentation
+ */
+long get_time();
+
+/*
+ *
+ */
+void disable_cursor();
 
 #endif /* SPACE_INVADERS_GAME */
