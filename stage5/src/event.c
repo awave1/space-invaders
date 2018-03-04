@@ -35,7 +35,7 @@ void on_laser_move(Model *model) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (model->player.shots[i].is_active)
-      move_shot(&model->player.shots[i]);
+      move_shot(&model->player.shots[i], model);
   }
 }
 
@@ -43,7 +43,7 @@ void on_bomb_move(Model *model) {
   int i;
   for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
     if (model->armada.shots[i].is_active) {
-      move_shot(&model->armada.shots[i]);
+      move_shot(&model->armada.shots[i], model);
     }
   }
 }

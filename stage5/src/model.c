@@ -37,12 +37,6 @@ void spaceship_shoot(Spaceship *spaceship) {
         spaceship->shot_count += 1;
       }
     }
-
-    if (spaceship->shots[i].is_out_of_bounds) {
-      spaceship->shots[i].is_out_of_bounds = false;
-      spaceship->shot_count--;
-      spaceship->shots[i].y = SPACESHIP_START_Y;
-    }
   }
 }
 
@@ -70,9 +64,6 @@ void alien_shoot(Armada *armada) {
         armada->shot_count++;
       }
     }
-
-    if (armada->shots[i].is_active)
-      move_shot(&armada->shots[i]);
 
     if (armada->shots[i].is_out_of_bounds) {
       armada->shots[i].is_out_of_bounds = false;
@@ -174,6 +165,7 @@ void init_armada(Armada *armada) {
   armada->top_left_x = ALIENS_START_X;
   armada->top_left_y = ALIENS_START_Y;
   armada->move_direction = right;
+  armada->alive_count = 0;
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
@@ -193,14 +185,14 @@ void init_armada(Armada *armada) {
       alien_score = ALIEN_B_SCORE;
     else
       alien_score = ALIEN_A_SCORE;
-
   }
 
   armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
   armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
 
   armada->width = (armada->bottom_right_x + 16) - armada->top_left_x;
-  armada->height = (armada->bottom_right_y + 16) - armada->top_left_y;;
+  armada->height = (armada->bottom_right_y + 16) - armada->top_left_y;
+  armada->alive_count = ALIENS_NUM_OF_ALIENS;
 
   init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
 
@@ -221,7 +213,7 @@ void init_armada(Armada *armada) {
 /*
  * Shot functions
  */
-void move_shot(Shot *shot) {
+void move_shot(Shot *shot, Model* model) {
   if (shot->type == spaceship_laser)
     shot->y -= SPACESHIP_LASER_SPEED;
   else if (shot->type == alien_bomb)
@@ -229,7 +221,7 @@ void move_shot(Shot *shot) {
 
   if (shot->y <= 0 || shot->y >= SCREEN_HEIGHT) {
     shot->is_active = false;
-    shot->is_out_of_bounds = true;
+    model->player.shot_count -= 1;
   }
 
   if (MODEL_DEBUG) {

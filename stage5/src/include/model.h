@@ -80,7 +80,7 @@ void alien_shoot(Armada *armada);
 void init_armada(Armada *armada);
 
 /* shot functions */
-void move_shot(Shot* shot);
+void move_shot(Shot* shot, Model* model);
 void shot_hit_alien(Shot* player_shot, Alien* alien);
 void shot_hit_player(Shot* player_shot, Spaceship* alien);
 void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);

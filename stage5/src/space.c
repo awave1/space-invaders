@@ -45,12 +45,13 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     clear_aliens(&model->armada, base);
-    clear_region(base, model->player.shots[0].x, model->player.shots[0].y, 8, 8);
+    
+    if (model->player.shots[0].is_active)
+      clear_region(base, model->player.shots[0].x, model->player.shots[0].y, 8, 8);
 
     /* on_armada_move(model); */
     on_laser_hit_alien(model);
     on_laser_move(model);
-
 
     render_armada(&model->armada, base);
     render_shot(&model->player.shots[0], base);
