@@ -64,6 +64,8 @@ void on_laser_hit_alien(Model *model) {
           model->player.shots[i].x = model->player.y;
           model->player.shot_count -= 1;
 
+          update_scorebox(&model->scorebox, model->armada.aliens[row][col].score_val);
+
           collided = true;
 
           if (EVENT_DEBUG) {
