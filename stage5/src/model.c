@@ -12,11 +12,11 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
     case left:
       if (in_bounds(spaceship->x - 10, SPACESHIP_START_Y))
         spaceship->x -= SPACESHIP_MOVE_SPEED;
-          break;
+      break;
     case right:
       if (in_bounds(spaceship->x + 10, SPACESHIP_START_Y))
         spaceship->x += SPACESHIP_MOVE_SPEED;
-          break;
+      break;
     default:
       break;
   }
@@ -31,15 +31,12 @@ void spaceship_shoot(Spaceship *spaceship) {
     if (spaceship->shot_count == 0 &&
         spaceship->shot_count < SPACESHIP_MAX_LASERS) {
       if (!spaceship->shots[i].is_active) {
+        spaceship->shots[i].x = spaceship->x - 2;
+        spaceship->shots[i].y = spaceship->y - 8;
         spaceship->shots[i].is_active = true;
         spaceship->shot_count += 1;
       }
     }
-
-/*
-    if (spaceship->shots[i].is_active && !spaceship->shots[i].is_out_of_bounds)
-      move_shot(&spaceship->shots[i]);
-      */
 
     if (spaceship->shots[i].is_out_of_bounds) {
       spaceship->shots[i].is_out_of_bounds = false;
@@ -54,7 +51,7 @@ void init_spaceship(Spaceship *spaceship) {
   spaceship->y = SPACESHIP_START_Y;
   spaceship->shot_count = 0;
   spaceship->is_alive = true;
-  init_shots(spaceship->shots, spaceship_laser, SPACESHIP_MAX_LASERS);
+  init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
 
@@ -84,6 +81,13 @@ void alien_shoot(Armada *armada) {
   } 
 }
 
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
+  if (shot->type == spaceship_laser) {
+    shot->is_active = false;
+    alien->is_alive = false;
+    armada->alive_count -= 1;
+  }
+}
 
 /*
  * Armada functions
@@ -198,7 +202,7 @@ void init_armada(Armada *armada) {
   armada->width = (armada->bottom_right_x + 16) - armada->top_left_x;
   armada->height = (armada->bottom_right_y + 16) - armada->top_left_y;;
 
-  init_shots(armada->shots, alien_bomb, ALIEN_MAX_BOMBS);
+  init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
 
   if (MODEL_DEBUG) {
     printf("model: initial positions of aliens:\n");
@@ -223,7 +227,7 @@ void move_shot(Shot *shot) {
   else if (shot->type == alien_bomb)
     shot->y += ALIEN_BOMB_SPEED;
 
-  if (shot->y == 0 || shot->y >= SCREEN_HEIGHT) {
+  if (shot->y <= 0 || shot->y >= SCREEN_HEIGHT) {
     shot->is_active = false;
     shot->is_out_of_bounds = true;
   }
@@ -233,12 +237,18 @@ void move_shot(Shot *shot) {
   }
 }
 
-void init_shots(Shot shots[], shot_t type, int max_shots) {
-  int i;
+void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
+  int i, row, col;
   Shot shot;
   for (i = 0; i < max_shots; i++) {
-    shot.x = 0;
-    shot.y = SPACESHIP_START_Y;
+    if (type == spaceship_laser) {
+      shot.x = SPACESHIP_START_X;
+      shot.y = SPACESHIP_START_Y - 8;
+    } else if (type == alien_bomb) {
+      shot.x = armada->aliens[0][0].x;
+      shot.y = armada->aliens[0][0].y;
+    }
+
     shot.type = type;
     shot.is_active = false;
     shot.is_out_of_bounds = false;
@@ -246,15 +256,18 @@ void init_shots(Shot shots[], shot_t type, int max_shots) {
   }
 }
 
+bool laser_collides_with_alien(Alien* alien, Shot* laser) {
+  int x_start = alien->x;
+  int x_end = alien->x + 16;
 
-bool laser_collides_with_alien(Alien *alien, Shot *laser) {
-  return laser->type == spaceship_laser && alien->y == laser->y && alien->x &&
-         laser->x;
+  return alien->is_alive && alien->y == laser->y && in_range(x_start, x_end, laser->x);
 }
 
-bool bomb_collides_with_spaceship(Spaceship *spaceship, Shot *bomb) {
-  return bomb->type == alien_bomb && spaceship->y == bomb->y && spaceship->x &&
-         bomb->x;
+bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
+  int x_start = spaceship->x;
+  int x_end = spaceship->x + 16;
+
+  return bomb->y >= spaceship->y && in_range(x_start, x_end, bomb->x); 
 
 }
 
@@ -298,4 +311,8 @@ void pause_game(Model *model) {
 void game_over(Model *model) {
   model->is_game_over = true;
   model->is_playing = false;
+}
+
+bool in_range(unsigned int low, unsigned int high, unsigned int x) {
+  return (low <= x  && x <= high);
 }

@@ -36,7 +36,7 @@ void render_alien(const Alien *alien, uint16 *base) {
 
 void render_shot(const Shot *shot, uint8 *base) {
   if (shot->is_active) {
-    plot_rectangle(base, shot->x, shot->y, 2, 4);
+    plot_rectangle__inverse(base, shot->x, shot->y, 8, 8);
   }
 }
 

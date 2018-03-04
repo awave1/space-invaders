@@ -5,10 +5,6 @@
 #include "const.h"
 #include "types.h"
 
-/*const uint16 *SPACESHIP_BMP;
-const uint16 *ALIEN_A_BMP; *//* 10 point alien *//*
-const uint16 *ALIEN_B_BMP; *//* 20 point alien *//*
-const uint16 *ALIEN_C_BMP; *//* 30 point alien */
 
 typedef struct Shot {
     int x;
@@ -48,6 +44,7 @@ typedef struct Armada {
     int bottom_right_y;
     direction_t move_direction;
     Shot shots[ALIEN_MAX_BOMBS];
+    int alive_count;
     int shot_count;
 } Armada;
 
@@ -67,52 +64,41 @@ typedef struct Model {
 } Model;
 
 /* spaceship functions */
-void move_spaceship(Spaceship *spaceship, direction_t direction);
-
-void spaceship_shoot(Spaceship *spaceship);
-
-void init_spaceship(Spaceship *spaceship);
-
-void set_spaceship_x(Spaceship *spaceship, uint16 x);
+void move_spaceship(Spaceship* spaceship, direction_t direction);
+void spaceship_shoot(Spaceship* spaceship);
+void init_spaceship(Spaceship* spaceship);
+void set_spaceship_x(Spaceship* spaceship, uint16 x);
 
 
 /* alien functions */
 void alien_collide(Alien *alien);
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada);
 
 /* armada functions */
-void move_armada(Model *model);
+void move_armada(Model* model);
 void alien_shoot(Armada *armada);
 void init_armada(Armada *armada);
-void _update_alien_pos(Armada* armada, direction_t direction);
 
 /* shot functions */
-void move_shot(Shot *shot);
+void move_shot(Shot* shot);
+void shot_hit_alien(Shot* player_shot, Alien* alien);
+void shot_hit_player(Shot* player_shot, Spaceship* alien);
+void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
 
-void shot_hit_alien(Shot *player_shot, Alien *alien);
-
-void shot_hit_player(Shot *player_shot, Spaceship *alien);
-void init_shots(Shot shots[], shot_t type, int max_shots);
-
-bool laser_collides_with_alien(Alien *alien, Shot *laser);
-
-bool bomb_collides_with_spaceship(Spaceship *alien, Shot *laser);
+bool laser_collides_with_alien(Alien* alien, Shot* laser);
+bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
 
 /* scorebox functions */
-void set_score(Scorebox *scorebox, uint32 score);
-
-uint32 get_score(Scorebox *scorebox);
-
-void _update_score_text(Scorebox *scorebox);
+void set_score(Scorebox* scorebox, uint32 score);
+uint32 get_score(Scorebox* scorebox);
+void _update_score_text(Scorebox* scorebox);
 
 /* model functions */
-void init_model(Model *model);
+void init_model(Model* model);
+void game_over(Model* model);
+void pause_game(Model* model);
+void resume_game(Model* model);
 
-void game_over(Model *model);
-
-void pause_game(Model *model);
-
-void resume_game(Model *model);
-
-void _log_model(const char *model_name, const char *message, ...);
+bool in_range(unsigned int low, unsigned int high, unsigned int x);
 
 #endif /* SPACE_INVADERS_MODEL_H */

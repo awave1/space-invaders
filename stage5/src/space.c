@@ -6,7 +6,8 @@ void clear_aliens(Armada* armada, uint16* base) {
     for (j = 0; j < ALIENS_COLS; j++) {
       x = armada->aliens[i][j].x;
       y = armada->aliens[i][j].y;
-      clear_region(base, x, y, SPRITE_SIZE, SPRITE_SIZE);
+      if (armada->aliens[i][j].is_alive)
+        clear_region(base, x, y, SPRITE_SIZE, SPRITE_SIZE);
     }
   }
 }
@@ -30,7 +31,9 @@ void process_async_events(Model* model, void* base) {
   if (has_user_input()) {
     input = get_user_input();
     clear_region(base, model->player.x, model->player.y, SPRITE_SIZE, SPRITE_SIZE);
+
     on_spaceship_move(&model->player, input);
+    
     render_spaceship(&model->player, base);
   }
 }
@@ -42,8 +45,16 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     clear_aliens(&model->armada, base);
-    on_armada_move(model);
+    clear_region(base, model->player.shots[0].x, model->player.shots[0].y, 8, 8);
+
+    /* on_armada_move(model); */
+    on_laser_hit_alien(model);
+    on_laser_move(model);
+
+
     render_armada(&model->armada, base);
+    render_shot(&model->player.shots[0], base);
+
     time_then = time_now;
   }
 }

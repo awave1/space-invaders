@@ -31,19 +31,48 @@ void on_armada_move(Model *model) {
   }
 }
 
-void on_laser_move(Shot *laser) {
-  if (laser->is_active)
-    move_shot(laser);
+void on_laser_move(Model *model) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    if (model->player.shots[i].is_active)
+      move_shot(&model->player.shots[i]);
+  }
 }
 
-void on_bomb_move(Shot *bomb) {
-  move_shot(bomb);
+void on_bomb_move(Model *model) {
+  int i;
+  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+    if (model->armada.shots[i].is_active) {
+      move_shot(&model->armada.shots[i]);
+    }
+  }
 }
 
-void on_laser_hit_alien(Shot *laser, Alien *alien) {
-  if (laser_collides_with_alien(alien, laser)) {
-    laser->is_active = false;
-    alien->is_alive = false;
+void on_laser_hit_alien(Model *model) {
+  int i, row, col;
+  bool collided = false;
+  for (i = 0; i < model->player.shot_count && !collided; i++) {
+    for (row = 0; row < ALIENS_ROWS && !collided; row++) {
+      for (col = 0; col < ALIENS_COLS && !collided; col++) {
+        if (model->player.shots[i].is_active && laser_collides_with_alien(&model->armada.aliens[row][col], &model->player.shots[i])) {
+          destroy_alien(&model->armada.aliens[row][col], &model->player.shots[i], &model->armada);
+
+          /* todo: add function to reset shot */
+          model->player.shots[i].is_active = false;
+          model->player.shots[i].is_out_of_bounds = false;
+          model->player.shots[i].x = model->player.x;
+          model->player.shots[i].x = model->player.y;
+          model->player.shot_count -= 1;
+
+          collided = true;
+
+          if (EVENT_DEBUG) {
+            printf("destroyed (on screen): %d, %d\n", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
+            printf("alien count: %d\n", model->armada.alive_count);
+          }
+        }
+      }
+    }
   }
 }
 
@@ -62,10 +91,14 @@ void on_bomb_hit_boundary(Shot *bomb) {
   }
 }
 
-void on_bomb_hit_player(Spaceship *spaceship, Shot *bomb) {
-  /* todo: end game function */
-  if (bomb_collides_with_spaceship(spaceship, bomb)) {
-    spaceship->is_alive = false;
+void on_bomb_hit_player(Model* model) {
+  int i;
+  for (i = 0; i < model->armada.shot_count; i++) {
+    if (model->armada.shots[i].is_active && bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
+      model->player.is_alive = false;
+      on_game_over(model);
+      break;
+    }
   }
 }
 
