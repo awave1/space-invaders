@@ -34,9 +34,12 @@ void render_alien(const Alien *alien, uint16 *base) {
   }
 }
 
-void render_shot(const Shot *shot, uint8 *base) {
-  if (shot->is_active) {
-    plot_rectangle__inverse(base, shot->x, shot->y, 8, 8);
+void render_shots(const Shot shots[], shot_t shot_type, uint8 *base) {
+  int i;
+  int max_shots = shot_type == spaceship_laser ? SPACESHIP_MAX_LASERS : ALIEN_MAX_BOMBS;
+  for (i = 0; i < max_shots; i++) {
+    if (shots[i].is_active)
+      plot_rectangle__inverse(base, shots[i].x, shots[i].y, 8, 8);
   }
 }
 

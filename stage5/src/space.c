@@ -12,6 +12,14 @@ void clear_aliens(Armada* armada, uint16* base) {
   }
 }
 
+void clear_shots(Shot shots[], uint8* base) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    if (shots[i].is_active)
+      clear_region(base, shots[i].x, shots[i].y, 8, 8);
+  }
+}
+
 long get_time() {
   long* timer = (long*) SYSTEM_CLOCK;
   long old_ssp = Super(0);
@@ -46,16 +54,15 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     clear_aliens(&model->armada, base);
-
-    if (model->player.shots[0].is_active)
-      clear_region(base, model->player.shots[0].x, model->player.shots[0].y, 8, 8);
+    clear_shots(model->player.shots, base);
 
     on_armada_move(model);
-    on_laser_hit_alien(model);
     on_laser_move(model);
 
+    on_laser_hit_alien(model);
+
     render_armada(&model->armada, base);
-    render_shot(&model->player.shots[0], base);
+    render_shots(model->player.shots, spaceship_laser, base);
 
     if (model->scorebox.score > 0 && model->scorebox.score > prev_score) {
       render_scoreboard(&model->scorebox, base);
