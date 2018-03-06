@@ -48,7 +48,7 @@ void process_async_events(Model* model, void* base) {
 
 void process_sync_events(Model* model, void* base) {
   unsigned long time_then, time_now, time_elapsed;
-  int prev_score = 0;
+  int prev_score = model->scorebox.score;
 
   time_now = get_time();
   time_elapsed = time_now - time_then;
@@ -64,10 +64,8 @@ void process_sync_events(Model* model, void* base) {
     render_armada(&model->armada, base);
     render_shots(model->player.shots, spaceship_laser, base);
 
-    if (model->scorebox.score > 0 && model->scorebox.score > prev_score) {
+    if (model->scorebox.score > 0 && model->scorebox.score > prev_score)
       render_scoreboard(&model->scorebox, base);
-      prev_score = model->scorebox.score;
-    }
 
     time_then = time_now;
   }
