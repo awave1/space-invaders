@@ -19,6 +19,7 @@ typedef struct Shot {
   shot_t type;
   bool is_active;
   bool is_out_of_bounds;
+  hitbox_t hitbox;
 } Shot;
 
 typedef struct Spaceship {
@@ -29,6 +30,7 @@ typedef struct Spaceship {
   Shot shots[SPACESHIP_MAX_LASERS];
   int shot_count;
   bool is_alive;
+  hitbox_t hitbox;
 } Spaceship;
 
 typedef struct Alien {
@@ -39,6 +41,7 @@ typedef struct Alien {
   int score_val;
   bool is_alive;
   uint16* bitmap[SPRITE_HEIGHT];
+  hitbox_t hitbox;
 } Alien;
 
 typedef struct Armada {
