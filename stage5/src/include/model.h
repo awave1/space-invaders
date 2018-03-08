@@ -5,6 +5,14 @@
 #include "const.h"
 #include "types.h"
 
+
+typedef struct {
+    uint16 x;
+    uint16 y;
+    uint16 width;
+    uint16 height;
+} hitbox_t;
+
 typedef struct Shot {
   int x;
   int y;
