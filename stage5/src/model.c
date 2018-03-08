@@ -63,8 +63,8 @@ void init_spaceship(Spaceship *spaceship) {
  */
 void alien_shoot(Armada *armada) {
   int i;
-  int rand_row = rand() % ALIENS_ROWS;
-  int rand_col = rand() % ALIENS_COLS;
+  int rand_row = Random() % ALIENS_ROWS;
+  int rand_col = Random() % ALIENS_COLS;
 
   for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
     if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {

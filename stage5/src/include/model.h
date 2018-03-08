@@ -2,6 +2,7 @@
 #define SPACE_INVADERS_MODEL_H
 
 #include <stdio.h>
+#include <osbind.h>
 #include "const.h"
 #include "types.h"
 
