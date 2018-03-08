@@ -8,7 +8,7 @@
  * 
  */
 void plot_pixel(uint8 *base, int x, int y) {
-  if (in_bounds(x, y))
+  if (pos_in_bounds(x, y))
     *(base + (y * 80) + (x >> 3)) |= 1 << (7 - (x & 7));
 }
 

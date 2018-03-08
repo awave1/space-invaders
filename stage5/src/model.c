@@ -41,7 +41,7 @@ void init_spaceship(Spaceship *spaceship) {
   spaceship->y = SPACESHIP_START_Y;
   spaceship->shot_count = 0;
   spaceship->is_alive = true;
-  init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
+  _init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
 
@@ -99,11 +99,11 @@ void move_armada(Model *model) {
   switch (armada->move_direction) {
     case right:
       if (new_bottom_right_x__right < SCREEN_WIDTH) {
-        _update_alien_pos(&model->armada, right);
+        _move_aliens(&model->armada, right);
         hitbox->bottom_right_x = new_bottom_right_x__right;
         hitbox->top_left_x = new_top_left_x__right;
       } else {
-        _update_alien_pos(&model->armada, down);
+        _move_aliens(&model->armada, down);
         if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
@@ -115,11 +115,11 @@ void move_armada(Model *model) {
       break;
     case left:
       if (new_top_left_x__left >= 0) {
-        _update_alien_pos(&model->armada, left);
+        _move_aliens(&model->armada, left);
         hitbox->bottom_right_x = new_bottom_right_x__left;
         hitbox->top_left_x = new_top_left_x__left;
       } else {
-        _update_alien_pos(&model->armada, down);
+        _move_aliens(&model->armada, down);
         if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
@@ -161,7 +161,7 @@ void init_armada(Armada *armada) {
   }
 
   _init_armada_hitbox(armada);
-  init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
+  _init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
 }
 
 
@@ -289,18 +289,25 @@ void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
   }
 }
 
-void _update_alien_pos(Armada* armada, direction_t direction) {
+void _move_aliens(Armada* armada, direction_t direction) {
   int row, col;
-  for (row = 0; row < ALIENS_ROWS; row++) {
-    for (col = 0; col < ALIENS_COLS; col++) {
-      if (direction == right)
-        armada->aliens[row][col].x += ALIEN_SPEED_X;
-      else if (direction == left)
-        armada->aliens[row][col].x -= ALIEN_SPEED_X;
-      else if (direction == down)
-        armada->aliens[row][col].y += ALIEN_SPEED_Y;
-    }
-  }
+  for (row = 0; row < ALIENS_ROWS; row++)
+    for (col = 0; col < ALIENS_COLS; col++)
+      _move_alien(&armada->aliens[row][col], direction);
+}
+
+void _move_alien(Alien* alien, direction_t direction) {
+  if (direction == right)
+    alien->x += ALIEN_SPEED_X;
+  else if (direction == left)
+    alien->x -= ALIEN_SPEED_X;
+  else if (direction == down)
+    alien->y += ALIEN_SPEED_Y;
+  
+  alien->hitbox.top_left_x = alien->x;
+  alien->hitbox.top_left_y = alien->y;
+  alien->hitbox.bottom_right_x = alien->x + SPRITE_SIZE;
+  alien->hitbox.bottom_right_y = alien->y + SPRITE_SIZE;
 }
 
 bool _in_range(unsigned int low, unsigned int high, unsigned int x) {

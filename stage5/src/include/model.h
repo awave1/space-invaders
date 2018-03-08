@@ -5,8 +5,8 @@
 #include "const.h"
 #include "types.h"
 
-#define for_row for (int row = 0; row < ALIENS_ROWS; row++)
-#define for_col for (int col = 0; col < ALIENS_COLS; col++)
+#define for_row for (row = 0; row < ALIENS_ROWS; row++)
+#define for_col for (col = 0; col < ALIENS_COLS; col++)
 #define iterate_aliens for_row for_col
 
 typedef struct {
@@ -109,7 +109,8 @@ void resume_game(Model* model);
 void _init_alien(Alien* alien, int x, int y, int row, int col, int score);
 void _init_armada_hitbox(Armada* armada);
 void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
-void _update_alien_pos(Armada* armada, direction_t direction);
+void _move_aliens(Armada* armada, direction_t direction);
+void _move_alien(Alien* alien, direction_t direction);
 bool _in_range(unsigned int low, unsigned int high, unsigned int x);
 
 #endif /* SPACE_INVADERS_MODEL_H */
