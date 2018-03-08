@@ -35,7 +35,7 @@ void spaceship_shoot(Spaceship *spaceship) {
         spaceship->shots[i].hitbox.bottom_right_x = spaceship->shots[i].x + SHOT_WIDTH;
         spaceship->shots[i].hitbox.bottom_right_y = spaceship->shots[i].y + SHOT_HEIGHT;
 
-        spaceship->shot_count += 1;
+        spaceship->shot_count++;
       }
     }
   }
@@ -63,20 +63,23 @@ void init_spaceship(Spaceship *spaceship) {
  */
 void alien_shoot(Armada *armada) {
   int i;
-  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
-    /*
-     * we can add more shots when curr count is less than max and current shot IS NOT active
-     */
-    if (armada->shot_count == 0 && armada->shot_count < SPACESHIP_MAX_LASERS) {
-      if (!armada->shots[i].is_active) {
-        armada->shots[i].is_active = true;
-        armada->shot_count++;
-      }
-    }
+  int rand_row = rand() % ALIENS_ROWS;
+  int rand_col = rand() % ALIENS_COLS;
 
-    if (armada->shots[i].is_out_of_bounds) {
-      armada->shots[i].is_out_of_bounds = false;
-      armada->shot_count--;
+  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+    if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {
+      if (!armada->shots[i].is_active) {
+        armada->shots[i].x = armada->aliens[rand_row][rand_col].x - 2;
+        armada->shots[i].y = armada->aliens[rand_row][rand_col].y + 4;
+        armada->shots[i].is_active = true;
+
+        armada->shots[i].hitbox.top_left_x = armada->shots[i].x;
+        armada->shots[i].hitbox.top_left_y = armada->shots[i].y;
+        armada->shots[i].hitbox.bottom_right_x = armada->shots[i].x + SHOT_WIDTH;
+        armada->shots[i].hitbox.bottom_right_y = armada->shots[i].y + SHOT_HEIGHT;
+
+        armada->shot_count++;
+      } 
     }
   } 
 }
@@ -160,6 +163,7 @@ void init_armada(Armada *armada) {
 
   armada->move_direction = right;
   armada->alive_count = ALIENS_NUM_OF_ALIENS;
+  armada->shot_count = 0;
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
@@ -192,7 +196,10 @@ void move_shot(Shot *shot, Model* model) {
 
   if (shot->y <= 0 || shot->y >= SCREEN_HEIGHT) {
     shot->is_active = false;
-    model->player.shot_count -= 1;
+    if (shot->type == spaceship_laser)
+      model->player.shot_count -= 1;
+    else
+      model->armada.shot_count -= 1;
   }
 
   if (MODEL_DEBUG) {

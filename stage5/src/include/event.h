@@ -9,9 +9,7 @@ void on_armada_move(Model* model);
 void on_laser_move(Model *model);
 void on_bomb_move(Model *model);
 
-void on_shoot();
-
-void alien_shoots();
+void on_alien_shoot(Model* model);
 
 void on_alien_hit_bottom(Alien *alien);
 
