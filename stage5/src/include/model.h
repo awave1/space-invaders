@@ -5,12 +5,17 @@
 #include "const.h"
 #include "types.h"
 
+#define for_row for (int row = 0; row < ALIENS_ROWS; row++)
+#define for_col for (int col = 0; col < ALIENS_COLS; col++)
+#define iterate_aliens for_row for_col
 
 typedef struct {
-    uint16 x;
-    uint16 y;
-    uint16 width;
-    uint16 height;
+  uint16 top_left_x;
+  uint16 top_left_y;
+  uint16 bottom_right_x;
+  uint16 bottom_right_y;
+  uint16 width;
+  uint16 height;
 } hitbox_t;
 
 typedef struct Shot {
@@ -46,16 +51,11 @@ typedef struct Alien {
 
 typedef struct Armada {
   Alien aliens[ALIENS_ROWS][ALIENS_COLS];
-  int width;
-  int height;
-  int top_left_x;
-  int top_left_y;
-  int bottom_right_x;
-  int bottom_right_y;
   direction_t move_direction;
   Shot shots[ALIEN_MAX_BOMBS];
   int alive_count;
   int shot_count;
+  hitbox_t hitbox;
 } Armada;
 
 typedef struct Scorebox {
@@ -86,8 +86,10 @@ void destroy_alien(Alien* alien, Shot* shot, Armada* armada);
 
 /* armada functions */
 void move_armada(Model* model);
-void alien_shoot(Armada *armada);
-void init_armada(Armada *armada);
+void alien_shoot(Armada* armada);
+void init_armada(Armada* armada);
+void init_alien(Alien* alien, int x, int y, int row, int col, int score);
+void init_armada_hitbox(Armada* armada);
 
 /* shot functions */
 void move_shot(Shot* shot, Model* model);

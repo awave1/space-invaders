@@ -89,46 +89,47 @@ void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
  */
 void move_armada(Model *model) {
   Armada *armada = &model->armada;
+  hitbox_t* hitbox = &armada->hitbox;
 
-  int new_bottom_right_x__right = armada->bottom_right_x + ALIEN_SPEED_X;
-  int new_top_left_x__right = armada->top_left_x + ALIEN_SPEED_X;
+  int new_bottom_right_x__right = hitbox->bottom_right_x + ALIEN_SPEED_X;
+  int new_top_left_x__right = hitbox->top_left_x + ALIEN_SPEED_X;
 
-  int new_bottom_right_x__left = armada->bottom_right_x - ALIEN_SPEED_X;
-  int new_top_left_x__left = armada->top_left_x - ALIEN_SPEED_X;
+  int new_bottom_right_x__left = hitbox->bottom_right_x - ALIEN_SPEED_X;
+  int new_top_left_x__left = hitbox->top_left_x - ALIEN_SPEED_X;
 
-  int new_bottom_right_y = armada->bottom_right_y + ALIEN_SPEED_Y;
-  int new_top_left_y = armada->top_left_y + ALIEN_SPEED_Y;
+  int new_bottom_right_y = hitbox->bottom_right_y + ALIEN_SPEED_Y;
+  int new_top_left_y = hitbox->top_left_y + ALIEN_SPEED_Y;
 
   switch (armada->move_direction) {
     case right:
       if (new_bottom_right_x__right < SCREEN_WIDTH) {
         _update_alien_pos(&model->armada, right);
-        armada->bottom_right_x = new_bottom_right_x__right;
-        armada->top_left_x = new_top_left_x__right;
+        hitbox->bottom_right_x = new_bottom_right_x__right;
+        hitbox->top_left_x = new_top_left_x__right;
       } else {
         _update_alien_pos(&model->armada, down);
         if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
 
-        armada->bottom_right_y = new_bottom_right_y;
-        armada->top_left_y = new_top_left_y;
+        hitbox->bottom_right_y = new_bottom_right_y;
+        hitbox->top_left_y = new_top_left_y;
         armada->move_direction = left;
       }
       break;
     case left:
       if (new_top_left_x__left >= 0) {
         _update_alien_pos(&model->armada, left);
-        armada->bottom_right_x = new_bottom_right_x__left;
-        armada->top_left_x = new_top_left_x__left;
+        hitbox->bottom_right_x = new_bottom_right_x__left;
+        hitbox->top_left_x = new_top_left_x__left;
       } else {
         _update_alien_pos(&model->armada, down);
         if (new_bottom_right_y >= SCREEN_HEIGHT) {
           game_over(model);
         }
 
-        armada->bottom_right_y = new_bottom_right_y;
-        armada->top_left_y = new_top_left_y;
+        hitbox->bottom_right_y = new_bottom_right_y;
+        hitbox->top_left_y = new_top_left_y;
         armada->move_direction = right;
       }
       break;
@@ -157,57 +158,53 @@ void _update_alien_pos(Armada* armada, direction_t direction) {
  */
 void init_armada(Armada *armada) {
   int row, col;
-  uint16 alien_screen_x = ALIENS_START_X;
-  uint16 alien_screen_y = ALIENS_START_Y;
-  uint16 alien_score = ALIEN_C_SCORE;
+  uint16 x = ALIENS_START_X;
+  uint16 y = ALIENS_START_Y;
+  uint16 score = ALIEN_C_SCORE;
   Alien alien;
 
-  armada->top_left_x = ALIENS_START_X;
-  armada->top_left_y = ALIENS_START_Y;
   armada->move_direction = right;
-  armada->alive_count = 0;
+  armada->alive_count = ALIENS_NUM_OF_ALIENS;
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
-      alien.x = alien_screen_x;
-      alien.y = alien_screen_y; 
-      alien.row = row;
-      alien.col = col;
-      alien.score_val = alien_score;
-      alien.is_alive = true;
-
+      init_alien(&alien, x, y, row, col, score);
       armada->aliens[row][col] = alien;
-      alien_screen_x += ALIEN_BOX_SIZE;
+      x += ALIEN_BOX_SIZE;
     }
-    alien_screen_x = ALIENS_START_X;
-    alien_screen_y += ALIEN_BOX_SIZE;
-    if (row >= 1 && alien_score <= 3)
-      alien_score = ALIEN_B_SCORE;
-    else
-      alien_score = ALIEN_A_SCORE;
+
+    x = ALIENS_START_X;
+    y += ALIEN_BOX_SIZE;
+
+    score = row >= 1 && row < 3 ? ALIEN_B_SCORE : ALIEN_A_SCORE;
   }
 
-  armada->bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
-  armada->bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
-
-  armada->width = (armada->bottom_right_x + 16) - armada->top_left_x;
-  armada->height = (armada->bottom_right_y + 16) - armada->top_left_y;
-  armada->alive_count = ALIENS_NUM_OF_ALIENS;
-
+  init_armada_hitbox(armada);
   init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
+}
 
-  if (MODEL_DEBUG) {
-    printf("model: initial positions of aliens:\n");
-    for (row = 0; row < ALIENS_ROWS; row++) {
-      for (col = 0; col < ALIENS_COLS; col++) {
-        printf("%d,%d ", armada->aliens[row][col].row,
-               armada->aliens[row][col].col);
-      }
-      printf("\n");
-    }
-    printf("initial armada pos top: %d,%d, bottom: %d,%d\n", armada->top_left_x,
-           armada->top_left_y, armada->bottom_right_x, armada->bottom_right_y);
-  }
+void init_alien(Alien* alien, int x, int y, int row, int col, int score) {
+  alien->x = x;
+  alien->y = y; 
+  alien->row = row;
+  alien->col = col;
+  alien->score_val = score;
+  alien->is_alive = true;
+  alien->hitbox.top_left_x = x;
+  alien->hitbox.top_left_y = y;
+  alien->hitbox.bottom_right_x = x + SPRITE_SIZE;
+  alien->hitbox.bottom_right_y = y + SPRITE_SIZE;
+  alien->hitbox.width = SPRITE_SIZE;
+  alien->hitbox.height = SPRITE_SIZE;
+}
+
+void init_armada_hitbox(Armada* armada) {
+  armada->hitbox.top_left_x = ALIENS_START_X;
+  armada->hitbox.top_left_y = ALIENS_START_Y;
+  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
+  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
+  armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
+  armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
 }
 
 /*
