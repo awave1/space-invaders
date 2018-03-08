@@ -16,6 +16,9 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
     default:
       break;
   }
+
+  spaceship->hitbox.top_left_x = spaceship->x;
+  spaceship->hitbox.bottom_right_x = spaceship->x + SPRITE_SIZE;
 }
 
 void spaceship_shoot(Spaceship *spaceship) {
@@ -43,6 +46,14 @@ void init_spaceship(Spaceship *spaceship) {
   spaceship->y = SPACESHIP_START_Y;
   spaceship->shot_count = 0;
   spaceship->is_alive = true;
+
+  spaceship->hitbox.top_left_x = spaceship->x;
+  spaceship->hitbox.top_left_y = spaceship->y;
+  spaceship->hitbox.bottom_right_x = spaceship->x + SPRITE_SIZE;
+  spaceship->hitbox.bottom_right_y = spaceship->y + SPRITE_SIZE;
+  spaceship->hitbox.width = SPRITE_SIZE;
+  spaceship->hitbox.height = SPRITE_SIZE;
+
   _init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
 
