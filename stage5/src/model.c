@@ -85,6 +85,7 @@ void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
   if (shot->type == spaceship_laser) {
     shot->is_active = false;
     alien->is_alive = false;
+    alien->hitbox.active = false;
     armada->alive_count -= 1;
   }
 }
@@ -200,17 +201,11 @@ void move_shot(Shot *shot, Model* model) {
 }
 
 bool laser_collides_with_alien(Alien* alien, Shot* laser) {
-  int x_start = alien->x;
-  int x_end = alien->x + 16;
-
-  return alien->is_alive && alien->y == laser->y && _in_range(x_start, x_end, laser->x);
+  return collides(alien->hitbox, laser->hitbox);
 }
 
 bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
-  int x_start = spaceship->x;
-  int x_end = spaceship->x + 16;
-
-  return bomb->y >= spaceship->y && _in_range(x_start, x_end, bomb->x); 
+  return collides(spaceship->hitbox, bomb->hitbox);
 
 }
 
@@ -260,6 +255,16 @@ void game_over(Model *model) {
 }
 
 
+bool collides(hitbox_t box1, hitbox_t box2) {
+  return
+    box1.active && box2.active &&
+    box1.top_left_x < box2.bottom_right_x && 
+    box1.bottom_right_x > box2.top_left_x &&
+    box1.top_left_y < box2.bottom_right_y &&
+    box1.bottom_right_y > box2.top_left_y;
+}
+
+
 /* Helpers */
 void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
   alien->x = x;
@@ -274,6 +279,7 @@ void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
   alien->hitbox.bottom_right_y = y + SPRITE_SIZE;
   alien->hitbox.width = SPRITE_SIZE;
   alien->hitbox.height = SPRITE_SIZE;
+  alien->hitbox.active = true;
 }
 
 void _init_armada_hitbox(Armada* armada) {

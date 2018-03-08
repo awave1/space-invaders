@@ -16,6 +16,7 @@ typedef struct {
   uint16 bottom_right_y;
   uint16 width;
   uint16 height;
+  bool active;          /* only used for aliens */
 } hitbox_t;
 
 typedef struct Shot {
@@ -104,6 +105,8 @@ void init_model(Model* model);
 void game_over(Model* model);
 void pause_game(Model* model);
 void resume_game(Model* model);
+
+bool collides(hitbox_t box1, hitbox_t box2);
 
 /* Helpers */
 void _init_alien(Alien* alien, int x, int y, int row, int col, int score);

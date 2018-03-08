@@ -18,9 +18,6 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
   }
 }
 
-/*
- * todo: not sure if anything else supposed to be here
- */
 void on_armada_move(Model *model) {
   move_armada(model);
 }
