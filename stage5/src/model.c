@@ -3,18 +3,14 @@
 /*
  * Spaceship functions
  */
-
-/*
- * note: value of 10 was choosen randomly, might need to change
- */
 void move_spaceship(Spaceship *spaceship, direction_t direction) {
   switch (direction) {
     case left:
-      if (in_bounds(spaceship->x - 10, SPACESHIP_START_Y))
+      if (pos_in_bounds(spaceship->x - SPACESHIP_MOVE_SPEED, SPACESHIP_START_Y))
         spaceship->x -= SPACESHIP_MOVE_SPEED;
       break;
     case right:
-      if (in_bounds(spaceship->x + 10, SPACESHIP_START_Y))
+      if (pos_in_bounds(spaceship->x + SPACESHIP_MOVE_SPEED, SPACESHIP_START_Y))
         spaceship->x += SPACESHIP_MOVE_SPEED;
       break;
     default:
@@ -138,21 +134,6 @@ void move_armada(Model *model) {
   }
 }
 
-
-void _update_alien_pos(Armada* armada, direction_t direction) {
-  int row, col;
-  for (row = 0; row < ALIENS_ROWS; row++) {
-    for (col = 0; col < ALIENS_COLS; col++) {
-      if (direction == right)
-        armada->aliens[row][col].x += ALIEN_SPEED_X;
-      else if (direction == left)
-        armada->aliens[row][col].x -= ALIEN_SPEED_X;
-      else if (direction == down)
-        armada->aliens[row][col].y += ALIEN_SPEED_Y;
-    }
-  }
-}
-
 /*
  * Populates 2d array of aliens
  */
@@ -168,7 +149,7 @@ void init_armada(Armada *armada) {
 
   for (row = 0; row < ALIENS_ROWS; row++) {
     for (col = 0; col < ALIENS_COLS; col++) {
-      init_alien(&alien, x, y, row, col, score);
+      _init_alien(&alien, x, y, row, col, score);
       armada->aliens[row][col] = alien;
       x += ALIEN_BOX_SIZE;
     }
@@ -179,33 +160,10 @@ void init_armada(Armada *armada) {
     score = row >= 1 && row < 3 ? ALIEN_B_SCORE : ALIEN_A_SCORE;
   }
 
-  init_armada_hitbox(armada);
+  _init_armada_hitbox(armada);
   init_shots(armada->shots, armada, alien_bomb, ALIEN_MAX_BOMBS);
 }
 
-void init_alien(Alien* alien, int x, int y, int row, int col, int score) {
-  alien->x = x;
-  alien->y = y; 
-  alien->row = row;
-  alien->col = col;
-  alien->score_val = score;
-  alien->is_alive = true;
-  alien->hitbox.top_left_x = x;
-  alien->hitbox.top_left_y = y;
-  alien->hitbox.bottom_right_x = x + SPRITE_SIZE;
-  alien->hitbox.bottom_right_y = y + SPRITE_SIZE;
-  alien->hitbox.width = SPRITE_SIZE;
-  alien->hitbox.height = SPRITE_SIZE;
-}
-
-void init_armada_hitbox(Armada* armada) {
-  armada->hitbox.top_left_x = ALIENS_START_X;
-  armada->hitbox.top_left_y = ALIENS_START_Y;
-  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
-  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
-  armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
-  armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
-}
 
 /*
  * Shot functions
@@ -226,40 +184,20 @@ void move_shot(Shot *shot, Model* model) {
   }
 }
 
-void init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
-  int i, row, col;
-  Shot shot;
-  for (i = 0; i < max_shots; i++) {
-    if (type == spaceship_laser) {
-      shot.x = SPACESHIP_START_X;
-      shot.y = SPACESHIP_START_Y - 8;
-    } else if (type == alien_bomb) {
-      shot.x = armada->aliens[0][0].x;
-      shot.y = armada->aliens[0][0].y;
-    }
-
-    shot.type = type;
-    shot.is_active = false;
-    shot.is_out_of_bounds = false;
-    shots[i] = shot;
-  }
-}
-
 bool laser_collides_with_alien(Alien* alien, Shot* laser) {
   int x_start = alien->x;
   int x_end = alien->x + 16;
 
-  return alien->is_alive && alien->y == laser->y && in_range(x_start, x_end, laser->x);
+  return alien->is_alive && alien->y == laser->y && _in_range(x_start, x_end, laser->x);
 }
 
 bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
   int x_start = spaceship->x;
   int x_end = spaceship->x + 16;
 
-  return bomb->y >= spaceship->y && in_range(x_start, x_end, bomb->x); 
+  return bomb->y >= spaceship->y && _in_range(x_start, x_end, bomb->x); 
 
 }
-
 
 /*
  * Scorebox functions
@@ -281,6 +219,10 @@ void init_scorebox(Scorebox *scorebox) {
   scorebox->y = SCOREBOX_Y;
 }
 
+
+/*
+ * Model functions
+ */
 void init_model(Model *model) {
   model->is_playing = true;
   model->is_game_over = false;
@@ -302,6 +244,65 @@ void game_over(Model *model) {
   model->is_playing = false;
 }
 
-bool in_range(unsigned int low, unsigned int high, unsigned int x) {
+
+/* Helpers */
+void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
+  alien->x = x;
+  alien->y = y; 
+  alien->row = row;
+  alien->col = col;
+  alien->score_val = score;
+  alien->is_alive = true;
+  alien->hitbox.top_left_x = x;
+  alien->hitbox.top_left_y = y;
+  alien->hitbox.bottom_right_x = x + SPRITE_SIZE;
+  alien->hitbox.bottom_right_y = y + SPRITE_SIZE;
+  alien->hitbox.width = SPRITE_SIZE;
+  alien->hitbox.height = SPRITE_SIZE;
+}
+
+void _init_armada_hitbox(Armada* armada) {
+  armada->hitbox.top_left_x = ALIENS_START_X;
+  armada->hitbox.top_left_y = ALIENS_START_Y;
+  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
+  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
+  armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
+  armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
+}
+
+void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
+  int i, row, col;
+  Shot shot;
+  for (i = 0; i < max_shots; i++) {
+    if (type == spaceship_laser) {
+      shot.x = SPACESHIP_START_X;
+      shot.y = SPACESHIP_START_Y - 8;
+    } else if (type == alien_bomb) {
+      shot.x = armada->aliens[0][0].x;
+      shot.y = armada->aliens[0][0].y;
+    }
+
+    shot.type = type;
+    shot.is_active = false;
+    shot.is_out_of_bounds = false;
+    shots[i] = shot;
+  }
+}
+
+void _update_alien_pos(Armada* armada, direction_t direction) {
+  int row, col;
+  for (row = 0; row < ALIENS_ROWS; row++) {
+    for (col = 0; col < ALIENS_COLS; col++) {
+      if (direction == right)
+        armada->aliens[row][col].x += ALIEN_SPEED_X;
+      else if (direction == left)
+        armada->aliens[row][col].x -= ALIEN_SPEED_X;
+      else if (direction == down)
+        armada->aliens[row][col].y += ALIEN_SPEED_Y;
+    }
+  }
+}
+
+bool _in_range(unsigned int low, unsigned int high, unsigned int x) {
   return (low <= x  && x <= high);
 }

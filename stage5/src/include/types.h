@@ -5,7 +5,7 @@
 #define SCREEN_HEIGHT 400
 #define NULL_CH '\0'
 
-#define in_bounds(x, y) (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
+#define pos_in_bounds(x, y) (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 
 typedef unsigned char uint8;
 typedef unsigned int uint16;
