@@ -5,61 +5,60 @@
 #include "const.h"
 #include "types.h"
 
-
 typedef struct Shot {
-    int x;
-    int y;
-    shot_t type;
-    bool is_active;
-    bool is_out_of_bounds;
+  int x;
+  int y;
+  shot_t type;
+  bool is_active;
+  bool is_out_of_bounds;
 } Shot;
 
 typedef struct Spaceship {
-    int x;
-    int y;
-    direction_t direction;
-    hitbox_t hitbox;
-    Shot shots[SPACESHIP_MAX_LASERS];
-    int shot_count;
-    bool is_alive;
+  int x;
+  int y;
+  direction_t direction;
+  hitbox_t hitbox;
+  Shot shots[SPACESHIP_MAX_LASERS];
+  int shot_count;
+  bool is_alive;
 } Spaceship;
 
 typedef struct Alien {
-    int row;
-    int col;
-    int x;
-    int y;
-    int score_val;
-    bool is_alive;
-    uint16* bitmap[SPRITE_HEIGHT];
+  int row;
+  int col;
+  int x;
+  int y;
+  int score_val;
+  bool is_alive;
+  uint16* bitmap[SPRITE_HEIGHT];
 } Alien;
 
 typedef struct Armada {
-    Alien aliens[ALIENS_ROWS][ALIENS_COLS];
-    int width;
-    int height;
-    int top_left_x;
-    int top_left_y;
-    int bottom_right_x;
-    int bottom_right_y;
-    direction_t move_direction;
-    Shot shots[ALIEN_MAX_BOMBS];
-    int alive_count;
-    int shot_count;
+  Alien aliens[ALIENS_ROWS][ALIENS_COLS];
+  int width;
+  int height;
+  int top_left_x;
+  int top_left_y;
+  int bottom_right_x;
+  int bottom_right_y;
+  direction_t move_direction;
+  Shot shots[ALIEN_MAX_BOMBS];
+  int alive_count;
+  int shot_count;
 } Armada;
 
 typedef struct Scorebox {
-    int x;
-    int y;
-    int score;
+  int x;
+  int y;
+  int score;
 } Scorebox;
 
 typedef struct Model {
-    bool is_playing;
-    bool is_game_over;
-    Spaceship player;
-    Armada armada;
-    Scorebox scorebox;
+  bool is_playing;
+  bool is_game_over;
+  Spaceship player;
+  Armada armada;
+  Scorebox scorebox;
 
 } Model;
 
