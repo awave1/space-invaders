@@ -21,15 +21,17 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
 void spaceship_shoot(Spaceship *spaceship) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
-    /*
-     * we can add more shots when curr count is less than max and current shot IS NOT active
-     */
-    if (spaceship->shot_count == 0 &&
-        spaceship->shot_count < SPACESHIP_MAX_LASERS) {
+    if (spaceship->shot_count == 0 && spaceship->shot_count < SPACESHIP_MAX_LASERS) {
       if (!spaceship->shots[i].is_active) {
         spaceship->shots[i].x = spaceship->x - 2;
         spaceship->shots[i].y = spaceship->y - 8;
         spaceship->shots[i].is_active = true;
+
+        spaceship->shots[i].hitbox.top_left_x = spaceship->shots[i].x;
+        spaceship->shots[i].hitbox.top_left_y = spaceship->shots[i].y;
+        spaceship->shots[i].hitbox.bottom_right_x = spaceship->shots[i].x + SHOT_WIDTH;
+        spaceship->shots[i].hitbox.bottom_right_y = spaceship->shots[i].y + SHOT_HEIGHT;
+
         spaceship->shot_count += 1;
       }
     }
@@ -174,6 +176,8 @@ void move_shot(Shot *shot, Model* model) {
   else if (shot->type == alien_bomb)
     shot->y += ALIEN_BOMB_SPEED;
 
+  _update_shot_hitbox(&shot->hitbox, shot->y);
+
   if (shot->y <= 0 || shot->y >= SCREEN_HEIGHT) {
     shot->is_active = false;
     model->player.shot_count -= 1;
@@ -285,6 +289,14 @@ void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
     shot.type = type;
     shot.is_active = false;
     shot.is_out_of_bounds = false;
+
+    shot.hitbox.top_left_x = shot.x;
+    shot.hitbox.top_left_y = shot.y;
+    shot.hitbox.bottom_right_x = shot.x + SHOT_WIDTH;
+    shot.hitbox.bottom_right_y = shot.y + SHOT_HEIGHT;
+    shot.hitbox.width = SHOT_WIDTH;
+    shot.hitbox.width = SHOT_HEIGHT;
+
     shots[i] = shot;
   }
 }
@@ -308,6 +320,11 @@ void _move_alien(Alien* alien, direction_t direction) {
   alien->hitbox.top_left_y = alien->y;
   alien->hitbox.bottom_right_x = alien->x + SPRITE_SIZE;
   alien->hitbox.bottom_right_y = alien->y + SPRITE_SIZE;
+}
+
+void _update_shot_hitbox(hitbox_t* hitbox, int dy) {
+  hitbox->top_left_y = dy;
+  hitbox->bottom_right_y = dy + SHOT_HEIGHT;
 }
 
 bool _in_range(unsigned int low, unsigned int high, unsigned int x) {

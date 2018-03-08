@@ -111,6 +111,7 @@ void _init_armada_hitbox(Armada* armada);
 void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
 void _move_aliens(Armada* armada, direction_t direction);
 void _move_alien(Alien* alien, direction_t direction);
+void _update_shot_hitbox(hitbox_t* hitbox, int dy);
 bool _in_range(unsigned int low, unsigned int high, unsigned int x);
 
 #endif /* SPACE_INVADERS_MODEL_H */

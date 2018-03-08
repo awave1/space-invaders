@@ -45,6 +45,10 @@
 #define SPRITE_SIZE 16
 #define SPRITE_HEIGHT 16
 
+/*TODO: Replace, when proper plotting implemented*/
+#define SHOT_WIDTH 8
+#define SHOT_HEIGHT 8
+
 /*
  * Scorebox constants
  */
