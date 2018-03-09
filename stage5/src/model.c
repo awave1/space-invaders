@@ -121,12 +121,9 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__right;
       } else {
         _move_aliens(&model->armada, down);
-        if (new_bottom_right_y >= SCREEN_HEIGHT) {
-          game_over(model);
-        }
-
         hitbox->bottom_right_y = new_bottom_right_y;
         hitbox->top_left_y = new_top_left_y;
+
         armada->move_direction = left;
       }
       break;
@@ -137,18 +134,18 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__left;
       } else {
         _move_aliens(&model->armada, down);
-        if (new_bottom_right_y >= SCREEN_HEIGHT) {
-          game_over(model);
-        }
-
         hitbox->bottom_right_y = new_bottom_right_y;
         hitbox->top_left_y = new_top_left_y;
+
         armada->move_direction = right;
       }
       break;
     default:
       break;
   }
+
+  if (collides(*hitbox, model->player.hitbox))
+    game_over(model);
 }
 
 /*

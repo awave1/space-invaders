@@ -53,7 +53,7 @@ void process_sync_events(Model* model, void* base) {
   time_now = get_time();
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
-    on_alien_shoot(model);
+    /* on_alien_shoot(model); */
 
     clear_aliens(&model->armada, base);
     clear_shots(model->player.shots, base);
@@ -62,6 +62,7 @@ void process_sync_events(Model* model, void* base) {
     on_armada_move(model);
     on_bomb_move(model);
     on_laser_move(model);
+
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 

@@ -98,10 +98,6 @@ void on_bomb_hit_player(Model* model) {
   }
 }
 
-void on_alien_hit_bottom(Alien *alien) {
-  alien->is_alive = false;
-}
-
 void on_game_start(Model *model) {
   init_model(model);
 }
