@@ -10,12 +10,6 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
     move_spaceship(spaceship, right);
   else if (key == SPACE_KEY)
     spaceship_shoot(spaceship);
-
-  if (EVENT_DEBUG) {
-    printf("event: spaceship x pos: %d\n", spaceship->x);
-    printf("event: spaceship shots: %d\n", spaceship->shot_count);
-    printf("event: spaceship shot pos: %d\n", spaceship->shots[0].y);
-  }
 }
 
 void on_armada_move(Model *model) {
@@ -50,22 +44,11 @@ void on_laser_hit_alien(Model *model) {
       for (col = 0; col < ALIENS_COLS && !collided; col++) {
         if (model->player.shots[i].is_active && laser_collides_with_alien(&model->armada.aliens[row][col], &model->player.shots[i])) {
           destroy_alien(&model->armada.aliens[row][col], &model->player.shots[i], &model->armada);
-
-          /* todo: add function to reset shot */
-          model->player.shots[i].is_active = false;
-          model->player.shots[i].is_out_of_bounds = false;
-          model->player.shots[i].x = model->player.x;
-          model->player.shots[i].x = model->player.y;
-          model->player.shot_count -= 1;
-
+          reset_shot(&model->player.shots[i], model);
           update_scorebox(&model->scorebox, model->armada.aliens[row][col].score_val);
-
+          
+          /* break out of all loops since collision happened */
           collided = true;
-
-          if (EVENT_DEBUG) {
-            printf("destroyed (on screen): %d, %d\n", model->armada.aliens[row][col].x, model->armada.aliens[row][col].y);
-            printf("alien count: %d\n", model->armada.alive_count);
-          }
         }
       }
     }
@@ -103,7 +86,7 @@ void on_game_start(Model *model) {
 }
 
 void on_game_pause(Model *model) {
-  /* todo: add functions to halt all movement */
+  /* TODO: add functions to halt all movement */
   pause_game(model);
 }
 

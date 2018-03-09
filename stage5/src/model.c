@@ -205,13 +205,20 @@ void move_shot(Shot *shot, Model* model) {
   }
 }
 
+void reset_shot(Shot* shot, Model* model) {
+  shot->is_active = false;
+  shot->is_out_of_bounds = false;
+  shot->x = model->player.x;
+  shot->x = model->player.y;
+  model->player.shot_count -= 1;
+}
+
 bool laser_collides_with_alien(Alien* alien, Shot* laser) {
   return collides(alien->hitbox, laser->hitbox);
 }
 
 bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
   return collides(spaceship->hitbox, bomb->hitbox);
-
 }
 
 /*

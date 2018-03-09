@@ -91,11 +91,10 @@ void init_armada(Armada* armada);
 
 /* shot functions */
 void move_shot(Shot* shot, Model* model);
-void shot_hit_alien(Shot* player_shot, Alien* alien);
-void shot_hit_player(Shot* player_shot, Spaceship* alien);
-
 bool laser_collides_with_alien(Alien* alien, Shot* laser);
 bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
+void reset_shot(Shot* shot, Model* model);
+
 
 /* scorebox functions */
 void set_score(Scorebox* scorebox, uint32 score);
