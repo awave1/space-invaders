@@ -1,5 +1,5 @@
-#ifndef FONT_H
-#define FONT_H
+#ifndef SPACE_INVADERS_FONT_H
+#define SPACE_INVADERS_FONT_H
 
 #include "types.h"
 
@@ -17,4 +17,4 @@ extern const uint8 font[];     /* 8x8 system font */
 #define IS_PRINTABLE(i) ((i) >= ' ' && (i) <= '~')
 #define GLYPH_START(i) (font + (((i) - ' ') << 3))
 
-#endif
+#endif /* SPACE_INVADERS_FONT_H */

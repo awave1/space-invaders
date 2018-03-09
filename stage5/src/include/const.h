@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef SPACE_INVADERS_CONSTANTS_H
+#define SPACE_INVADERS_CONSTANTS_H
 
 #include "types.h"
 
@@ -62,5 +62,4 @@
 #define SYSTEM_CLOCK 0x462
 #define SCREEN_BUFFER_SIZE 32825
 
-#endif /* CONSTANTS_H */
-
+#endif /* SPACE_INVADERS_CONSTANTS_H */

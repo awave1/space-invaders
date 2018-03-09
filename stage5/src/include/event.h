@@ -1,5 +1,5 @@
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef SPACE_INVADERS_EVENT_H
+#define SPACE_INVEDERS_EVENT_H
 
 #include <osbind.h>
 #include "model.h"
@@ -24,4 +24,4 @@ void on_game_over(Model* model);
 bool has_user_input();
 unsigned long get_user_input();
 
-#endif /* EVENT_H */
+#endif /* SPACE_INVADERS_EVENT_H */

@@ -8,7 +8,6 @@ void process_async_events(Model* model, void* base) {
     clear_region(base, model->player.x, model->player.y, SPRITE_SIZE, SPRITE_SIZE);
 
     on_spaceship_move(&model->player, input);
-    
     render_spaceship(&model->player, base);
   }
 }
@@ -21,8 +20,9 @@ void process_sync_events(Model* model, void* base) {
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
     /* TODO: Need to delay the shots */
+    /* decrement some int val */
     on_alien_shoot(model);
-
+  
     clear_aliens(&model->armada, base);
     clear_shots(model->player.shots, base);
     clear_shots(model->armada.shots, base);
@@ -34,6 +34,7 @@ void process_sync_events(Model* model, void* base) {
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 
+    /* call vsync */
     render_armada(&model->armada, base);
     render_shots(model->player.shots, spaceship_laser, base);
     render_shots(model->armada.shots, alien_bomb, base);
@@ -52,9 +53,10 @@ void game_loop() {
   setup_game(&model, base);
 
   while (!model.is_game_over) {
+    /* clear_qk all */
+    clear_qk(base);
     process_async_events(&model, base);
     process_sync_events(&model, base);
-    Vsync();
   }
 }
 

@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef SPACE_INVADERS_TYPES_H
+#define SPACE_INVADERS_TYPES_H
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 400
@@ -25,4 +25,4 @@ typedef enum {
   alien_bomb, spaceship_laser
 } shot_t;
 
-#endif
+#endif /* SPACE_INVADERS_TYPES_H */

@@ -199,10 +199,6 @@ void move_shot(Shot *shot, Model* model) {
     else
       model->armada.shot_count -= 1;
   }
-
-  if (MODEL_DEBUG) {
-    printf("shot moves: y = %d\n", shot->y);
-  }
 }
 
 void reset_shot(Shot* shot, Model* model) {
@@ -229,10 +225,6 @@ void update_scorebox(Scorebox *scorebox, int alien_score) {
     scorebox->score += alien_score;
   else
     scorebox->score = MAX_SCORE;
-
-  if (MODEL_DEBUG) {
-    printf("int score: %lu\n", scorebox->score);
-  }
 }
 
 void init_scorebox(Scorebox *scorebox) {

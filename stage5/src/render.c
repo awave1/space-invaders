@@ -56,6 +56,7 @@ void disable_cursor() {
 
 void clear_aliens(Armada* armada, uint16* base) {
   int i, j, x, y;
+  /* TODO: Clear by row */
   for (i = 0; i < ALIENS_ROWS; i++) {
     for (j = 0; j < ALIENS_COLS; j++) {
       x = armada->aliens[i][j].x;
@@ -70,6 +71,6 @@ void clear_shots(Shot shots[], uint8* base) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (shots[i].is_active)
-      clear_region(base, shots[i].x, shots[i].y, 8, 8);
+      clear_region(base, shots[i].x, shots[i].y, SHOT_WIDTH, SHOT_HEIGHT);
   }
 }

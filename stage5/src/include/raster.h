@@ -1,5 +1,5 @@
-#ifndef RASTER_H
-#define RASTER_H
+#ifndef SPACE_INVADERS_RASTER_H
+#define SPACE_INVADERS_RASTER_H
 
 #include "types.h"
 #include "font.h"
@@ -102,4 +102,5 @@ void clear_hline(void *base, int x, int y, int width);
 void clear_hline_8(uint8 *base, int x, int y, int width);
 void clear_hline_16(uint16 *base, int x, int y, int width);
 void clear_hline_32(uint32 *base, int x, int y, int width);
-#endif
+
+#endif /* SPACE_INVADERS_RASTER_H */
