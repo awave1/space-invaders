@@ -39,14 +39,19 @@ void on_bomb_move(Model *model) {
 void on_laser_hit_alien(Model *model) {
   int i, row, col;
   bool collided = false;
+  Alien* alien;
+  Shot* shot;
+  
   for (i = 0; i < model->player.shot_count && !collided; i++) {
     for (row = 0; row < ALIENS_ROWS && !collided; row++) {
       for (col = 0; col < ALIENS_COLS && !collided; col++) {
-        if (model->player.shots[i].is_active && laser_collides_with_alien(&model->armada.aliens[row][col], &model->player.shots[i])) {
-          destroy_alien(&model->armada.aliens[row][col], &model->player.shots[i], &model->armada);
-          reset_shot(&model->player.shots[i], model);
-          update_scorebox(&model->scorebox, model->armada.aliens[row][col].score_val);
-          
+        shot = &model->player.shots[i];
+        alien = &model->armada.aliens[row][col];
+        if (shot->is_active && laser_collides_with_alien(alien, shot)) {
+          destroy_alien(alien, shot, &model->armada);
+          reset_shot(shot, model);
+          update_scorebox(&model->scorebox, alien->score_val);
+
           /* break out of all loops since collision happened */
           collided = true;
         }
