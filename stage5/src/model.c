@@ -122,7 +122,7 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__right;
       } else {
         _move_aliens(&model->armada, down);
-        hitbox->bottom_right_y = new_bottom_right_y + SPRITE_SIZE;
+        hitbox->bottom_right_y = new_bottom_right_y;
         hitbox->top_left_y = new_top_left_y;
 
         armada->move_direction = left;
@@ -135,7 +135,7 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__left;
       } else {
         _move_aliens(&model->armada, down);
-        hitbox->bottom_right_y = new_bottom_right_y + SPRITE_SIZE;
+        hitbox->bottom_right_y = new_bottom_right_y;
         hitbox->top_left_y = new_top_left_y;
 
         armada->move_direction = right;
@@ -290,8 +290,8 @@ void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
 void _init_armada_hitbox(Armada* armada) {
   armada->hitbox.top_left_x = ALIENS_START_X;
   armada->hitbox.top_left_y = ALIENS_START_Y;
-  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x;
-  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
+  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x + SPRITE_SIZE;
+  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y + SPRITE_SIZE;
   armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
   armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
   armada->hitbox.active = true;
