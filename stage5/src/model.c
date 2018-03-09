@@ -53,6 +53,7 @@ void init_spaceship(Spaceship *spaceship) {
   spaceship->hitbox.bottom_right_y = spaceship->y + SPRITE_SIZE;
   spaceship->hitbox.width = SPRITE_SIZE;
   spaceship->hitbox.height = SPRITE_SIZE;
+  spaceship->hitbox.active = true;
 
   _init_shots(spaceship->shots, NULL, spaceship_laser, SPACESHIP_MAX_LASERS);
 }
@@ -121,7 +122,7 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__right;
       } else {
         _move_aliens(&model->armada, down);
-        hitbox->bottom_right_y = new_bottom_right_y;
+        hitbox->bottom_right_y = new_bottom_right_y + SPRITE_SIZE;
         hitbox->top_left_y = new_top_left_y;
 
         armada->move_direction = left;
@@ -134,7 +135,7 @@ void move_armada(Model *model) {
         hitbox->top_left_x = new_top_left_x__left;
       } else {
         _move_aliens(&model->armada, down);
-        hitbox->bottom_right_y = new_bottom_right_y;
+        hitbox->bottom_right_y = new_bottom_right_y + SPRITE_SIZE;
         hitbox->top_left_y = new_top_left_y;
 
         armada->move_direction = right;
@@ -293,6 +294,7 @@ void _init_armada_hitbox(Armada* armada) {
   armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y;
   armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
   armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
+  armada->hitbox.active = true;
 }
 
 void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
@@ -317,6 +319,7 @@ void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
     shot.hitbox.bottom_right_y = shot.y + SHOT_HEIGHT;
     shot.hitbox.width = SHOT_WIDTH;
     shot.hitbox.width = SHOT_HEIGHT;
+    shot.hitbox.active = true;
 
     shots[i] = shot;
   }
