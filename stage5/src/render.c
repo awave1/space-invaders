@@ -45,6 +45,7 @@ void render_shots(const Shot shots[], shot_t shot_type, uint8 *base) {
 
 /*change base size if sprite different*/
 void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
+  print_string(base, scorebox->x, scorebox->y - 8, "Score");
   print_num(base, scorebox->x, scorebox->y, scorebox->score);
 }
 
