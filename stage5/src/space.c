@@ -63,6 +63,7 @@ void process_sync_events(Model* model, void* base) {
     on_bomb_move(model);
     on_laser_move(model);
     on_laser_hit_alien(model);
+    on_bomb_hit_player(model);
 
     render_armada(&model->armada, base);
     render_shots(model->player.shots, spaceship_laser, base);
