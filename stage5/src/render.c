@@ -49,3 +49,27 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
   print_num(base, scorebox->x, scorebox->y, scorebox->score);
 }
 
+void disable_cursor() {
+	printf("\033f");
+	fflush(stdout);
+}
+
+void clear_aliens(Armada* armada, uint16* base) {
+  int i, j, x, y;
+  for (i = 0; i < ALIENS_ROWS; i++) {
+    for (j = 0; j < ALIENS_COLS; j++) {
+      x = armada->aliens[i][j].x;
+      y = armada->aliens[i][j].y;
+      if (armada->aliens[i][j].is_alive)
+        clear_region(base, x, y, SPRITE_SIZE, SPRITE_SIZE);
+    }
+  }
+}
+
+void clear_shots(Shot shots[], uint8* base) {
+  int i;
+  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
+    if (shots[i].is_active)
+      clear_region(base, shots[i].x, shots[i].y, 8, 8);
+  }
+}

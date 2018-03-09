@@ -21,4 +21,10 @@ void render_shots(const Shot shots[], shot_t shot_type, uint8 *base);
 
 void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 
+void disable_cursor();
+
+void clear_aliens(Armada* armada, uint16* base);
+
+void clear_shots(Shot shots[], uint8* base);
+
 #endif /*SPACE_INVADERS_RENDER_H*/

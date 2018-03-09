@@ -34,11 +34,4 @@ void setup_game(Model* model, void* base);
  */
 long get_time();
 
-/*
- * TODO: Documentation
- */
-void disable_cursor();
-
-void clear_aliens(Armada* armada, uint16* base);
-
 #endif /* SPACE_INVADERS_GAME */

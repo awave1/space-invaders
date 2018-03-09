@@ -1,38 +1,5 @@
 #include "include/space.h"
 
-void clear_aliens(Armada* armada, uint16* base) {
-  int i, j, x, y;
-  for (i = 0; i < ALIENS_ROWS; i++) {
-    for (j = 0; j < ALIENS_COLS; j++) {
-      x = armada->aliens[i][j].x;
-      y = armada->aliens[i][j].y;
-      if (armada->aliens[i][j].is_alive)
-        clear_region(base, x, y, SPRITE_SIZE, SPRITE_SIZE);
-    }
-  }
-}
-
-void clear_shots(Shot shots[], uint8* base) {
-  int i;
-  for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
-    if (shots[i].is_active)
-      clear_region(base, shots[i].x, shots[i].y, 8, 8);
-  }
-}
-
-long get_time() {
-  long* timer = (long*) SYSTEM_CLOCK;
-  long old_ssp = Super(0);
-  long time_now = *timer;
-  Super(old_ssp);
-  return time_now;
-}
-
-void disable_cursor() {
-	printf("\033f");
-	fflush(stdout);
-}
-
 void process_async_events(Model* model, void* base) {
   unsigned long input;
 
@@ -53,6 +20,7 @@ void process_sync_events(Model* model, void* base) {
   time_now = get_time();
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
+    /* TODO: Need to delay the shots */
     on_alien_shoot(model);
 
     clear_aliens(&model->armada, base);
@@ -77,13 +45,6 @@ void process_sync_events(Model* model, void* base) {
   }
 }
 
-void setup_game(Model* model, void* base) {
-  disable_cursor();
-  on_game_start(model);
-  clear_qk(base);
-  render(model, base);
-}
-
 void game_loop() {
   Model model;
   void* base = Physbase();
@@ -93,7 +54,23 @@ void game_loop() {
   while (!model.is_game_over) {
     process_async_events(&model, base);
     process_sync_events(&model, base);
+    Vsync();
   }
+}
+
+long get_time() {
+  long* timer = (long*) SYSTEM_CLOCK;
+  long old_ssp = Super(0);
+  long time_now = *timer;
+  Super(old_ssp);
+  return time_now;
+}
+
+void setup_game(Model* model, void* base) {
+  disable_cursor();
+  on_game_start(model);
+  clear_qk(base);
+  render(model, base);
 }
 
 int main() {
