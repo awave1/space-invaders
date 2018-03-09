@@ -100,6 +100,7 @@ bool bomb_collides_with_spaceship(Spaceship* alien, Shot* laser);
 /* scorebox functions */
 void set_score(Scorebox* scorebox, uint32 score);
 uint32 get_score(Scorebox* scorebox);
+void update_scorebox(Scorebox *scorebox, int alien_score);
 
 /* model functions */
 void init_model(Model* model);
