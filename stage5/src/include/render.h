@@ -17,7 +17,7 @@ void render_armada(const Armada *armada, uint16 *base);
 
 void render_alien(const Alien *alien, uint16 *base);
 
-void render_shots(const Shot shots[], shot_t shot_type, uint8 *base);
+void render_shots(const Shot shots[], shot_t shot_type, uint16 *base);
 
 void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 
