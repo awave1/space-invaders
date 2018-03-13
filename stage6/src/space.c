@@ -32,22 +32,46 @@ void process_sync_events(Model *model, void *base) {
   }
 }
 
+uint8 buffer[32, 256];
+
+/*get base function*/
+unit8 *get_base(unit8 buffer[]) {
+  /*make sure byte aligned*/
+  unit8 *base;
+  unsigned int difference;
+  base = buffer;
+  difference = (int) base;
+  difference %= 0x100;
+  difference = 0x100 - difference;
+  return base + difference;
+}
+
 void game_loop() {
   /*TODO: Implement double buffering*/
   Model model;
-  void* base = Physbase();
-
+  Bool isScreen1;
+  void *base = Physbase();
+  int *screen2;
   setup_game(&model, base);
 
+  isScreen1 = true;
+  screen2 = get_base(buffer);
   while (!model.is_game_over || model.armada.alive_count != 0) {
-    clear_game(base); /* clears only game part of the screen */
-    process_async_events(&model, base);
-    process_sync_events(&model, base);
-    render(&model, base);
+    if (isScreen1) {
+      process_async_events(&model, base);
+      process_sync_events(&model, base);
+      clear_game(base); /* clears only game part of the screen */
+      render(&model, base);
+      Setscreen(-1, base, -1);
+    } else {
+      process_async_events(&model, screen2);
+      process_sync_events(&model, screen2);
+      clear_game(screen2); /* clears only game part of the screen */
+      render(&model, screen2);
+      Setscreen(-1, screen2, -1);
+    }
     Vsync();
-/*
-    Setscreen(-1,the screen to render to,-1);
-*/
+    isScreen1 = !isScreen1;
   }
 }
 
