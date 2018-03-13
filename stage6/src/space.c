@@ -1,8 +1,5 @@
 #include "include/space.h"
 
-/*
-uint8 buffer[SCREEN_BUFFER_SIZE];
-*/
 uint8 second_buffer[32256];
 void process_async_events(Model *model, void *base) {
   unsigned long input;
