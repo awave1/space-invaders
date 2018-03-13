@@ -1,4 +1,4 @@
-OBJ_FILES=bin\space.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\clear_qk.o
+OBJ_FILES=bin\space.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\clear_qk.o bin\clear_game.o
 EXE_NAME=space
 
 $(EXE_NAME).tos: $(OBJ_FILES)
@@ -27,3 +27,6 @@ bin\font.o: src\font.c src\include\font.h
 
 bin\clear_qk.o: src\asm\clear_qk.s src\include\clear_qk.h
 	gen -D -L2 src\asm\clear_qk.s -obin\clear_qk.o
+
+bin\clear_game.o: src\asm\clear_game.s src\include\clear_game.h
+	gen -D -L2 src\asm\clear_game.s -obin\clear_game.o

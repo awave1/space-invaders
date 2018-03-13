@@ -1,18 +1,13 @@
 #include "include/space.h"
 
+uint8 second_buffer[SCREEN_BUFFER_SIZE];
+
 void process_async_events(Model *model, void *base) {
   unsigned long input;
-
   if (has_user_input()) {
     input = get_user_input();
-/*
-    clear_region(base, model->player.x, model->player.y, SPRITE_SIZE, SPRITE_SIZE);
-*/
-
     on_spaceship_move(&model->player, input);
   }
-  render_spaceship(&model->player, base);
-  /* }*/
 }
 
 void process_sync_events(Model *model, void *base) {
@@ -24,13 +19,7 @@ void process_sync_events(Model *model, void *base) {
   if (time_elapsed > 0) {
     /* TODO: Need to delay the shots */
     /* decrement some int val */
-    on_alien_shoot(model);
-
-/*
-    clear_aliens(&model->armada, base);
-    clear_shots(model->player.shots, base);
-    clear_shots(model->armada.shots, base);
-*/
+    /* on_alien_shoot(model); */
 
     on_armada_move(model);
     on_bomb_move(model);
@@ -39,16 +28,6 @@ void process_sync_events(Model *model, void *base) {
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 
-    /* call vsync */
-    render_armada(&model->armada, base);
-    render_shots(model->player.shots, spaceship_laser, base);
-    render_shots(model->armada.shots, alien_bomb, base);
-
-/*
-    if (model->scorebox.score > 0 && model->scorebox.score > prev_score)
-*/
-    render_scoreboard(&model->scorebox, base);
-
     time_then = time_now;
   }
 }
@@ -56,18 +35,16 @@ void process_sync_events(Model *model, void *base) {
 void game_loop() {
   /*TODO: Implement double buffering*/
   Model model;
-  void *base = Physbase();
+  void* base = Physbase();
 
   setup_game(&model, base);
 
-  while (!model.is_game_over) {
-    /* clear_qk all */
-    clear_qk(base);
+  while (!model.is_game_over || model.armada.alive_count != 0) {
+    clear_game(base); /* clears only game part of the screen */
     process_async_events(&model, base);
-    /*if clock ticks*/
     process_sync_events(&model, base);
+    render(&model, base);
     Vsync();
-    /*vsync then render*/
 /*
     Setscreen(-1,the screen to render to,-1);
 */

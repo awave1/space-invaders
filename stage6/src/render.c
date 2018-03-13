@@ -3,6 +3,8 @@
 void render(Model *model, void *base) {
   render_spaceship(&model->player, (uint16 *) base);
   render_armada(&model->armada, (uint16 *) base);
+  render_shots(model->armada.shots, alien_bomb, base);
+  render_shots(model->player.shots, spaceship_laser, base);
   render_scoreboard(&model->scorebox, (uint8 *) base);
 }
 

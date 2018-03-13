@@ -7,6 +7,7 @@
 #include "event.h"
 #include "render.h"
 #include "clear_qk.h"
+#include "clear_qk_game.h"
 
 
 /*
