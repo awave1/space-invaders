@@ -1,3 +1,8 @@
+/*
+ *  File: model.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_MODEL_H
 #define SPACE_INVADERS_MODEL_H
 

@@ -1,3 +1,8 @@
+/*
+ *  File: sprites.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_SPRITES_H
 #define SPACE_INVADERS_SPRITES_H
 
