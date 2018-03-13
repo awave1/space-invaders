@@ -75,6 +75,7 @@ void game_loop() {
     Vsync();
     isScreen1 = !isScreen1;
   }
+  Setscreen(-1, base, -1);
 }
 
 long get_time() {
