@@ -19,7 +19,7 @@ void process_sync_events(Model *model, void *base) {
   if (time_elapsed > 0) {
     /* TODO: Need to delay the shots */
     /* decrement some int val */
-    /* on_alien_shoot(model); */
+    on_alien_shoot(model);
 
     on_armada_move(model);
     on_bomb_move(model);
