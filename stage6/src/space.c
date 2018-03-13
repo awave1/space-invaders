@@ -1,8 +1,5 @@
 #include "include/space.h"
 
-/*
-uint8 buffer[SCREEN_BUFFER_SIZE];
-*/
 uint8 second_buffer[32256];
 void process_async_events(Model *model, void *base) {
   unsigned long input;
@@ -56,6 +53,8 @@ void game_loop() {
 
   isScreen1 = true;
   screen2 = get_base(second_buffer);
+  clear_qk(screen2);
+
   while (!model.is_game_over || model.armada.alive_count != 0) {
     if (isScreen1) {
       process_async_events(&model, base);
@@ -73,6 +72,7 @@ void game_loop() {
     Vsync();
     isScreen1 = !isScreen1;
   }
+  Setscreen(-1, base, -1);
 }
 
 long get_time() {
