@@ -7,7 +7,7 @@
 #include "event.h"
 #include "render.h"
 #include "clear_qk.h"
-#include "clear_qk_game.h"
+#include "clear_game.h"
 
 
 /*
@@ -38,5 +38,6 @@ long get_time();
 /*
  * TODO: Documentation
  */
-unsigned char *get_base(unsigned char *second_buffer);
+uint8 *get_base(uint8 *second_buffer);
+
 #endif /* SPACE_INVADERS_GAME */

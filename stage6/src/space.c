@@ -35,9 +35,9 @@ void process_sync_events(Model *model, void *base) {
 }
 
 /*get base function*/
-unsigned char *get_base(unsigned char *second_buffer) {
+uint8 *get_base(uint8 *second_buffer) {
   /*make sure byte aligned*/
-  unsigned char *base;
+  uint8 *base;
   uint16 difference;
   base = second_buffer;
   difference = (int) base;

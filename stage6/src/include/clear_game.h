@@ -1,5 +1,5 @@
-#ifndef CLEAR_QK_H_GAME
-#define CLEAR_QK_H_GAME
+#ifndef CLEAR_GAME_H
+#define CLEAR_GAME_H
 
 void clear_game(void *base);
 
