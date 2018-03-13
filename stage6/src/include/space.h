@@ -7,7 +7,7 @@
 #include "event.h"
 #include "render.h"
 #include "clear_qk.h"
-#include "clear_game.h"
+#include "clear_ga.h"
 
 
 /*
