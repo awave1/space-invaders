@@ -35,4 +35,8 @@ void setup_game(Model *model, void *base);
  */
 long get_time();
 
+/*
+ * TODO: Documentation
+ */
+unsigned char *get_base(unsigned char *second_buffer);
 #endif /* SPACE_INVADERS_GAME */

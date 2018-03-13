@@ -1,7 +1,9 @@
 #include "include/space.h"
 
-uint8 second_buffer[SCREEN_BUFFER_SIZE];
-
+/*
+uint8 buffer[SCREEN_BUFFER_SIZE];
+*/
+uint8 second_buffer[32256];
 void process_async_events(Model *model, void *base) {
   unsigned long input;
   if (has_user_input()) {
@@ -32,14 +34,12 @@ void process_sync_events(Model *model, void *base) {
   }
 }
 
-uint8 buffer[32, 256];
-
 /*get base function*/
-unit8 *get_base(unit8 buffer[]) {
+unsigned char *get_base(unsigned char *second_buffer) {
   /*make sure byte aligned*/
-  unit8 *base;
-  unsigned int difference;
-  base = buffer;
+  unsigned char *base;
+  uint16 difference;
+  base = second_buffer;
   difference = (int) base;
   difference %= 0x100;
   difference = 0x100 - difference;
@@ -49,13 +49,13 @@ unit8 *get_base(unit8 buffer[]) {
 void game_loop() {
   /*TODO: Implement double buffering*/
   Model model;
-  Bool isScreen1;
-  void *base = Physbase();
-  int *screen2;
+  bool isScreen1;
+  uint8 *base = Physbase();
+  void *screen2;
   setup_game(&model, base);
 
   isScreen1 = true;
-  screen2 = get_base(buffer);
+  screen2 = get_base(second_buffer);
   while (!model.is_game_over || model.armada.alive_count != 0) {
     if (isScreen1) {
       process_async_events(&model, base);
