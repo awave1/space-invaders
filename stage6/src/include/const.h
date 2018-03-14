@@ -1,6 +1,9 @@
 /*
  *  File: const.h 
  *  Authors: Artem Golovin, Daniel Artuso 
+ *  
+ *  Description: 
+ *      Contains constants used throughout the project
  */
 
 #ifndef SPACE_INVADERS_CONSTANTS_H
