@@ -1,6 +1,6 @@
 #include "include/space.h"
 
-uint8 second_buffer[32256];
+uint8 second_buffer[32256]; /*Second Screen for double buffering */
 void process_async_events(Model *model, void *base) {
   unsigned long input;
   if (has_user_input()) {
@@ -44,7 +44,6 @@ uint8 *get_base(uint8 *second_buffer) {
 }
 
 void game_loop() {
-  /*TODO: Implement double buffering*/
   Model model;
   bool isScreen1;
   uint8 *base = Physbase();
@@ -63,11 +62,7 @@ void game_loop() {
       render(&model, base);
       Setscreen(-1, base, -1);
     } else {
-/*
-      process_async_events(&model, screen2);
-      process_sync_events(&model, screen2);
-*/
-      clear_game(screen2); /* clears only game part of the screen */
+      clear_game(screen2);
       render(&model, screen2);
       Setscreen(-1, screen2, -1);
     }
