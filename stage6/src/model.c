@@ -260,14 +260,6 @@ void init_model(Model *model) {
   init_scorebox(&model->scorebox);
 }
 
-void resume_game(Model *model) {
-  model->is_playing = true;
-}
-
-void pause_game(Model *model) {
-  model->is_playing = false;
-}
-
 void game_over(Model *model) {
   model->is_game_over = true;
   model->is_playing = false;
@@ -367,8 +359,4 @@ void _move_alien(Alien *alien, direction_t direction) {
 void _update_shot_hitbox(hitbox_t *hitbox, int dy) {
   hitbox->top_left_y = dy;
   hitbox->bottom_right_y = dy + SHOT_HEIGHT;
-}
-
-bool _in_range(unsigned int low, unsigned int high, unsigned int x) {
-  return (low <= x && x <= high);
 }
