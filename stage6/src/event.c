@@ -78,7 +78,9 @@ void on_game_start(Model *model) {
 
 void on_game_pause(Model *model) {
   /* TODO: add functions to halt all movement */
+/*
   pause_game(model);
+*/
 }
 
 void on_game_over(Model *model) {

@@ -56,15 +56,17 @@ void game_loop() {
   clear_qk(screen2);
 
   while (!model.is_game_over || model.armada.alive_count != 0) {
+    process_async_events(&model, base);
+    process_sync_events(&model, base);
     if (isScreen1) {
-      process_async_events(&model, base);
-      process_sync_events(&model, base);
       clear_game(base); /* clears only game part of the screen */
       render(&model, base);
       Setscreen(-1, base, -1);
     } else {
+/*
       process_async_events(&model, screen2);
       process_sync_events(&model, screen2);
+*/
       clear_game(screen2); /* clears only game part of the screen */
       render(&model, screen2);
       Setscreen(-1, screen2, -1);
