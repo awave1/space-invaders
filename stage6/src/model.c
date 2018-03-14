@@ -169,6 +169,17 @@ void init_armada(Armada *armada) {
   armada->shot_count = 0;
 
   for (row = 0; row < ALIENS_ROWS; row++) {
+    switch (row) {
+      case 1:
+      case 2:
+        score = ALIEN_B_SCORE;
+        break;
+      case 3:
+      case 4:
+        score = ALIEN_A_SCORE;
+        break;
+    }
+    
     for (col = 0; col < ALIENS_COLS; col++) {
       _init_alien(&alien, x, y, row, col, score);
       armada->aliens[row][col] = alien;
@@ -178,7 +189,6 @@ void init_armada(Armada *armada) {
     x = ALIENS_START_X;
     y += ALIEN_BOX_SIZE;
 
-    score = row >= 1 && row < 3 ? ALIEN_B_SCORE : ALIEN_A_SCORE;
   }
 
   _init_armada_hitbox(armada);
