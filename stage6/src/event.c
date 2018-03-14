@@ -60,21 +60,6 @@ void on_laser_hit_alien(Model *model) {
   }
 }
 
-/* todo: write test driver for below functions */
-void on_laser_hit_boundary(Shot *laser) {
-  if (laser->type == spaceship_laser) {
-    laser->is_active = false;
-    laser->is_out_of_bounds = true;
-  }
-}
-
-void on_bomb_hit_boundary(Shot *bomb) {
-  if (bomb->type == alien_bomb) {
-    bomb->is_active = false;
-    bomb->is_out_of_bounds = true;
-  }
-}
-
 void on_bomb_hit_player(Model *model) {
   int i;
   for (i = 0; i < model->armada.shot_count; i++) {
