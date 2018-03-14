@@ -13,9 +13,10 @@
 
 /* event constants */
 #define EVENT_DEBUG false
-#define LEFT_KEY 0x4b
-#define RIGHT_KEY 0x4D
-#define SPACE_KEY 0x39
+#define ESC_KEY 0x
+#define LEFT_KEY 0x004b0000
+#define RIGHT_KEY 0x004d0000
+#define SPACE_KEY 0x00390020
 
 
 /* model constants */

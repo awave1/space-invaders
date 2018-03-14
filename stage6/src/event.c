@@ -90,5 +90,5 @@ bool has_user_input() {
 }
 
 unsigned long get_user_input() {
-  return Cnecin() >> 16;
+  return Cnecin();
 }
