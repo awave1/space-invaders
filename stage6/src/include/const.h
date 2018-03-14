@@ -41,7 +41,7 @@
 #define ALIEN_A_SCORE 10
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
-#define ALIEN_BOMB_SPEED 2
+#define ALIEN_BOMB_SPEED 22
 #define ALIEN_MAX_BOMBS 3
 #define ALIEN_SPEED_X 2
 #define ALIEN_SPEED_Y 4
