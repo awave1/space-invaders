@@ -1,3 +1,8 @@
+/*
+ *  File: raster.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_RASTER_H
 #define SPACE_INVADERS_RASTER_H
 

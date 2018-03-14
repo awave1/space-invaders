@@ -1,3 +1,8 @@
+/*
+ *  File: const.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_CONSTANTS_H
 #define SPACE_INVADERS_CONSTANTS_H
 

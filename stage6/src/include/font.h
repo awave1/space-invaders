@@ -1,3 +1,8 @@
+/*
+ *  File: font.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_FONT_H
 #define SPACE_INVADERS_FONT_H
 

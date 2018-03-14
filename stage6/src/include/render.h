@@ -1,3 +1,8 @@
+/*
+ *  File: render.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_RENDER_H
 #define SPACE_INVADERS_RENDER_H
 

@@ -1,3 +1,8 @@
+/*
+ *  File: event.h 
+ *  Authors: Artem Golovin, Daniel Artuso 
+ */
+
 #ifndef SPACE_INVADERS_EVENT_H
 #define SPACE_INVEDERS_EVENT_H
 
