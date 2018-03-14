@@ -14,34 +14,47 @@
 #include "clear_qk.h"
 #include "clear_ga.h"
 
-
-/*
- * TODO: Documentation
+/**
+ * Game loop, that processes async/sync events and handles double buffering
  */
 void game_loop();
 
-/*
- * TODO: Documentation
+/**
+ * Process all async events
+ * 
+ * @param model - Game model
+ * @param base  - Screen
  */
 void process_async_events(Model *model, void *base);
 
-/*
- * TODO: Documentation
+/**
+ * Process all sync events
+ * 
+ * @param model - Game model
+ * @param base  - Screen
  */
 void process_sync_events(Model *model, void *base);
 
-/*
- * TODO: Documentation
+/**
+ * Set up the game, clear the screen and draw the initial state of the game
+ * 
+ * @param model - Game model
+ * @param base  - Screen
  */
 void setup_game(Model *model, void *base);
 
-/*
- * TODO: Documentation
+/**
+ * Get the system time
+ * 
+ * @return long - system time
  */
 long get_time();
 
-/*
- * TODO: Documentation
+/**
+ * @brief Get the 256 byte aligned base
+ * 
+ * @param second_buffer - second buffere used for double buffering technique
+ * @return uint8* - 256 byte aligned screen base
  */
 uint8 *get_base(uint8 *second_buffer);
 
