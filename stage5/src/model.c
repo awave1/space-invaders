@@ -8,11 +8,11 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
     case left:
       if (pos_in_bounds(spaceship->x - SPACESHIP_MOVE_SPEED, SPACESHIP_START_Y))
         spaceship->x -= SPACESHIP_MOVE_SPEED;
-      break;
+          break;
     case right:
       if (pos_in_bounds(spaceship->x + SPACESHIP_MOVE_SPEED, SPACESHIP_START_Y))
         spaceship->x += SPACESHIP_MOVE_SPEED;
-      break;
+          break;
     default:
       break;
   }
@@ -24,7 +24,8 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
 void spaceship_shoot(Spaceship *spaceship) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
-    if (spaceship->shot_count == 0 && spaceship->shot_count < SPACESHIP_MAX_LASERS) {
+    if (spaceship->shot_count == 0 &&
+        spaceship->shot_count < SPACESHIP_MAX_LASERS) {
       if (!spaceship->shots[i].is_active) {
         spaceship->shots[i].x = spaceship->x - 2;
         spaceship->shots[i].y = spaceship->y - 8;
@@ -32,8 +33,10 @@ void spaceship_shoot(Spaceship *spaceship) {
 
         spaceship->shots[i].hitbox.top_left_x = spaceship->shots[i].x;
         spaceship->shots[i].hitbox.top_left_y = spaceship->shots[i].y;
-        spaceship->shots[i].hitbox.bottom_right_x = spaceship->shots[i].x + SHOT_WIDTH;
-        spaceship->shots[i].hitbox.bottom_right_y = spaceship->shots[i].y + SHOT_HEIGHT;
+        spaceship->shots[i].hitbox.bottom_right_x =
+          spaceship->shots[i].x + SHOT_WIDTH;
+        spaceship->shots[i].hitbox.bottom_right_y =
+          spaceship->shots[i].y + SHOT_HEIGHT;
 
         spaceship->shot_count++;
       }
@@ -66,26 +69,32 @@ void alien_shoot(Armada *armada) {
   int i;
   int rand_row = Random() % ALIENS_ROWS;
   int rand_col = Random() % ALIENS_COLS;
+  int max_shots =
+    armada->alive_count >= 3 ? ALIEN_MAX_BOMBS : armada->alive_count;
+  Alien alien = armada->aliens[rand_row][rand_col];
+  if (alien.is_alive) {
+    for (i = 0; i < max_shots; i++) {
+      if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {
+        if (!armada->shots[i].is_active) {
+          armada->shots[i].x = armada->aliens[rand_row][rand_col].x - 2;
+          armada->shots[i].y = armada->aliens[rand_row][rand_col].y + 4;
+          armada->shots[i].is_active = true;
 
-  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
-    if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {
-      if (!armada->shots[i].is_active) {
-        armada->shots[i].x = armada->aliens[rand_row][rand_col].x - 2;
-        armada->shots[i].y = armada->aliens[rand_row][rand_col].y + 4;
-        armada->shots[i].is_active = true;
+          armada->shots[i].hitbox.top_left_x = armada->shots[i].x;
+          armada->shots[i].hitbox.top_left_y = armada->shots[i].y;
+          armada->shots[i].hitbox.bottom_right_x =
+            armada->shots[i].x + SHOT_WIDTH;
+          armada->shots[i].hitbox.bottom_right_y =
+            armada->shots[i].y + SHOT_HEIGHT;
 
-        armada->shots[i].hitbox.top_left_x = armada->shots[i].x;
-        armada->shots[i].hitbox.top_left_y = armada->shots[i].y;
-        armada->shots[i].hitbox.bottom_right_x = armada->shots[i].x + SHOT_WIDTH;
-        armada->shots[i].hitbox.bottom_right_y = armada->shots[i].y + SHOT_HEIGHT;
-
-        armada->shot_count++;
-      } 
+          armada->shot_count++;
+        }
+      }
     }
-  } 
+  }
 }
 
-void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
+void destroy_alien(Alien *alien, Shot *shot, Armada *armada) {
   if (shot->type == spaceship_laser) {
     shot->is_active = false;
     alien->is_alive = false;
@@ -103,7 +112,7 @@ void destroy_alien(Alien* alien, Shot* shot, Armada* armada) {
  */
 void move_armada(Model *model) {
   Armada *armada = &model->armada;
-  hitbox_t* hitbox = &armada->hitbox;
+  hitbox_t *hitbox = &armada->hitbox;
 
   int new_bottom_right_x__right = hitbox->bottom_right_x + ALIEN_SPEED_X;
   int new_top_left_x__right = hitbox->top_left_x + ALIEN_SPEED_X;
@@ -127,7 +136,7 @@ void move_armada(Model *model) {
 
         armada->move_direction = left;
       }
-      break;
+          break;
     case left:
       if (new_top_left_x__left >= 0) {
         _move_aliens(&model->armada, left);
@@ -140,7 +149,7 @@ void move_armada(Model *model) {
 
         armada->move_direction = right;
       }
-      break;
+          break;
     default:
       break;
   }
@@ -172,8 +181,20 @@ void init_armada(Armada *armada) {
 
     x = ALIENS_START_X;
     y += ALIEN_BOX_SIZE;
-
-    score = row >= 1 && row < 3 ? ALIEN_B_SCORE : ALIEN_A_SCORE;
+    switch (row) {
+      case 0:
+      case 1:
+        score = ALIEN_C_SCORE;
+            break;
+      case 2:
+      case 3:
+        score = ALIEN_B_SCORE;
+            break;
+      case 4:
+      default:
+        score = ALIEN_C_SCORE;
+            break;
+    }
   }
 
   _init_armada_hitbox(armada);
@@ -184,7 +205,7 @@ void init_armada(Armada *armada) {
 /*
  * Shot functions
  */
-void move_shot(Shot *shot, Model* model) {
+void move_shot(Shot *shot, Model *model) {
   if (shot->type == spaceship_laser)
     shot->y -= SPACESHIP_LASER_SPEED;
   else if (shot->type == alien_bomb)
@@ -201,7 +222,7 @@ void move_shot(Shot *shot, Model* model) {
   }
 }
 
-void reset_shot(Shot* shot, Model* model) {
+void reset_shot(Shot *shot, Model *model) {
   shot->is_active = false;
   shot->is_out_of_bounds = false;
   shot->x = model->player.x;
@@ -209,11 +230,11 @@ void reset_shot(Shot* shot, Model* model) {
   model->player.shot_count -= 1;
 }
 
-bool laser_collides_with_alien(Alien* alien, Shot* laser) {
+bool laser_collides_with_alien(Alien *alien, Shot *laser) {
   return collides(alien->hitbox, laser->hitbox);
 }
 
-bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb) {
+bool bomb_collides_with_spaceship(Spaceship *spaceship, Shot *bomb) {
   return collides(spaceship->hitbox, bomb->hitbox);
 }
 
@@ -262,7 +283,7 @@ void game_over(Model *model) {
 bool collides(hitbox_t box1, hitbox_t box2) {
   return
     box1.active && box2.active &&
-    box1.top_left_x < box2.bottom_right_x && 
+    box1.top_left_x < box2.bottom_right_x &&
     box1.bottom_right_x > box2.top_left_x &&
     box1.top_left_y < box2.bottom_right_y &&
     box1.bottom_right_y > box2.top_left_y;
@@ -270,9 +291,9 @@ bool collides(hitbox_t box1, hitbox_t box2) {
 
 
 /* Helpers */
-void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
+void _init_alien(Alien *alien, int x, int y, int row, int col, int score) {
   alien->x = x;
-  alien->y = y; 
+  alien->y = y;
   alien->row = row;
   alien->col = col;
   alien->score_val = score;
@@ -286,17 +307,21 @@ void _init_alien(Alien* alien, int x, int y, int row, int col, int score) {
   alien->hitbox.active = true;
 }
 
-void _init_armada_hitbox(Armada* armada) {
+void _init_armada_hitbox(Armada *armada) {
   armada->hitbox.top_left_x = ALIENS_START_X;
   armada->hitbox.top_left_y = ALIENS_START_Y;
-  armada->hitbox.bottom_right_x = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x + SPRITE_SIZE;
-  armada->hitbox.bottom_right_y = armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y + SPRITE_SIZE;
-  armada->hitbox.width = (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
-  armada->hitbox.height = (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
+  armada->hitbox.bottom_right_x =
+    armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].x + SPRITE_SIZE;
+  armada->hitbox.bottom_right_y =
+    armada->aliens[ALIENS_ROWS - 1][ALIENS_COLS - 1].y + SPRITE_SIZE;
+  armada->hitbox.width =
+    (armada->hitbox.bottom_right_x + SPRITE_SIZE) - armada->hitbox.top_left_x;
+  armada->hitbox.height =
+    (armada->hitbox.bottom_right_y + SPRITE_SIZE) - armada->hitbox.top_left_y;
   armada->hitbox.active = true;
 }
 
-void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
+void _init_shots(Shot shots[], Armada *armada, shot_t type, int max_shots) {
   int i, row, col;
   Shot shot;
   for (i = 0; i < max_shots; i++) {
@@ -324,32 +349,32 @@ void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots) {
   }
 }
 
-void _move_aliens(Armada* armada, direction_t direction) {
+void _move_aliens(Armada *armada, direction_t direction) {
   int row, col;
   for (row = 0; row < ALIENS_ROWS; row++)
     for (col = 0; col < ALIENS_COLS; col++)
       _move_alien(&armada->aliens[row][col], direction);
 }
 
-void _move_alien(Alien* alien, direction_t direction) {
+void _move_alien(Alien *alien, direction_t direction) {
   if (direction == right)
     alien->x += ALIEN_SPEED_X;
   else if (direction == left)
     alien->x -= ALIEN_SPEED_X;
   else if (direction == down)
     alien->y += ALIEN_SPEED_Y;
-  
+
   alien->hitbox.top_left_x = alien->x;
   alien->hitbox.top_left_y = alien->y;
   alien->hitbox.bottom_right_x = alien->x + SPRITE_SIZE;
   alien->hitbox.bottom_right_y = alien->y + SPRITE_SIZE;
 }
 
-void _update_shot_hitbox(hitbox_t* hitbox, int dy) {
+void _update_shot_hitbox(hitbox_t *hitbox, int dy) {
   hitbox->top_left_y = dy;
   hitbox->bottom_right_y = dy + SHOT_HEIGHT;
 }
 
 bool _in_range(unsigned int low, unsigned int high, unsigned int x) {
-  return (low <= x  && x <= high);
+  return (low <= x && x <= high);
 }
