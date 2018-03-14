@@ -26,7 +26,7 @@ void process_sync_events(Model *model) {
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 
-    /*on_armada_move(model);*/
+    on_armada_move(model);
     on_bomb_move(model);
     on_laser_move(model);
 
