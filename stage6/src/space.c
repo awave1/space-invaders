@@ -74,7 +74,9 @@ void game_loop() {
     Vsync();
     isScreen1 = !isScreen1;
   }
+  render(&model, base);
   Setscreen(-1, base, -1);
+  Vsync();
 }
 
 long get_time() {
