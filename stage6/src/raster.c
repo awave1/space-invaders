@@ -159,27 +159,6 @@ void print_num(uint8 *base, int x, int y, uint16 num) {
   print_char(base, x + 24, y, d);
 }
 
-/*
- * Clear screen (each longword (640 / 32) portion of the screen) 
- */
-
-void _clear_screen(uint32 *base, bool inverse) {
-  int x, y;
-  for (x = 0; x < 20; x++) {
-    for (y = 0; y < 399; y++) {
-      *(base + (y * 20) + x) = !inverse ? 0x00000000 : 0xffffffff;
-    }
-  }
-}
-
-void clear_screen(uint32 *base) {
-  _clear_screen(base, false);
-}
-
-void clear_screen__inverse(uint32 *base) {
-  _clear_screen(base, true);
-}
-
 void clear_region(void *base, int x, int y, int width, int height) {
   if (width <= 8)
     clear_region_8(base, x, y, width, height);

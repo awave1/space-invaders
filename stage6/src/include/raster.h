@@ -41,22 +41,36 @@ void plot_horizontal_line(uint8 *base, int x, int y, int width);
 void plot_horizontal_line__inverse(uint8 *base, int x, int y, int width);
 
 
-/* Plot line
- * Require starting x,y coordinates (x1,y2)
- * and end line location (x2,y2)
- *
+/** Plot line
+ * 
+ * 
  */
+
+ /**
+  * Require starting x,y coordinates (x1,y2)
+  * and end line location (x2,y2)
+  *
+  * @param base - Screen
+  * @param x1   - starting x
+  * @param y1   - starting y
+  * @param x2   - end x
+  * @param y2   - end y
+  */
 void plot_line(uint8 *base, int x1, int y1, int x2, int y2);
 
-/* Plot rectangle
- * Require starting coordinates of rectange
- * Width is how many pixels to the right the thickness of the rectangle will be
- * Height is how many pixels towards the bottom from the starting coordinates
- *  the rectangle will be.
- *
- */
+ /**
+  * Require starting coordinates of rectange
+  * Width is how many pixels to the right the thickness of the rectangle will be
+  * Height is how many pixels towards the bottom from the starting coordinates
+  *  the rectangle will be.
+  * 
+  * @param base   - Screen
+  * @param x      - x position
+  * @param y      - y position
+  * @param width  - width of rectange
+  * @param height - height of rectange
+  */
 void plot_rectangle(uint8 *base, int x, int y, int width, int height);
-
 void plot_rectangle__inverse(uint8 *base, int x, int y, int width, int height);
 
 /* Plots 8 by height Bitmap todo: idk if this is correct
@@ -93,12 +107,6 @@ void print_num(uint8 *base, int x, int y, uint16 num);
 /*
  * Clears the entire screen
  */
-void _clear_screen(uint32 *base, bool inverse);
-
-void clear_screen(uint32 *base);
-
-void clear_screen__inverse(uint32 *base);
-
 void clear_region(void *base, int x, int y, int width, int height);
 
 void clear_region_8(uint8 *base, int x, int y, int width, int height);
