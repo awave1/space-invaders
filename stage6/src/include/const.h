@@ -13,7 +13,7 @@
 
 /* event constants */
 #define EVENT_DEBUG false
-#define ESC_KEY 0x
+#define ESC_KEY 0x0001001b
 #define LEFT_KEY 0x004b0000
 #define RIGHT_KEY 0x004d0000
 #define SPACE_KEY 0x00390020
@@ -41,7 +41,7 @@
 #define ALIEN_A_SCORE 10
 #define ALIEN_B_SCORE 20
 #define ALIEN_C_SCORE 30
-#define ALIEN_BOMB_SPEED 22
+#define ALIEN_BOMB_SPEED 2
 #define ALIEN_MAX_BOMBS 3
 #define ALIEN_SPEED_X 2
 #define ALIEN_SPEED_Y 4
@@ -54,7 +54,6 @@
 #define SPRITE_SIZE 16
 #define SPRITE_HEIGHT 16
 
-/*TODO: Replace, when proper plotting implemented*/
 #define SHOT_WIDTH 8
 #define SHOT_HEIGHT 8
 

@@ -23,17 +23,15 @@ void game_loop();
  * Process all async events
  * 
  * @param model - Game model
- * @param base  - Screen
  */
-void process_async_events(Model *model, void *base);
+void process_async_events(Model *model);
 
 /**
  * Process all sync events
  * 
  * @param model - Game model
- * @param base  - Screen
  */
-void process_sync_events(Model *model, void *base);
+void process_sync_events(Model *model);
 
 /**
  * Set up the game, clear the screen and draw the initial state of the game

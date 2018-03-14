@@ -22,9 +22,6 @@
 #include "const.h"
 #include "types.h"
 
-#define for_row for (row = 0; row < ALIENS_ROWS; row++)
-#define for_col for (col = 0; col < ALIENS_COLS; col++)
-#define iterate_aliens for_row for_col
 
 typedef struct {
     uint16 top_left_x;
@@ -86,7 +83,6 @@ typedef struct Model {
     Spaceship player;
     Armada armada;
     Scorebox scorebox;
-
 } Model;
 
 /* spaceship functions */

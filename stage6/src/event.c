@@ -62,12 +62,13 @@ void on_laser_hit_alien(Model *model) {
 
 void on_bomb_hit_player(Model *model) {
   int i;
-  for (i = 0; i < model->armada.shot_count; i++) {
+  bool collided = false;
+  for (i = 0; i < model->armada.shot_count && !collided; i++) {
     if (model->armada.shots[i].is_active &&
         bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
       model->player.is_alive = false;
       on_game_over(model);
-      break;
+      collided = true;
     }
   }
 }

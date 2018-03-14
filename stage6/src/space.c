@@ -1,15 +1,18 @@
 #include "include/space.h"
 
-uint8 second_buffer[32256];
-void process_async_events(Model *model, void *base) {
+const uint8 second_buffer[32256]; /*Second Screen for double buffering */
+
+void process_async_events(Model *model) {
   unsigned long input;
   if (has_user_input()) {
     input = get_user_input();
     on_spaceship_move(&model->player, input);
+    if (input == ESC_KEY)
+      on_game_over(model);
   }
 }
 
-void process_sync_events(Model *model, void *base) {
+void process_sync_events(Model *model) {
   unsigned long time_then, time_now, time_elapsed;
   int prev_score = model->scorebox.score;
 
@@ -20,12 +23,12 @@ void process_sync_events(Model *model, void *base) {
     /* decrement some int val */
     on_alien_shoot(model);
 
-    on_armada_move(model);
-    on_bomb_move(model);
-    on_laser_move(model);
-
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
+
+    /*on_armada_move(model);*/
+    on_bomb_move(model);
+    on_laser_move(model);
 
     time_then = time_now;
   }
@@ -44,7 +47,6 @@ uint8 *get_base(uint8 *second_buffer) {
 }
 
 void game_loop() {
-  /*TODO: Implement double buffering*/
   Model model;
   bool swap_screens = true;
   uint8 *base = Physbase();
@@ -54,20 +56,28 @@ void game_loop() {
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
 
-  while (!model.is_game_over || model.armada.alive_count != 0) {
-    process_async_events(&model, base);
-    process_sync_events(&model, base);
-    if (swap_screens) {
-      clear_game(base); /* clears only game part of the screen */
-      render(&model, base);
-      Setscreen(-1, base, -1);
+  while (!model.is_game_over|| model.armada.alive_count != 0) {
+    process_async_events(&model);
+    process_sync_events(&model);
+    if (!model.is_game_over) {
+      if (swap_screens) {
+        clear_game(base); /* clears only game part of the screen */
+        render(&model, base);
+        Setscreen(-1, base, -1);
+      } else {
+        clear_game(screen2);
+        render(&model, screen2);
+        Setscreen(-1, screen2, -1);
+      }
+      Vsync();
+      swap_screens = !swap_screens;
     } else {
-      clear_game(screen2); /* clears only game part of the screen */
-      render(&model, screen2);
-      Setscreen(-1, screen2, -1);
+      /* 
+        The only solution that worked. We tried adding a boolean flag, but it wouldn't break out of the loop 
+        That is why we had to use break statement here.
+      */
+      break;
     }
-    Vsync();
-    swap_screens = !swap_screens;
   }
   render(&model, base);
   Setscreen(-1, base, -1);

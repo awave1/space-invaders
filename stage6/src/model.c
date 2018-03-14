@@ -70,21 +70,23 @@ void alien_shoot(Armada *armada) {
   int rand_row = Random() % ALIENS_ROWS;
   int rand_col = Random() % ALIENS_COLS;
 
-  for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
-    if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {
-      if (!armada->shots[i].is_active) {
-        armada->shots[i].x = armada->aliens[rand_row][rand_col].x - 2;
-        armada->shots[i].y = armada->aliens[rand_row][rand_col].y + 4;
-        armada->shots[i].is_active = true;
+  if (armada->aliens[rand_row][rand_col].is_alive) {
+    for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
+      if (armada->shot_count == 0 && armada->shot_count < ALIEN_MAX_BOMBS) {
+        if (!armada->shots[i].is_active) {
+          armada->shots[i].x = armada->aliens[rand_row][rand_col].x - 2;
+          armada->shots[i].y = armada->aliens[rand_row][rand_col].y + 4;
+          armada->shots[i].is_active = true;
 
-        armada->shots[i].hitbox.top_left_x = armada->shots[i].x;
-        armada->shots[i].hitbox.top_left_y = armada->shots[i].y;
-        armada->shots[i].hitbox.bottom_right_x =
-          armada->shots[i].x + SHOT_WIDTH;
-        armada->shots[i].hitbox.bottom_right_y =
-          armada->shots[i].y + SHOT_HEIGHT;
+          armada->shots[i].hitbox.top_left_x = armada->shots[i].x;
+          armada->shots[i].hitbox.top_left_y = armada->shots[i].y;
+          armada->shots[i].hitbox.bottom_right_x =
+            armada->shots[i].x + SHOT_WIDTH;
+          armada->shots[i].hitbox.bottom_right_y =
+            armada->shots[i].y + SHOT_HEIGHT;
 
-        armada->shot_count++;
+          armada->shot_count++;
+        }
       }
     }
   }
@@ -150,7 +152,7 @@ void move_armada(Model *model) {
       break;
   }
 
-  if (collides(*hitbox, model->player.hitbox))
+  if (collides(*(hitbox), model->player.hitbox))
     game_over(model);
 }
 
