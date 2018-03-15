@@ -81,6 +81,10 @@ void on_game_over(Model *model) {
   game_over(model);
 }
 
+void on_next_wave(Model* model) {
+  init_armada(&model->armada);
+}
+
 bool has_user_input() {
   return Cconis();
 }
