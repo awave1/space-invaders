@@ -1,6 +1,7 @@
 #include "include/space.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
+int next_shot = 50; /* TODO: Replace asap */
 
 void process_async_events(Model *model) {
   unsigned long input;
@@ -19,9 +20,10 @@ void process_sync_events(Model *model) {
   time_now = get_time();
   time_elapsed = time_now - time_then;
   if (time_elapsed > 0) {
-    /* TODO: Need to delay the shots */
-    /* decrement some int val */
-    on_alien_shoot(model);
+    if (next_shot == 0) {
+      on_alien_shoot(model);
+      next_shot = 50;
+    }
 
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
@@ -30,6 +32,7 @@ void process_sync_events(Model *model) {
     on_bomb_move(model);
     on_laser_move(model);
 
+    next_shot--;
     time_then = time_now;
   }
 }
