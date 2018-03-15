@@ -56,9 +56,13 @@ void game_loop() {
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
 
-  while (!model.is_game_over|| model.armada.alive_count != 0) {
+  while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
     process_sync_events(&model);
+    
+    if (model.armada.alive_count == 0)
+      on_next_wave(&model);
+
     if (!model.is_game_over) {
       if (swap_screens) {
         clear_game(base); /* clears only game part of the screen */

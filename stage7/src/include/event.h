@@ -89,6 +89,13 @@ void on_game_pause(Model *model);
 void on_game_over(Model *model);
 
 /**
+ * Event that is called when the next wave needs to be generated
+ * 
+ * @param model - Game model
+ */
+void on_next_wave(Model* model);
+
+/**
  * Checks, if user entered a character
  * 
  * @return true if user entered a character
