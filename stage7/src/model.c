@@ -209,7 +209,7 @@ void move_shot(Shot *shot, Model *model) {
 
   _update_shot_hitbox(&shot->hitbox, shot->y);
 
-  if (shot->y <= SCOREBOX_Y + 8 || shot->y >= SCREEN_HEIGHT) {
+  if (shot->y <= SCOREBOX_Y + 8 || shot->y >= model->player.hitbox.bottom_right_y) {
     shot->is_active = false;
     if (shot->type == spaceship_laser)
       model->player.shot_count -= 1;
