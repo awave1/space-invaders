@@ -1,9 +1,13 @@
 #ifndef SPACE_INVADERS_PSG_H
 #define SPACE_INVADERS_PSG_H
 
+#include <osbind.h>
 #include "types.h"
 
-#define valid_reg(reg) (reg >= 0 && reg <= 12)
+#define reg_is_valid(reg) (reg >= 0 && reg <= 12)
+
+volatile char* psg_reg_select = 0xFF8800;
+volatile char* psg_reg_write  = 0xFF8802;
 
 /**
  * Writes the given byte value (0-255) to the given PSG register (0-15)
