@@ -32,6 +32,19 @@ uint8 read_psg(int reg);
 void set_tone(int channel, int tuning);
 
 /**
+ * Load the noise register with the given tuning
+ * 
+ * @param tuning 
+ */
+void set_noise(int tuning);
+
+/**
+ * Loads the PSG envelope control registers with the given envelope
+ * shape and 16-bit sustain
+ */
+void set_envelope();
+
+/**
  * Loads the volume register for the given channel
  * 
  * @param channel - given channel
