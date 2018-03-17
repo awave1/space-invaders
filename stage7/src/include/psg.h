@@ -4,10 +4,24 @@
 #include <osbind.h>
 #include "types.h"
 
+#define CH_A_FINE_TUNE 0
+#define CH_A_COARSE_TUNE 1
+#define CH_A_MIXER 7
+#define CH_A_VOL 8
+
 #define reg_is_valid(reg) (reg >= 0 && reg <= 12)
 
 volatile char* psg_reg_select = 0xFF8800;
 volatile char* psg_reg_write  = 0xFF8802;
+
+/**
+ * The usual order of writing data to the registers of SSG:
+ *    1. Setting music frequency
+ *    2. Setting noise frequency
+ *    3. Setting mixer
+ *    4. Setting volume
+ *    5. Envelope control
+ */
 
 /**
  * Writes the given byte value (0-255) to the given PSG register (0-15)
