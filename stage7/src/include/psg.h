@@ -4,9 +4,9 @@
 #include <osbind.h>
 #include "types.h"
 
-#define CH_A_FREQUENCY 0x0
-#define CH_B_FREQUENCY 0x2
-#define CH_C_FREQUENCY 0x4
+#define CH_A_TONE 0x0
+#define CH_B_TONE 0x2
+#define CH_C_TONE 0x4
 
 #define CH_A_ROUGH_TONE 0x1
 #define CH_B_ROUGH_TONE 0x3
@@ -28,7 +28,7 @@
 #define MIXER_NOISE_CH_C 0x1f
 
 #define NOISE_FREQUENCY 0x6
-#define MIXER 0x7
+#define MIXER_REG 0x7
 
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)
