@@ -86,5 +86,7 @@ void enable_channel(channel_t channel, bool tone_on, bool noise_on) {
 }
 
 void stop_sound() {
-
+  set_volume(ch_a, 0);
+  set_volume(ch_b, 0);
+  set_volume(ch_c, 0);
 }
