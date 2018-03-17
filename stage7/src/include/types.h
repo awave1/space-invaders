@@ -23,11 +23,15 @@ typedef int bool;
 #define false 0
 
 typedef enum {
-    left, right, down, stop
+  left, right, down, stop
 } direction_t;
 
 typedef enum {
-    alien_bomb, spaceship_laser
+  alien_bomb, spaceship_laser
 } shot_t;
+
+typedef enum {
+  ch_a, ch_b, ch_c
+} channel_t;
 
 #endif /* SPACE_INVADERS_TYPES_H */
