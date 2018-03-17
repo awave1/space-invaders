@@ -47,7 +47,7 @@ uint8 read_psg(int reg);
  * @param channel
  * @param tuning
  */
-void set_tone(int channel, int tuning);
+void set_tone(channel_t channel, int tuning);
 
 /**
  * Load the noise register with the given tuning
@@ -68,7 +68,7 @@ void set_envelope();
  * @param channel - given channel
  * @param vol - volume amount
  */
-void set_volume(int channel, int vol);
+void set_volume(channel_t channel, int vol);
 
 /**
  * Turns the given channel's tone/noise signals on/off
@@ -77,7 +77,7 @@ void set_volume(int channel, int vol);
  * @param tone_on - true, to turn on
  * @param noise_on - true, to turn on
  */
-void enable_channel(int channel, bool tone_on, bool noise_on);
+void enable_channel(channel_t channel, bool tone_on, bool noise_on);
 
 /**
  * Silences all PSG sound
