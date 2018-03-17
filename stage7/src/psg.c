@@ -31,7 +31,7 @@ void set_tone(channel_t channel, int tuning) {
 }
 
 void set_noise(int tuning) {
-
+  write_psg(NOISE_FREQUENCY_REG, tuning)
 }
 
 void set_envelope() {

@@ -27,7 +27,7 @@
 #define MIXER_NOISE_CH_B 0x2f
 #define MIXER_NOISE_CH_C 0x1f
 
-#define NOISE_FREQUENCY 0x6
+#define NOISE_FREQUENCY_REG 0x6
 #define MIXER_REG 0x7
 
 
