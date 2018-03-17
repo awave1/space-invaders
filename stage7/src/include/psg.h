@@ -4,12 +4,34 @@
 #include <osbind.h>
 #include "types.h"
 
-#define CH_A_FINE_TUNE 0
-#define CH_A_COARSE_TUNE 1
-#define CH_A_MIXER 7
-#define CH_A_VOL 8
+#define CH_A_FREQUENCY 0x0
+#define CH_B_FREQUENCY 0x2
+#define CH_C_FREQUENCY 0x4
 
-#define reg_is_valid(reg) (reg >= 0 && reg <= 12)
+#define CH_A_ROUGH_TONE 0x1
+#define CH_B_ROUGH_TONE 0x3
+#define CH_C_ROUGH_TONE 0x5
+
+#define CH_A_VOL 0x8
+#define CH_B_VOL 0x9
+#define CH_C_VOL 0xa
+
+/**
+ * To combine channels, just '&' them
+ */
+#define MIXER_ALL_OFF 0xff
+#define MIXER_TONE_CH_A 0x3e
+#define MIXER_TONE_CH_B 0x3d
+#define MIXER_TONE_CH_C 0x3b
+#define MIXER_NOISE_CH_A 0x37
+#define MIXER_NOISE_CH_B 0x2f
+#define MIXER_NOISE_CH_C 0x1f
+
+#define NOISE_FREQUENCY 0x6
+#define MIXER 0x7
+
+
+#define reg_is_valid(reg) (reg >= 0 && reg <= 15)
 
 volatile char* psg_reg_select = 0xFF8800;
 volatile char* psg_reg_write  = 0xFF8802;
