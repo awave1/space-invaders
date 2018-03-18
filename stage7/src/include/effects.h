@@ -2,6 +2,9 @@
 #define SPACE_INVADERS_EFFECTS_H
 
 #include "psg.h"
+#include "types.h"
+
+#define EXPLOSION_NOISE_TUNE 0x11
 
 /**
  * Plays shot effect when called
