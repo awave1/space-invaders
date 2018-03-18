@@ -11,6 +11,7 @@
 #include "model.h"
 #include "event.h"
 #include "render.h"
+#include "psg.h"
 #include "clear_qk.h"
 #include "clear_ga.h"
 

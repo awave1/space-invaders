@@ -107,6 +107,11 @@ void setup_game(Model *model, void *base) {
 }
 
 int main() {
+  set_tone(ch_a, 248);
+  set_volume(ch_a, 11);
+  set_envelope();
+  enable_channel(ch_a, true, false);
   game_loop();
+  stop_sound();
   return 0;
 }

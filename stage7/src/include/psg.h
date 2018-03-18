@@ -29,6 +29,7 @@
 
 #define NOISE_FREQUENCY_REG 0x6
 #define MIXER_REG 0x7
+#define ENVELOPE_REG 0xd
 
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)
