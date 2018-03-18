@@ -8,8 +8,10 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
     move_spaceship(spaceship, left);
   else if (key == RIGHT_KEY)
     move_spaceship(spaceship, right);
-  else if (key == SPACE_KEY)
+  else if (key == SPACE_KEY) {
     spaceship_shoot(spaceship);
+    laser_shot_effect();
+  }
 }
 
 void on_armada_move(Model *model) {
@@ -49,8 +51,8 @@ void on_laser_hit_alien(Model *model) {
         alien = &model->armada.aliens[row][col];
         if (shot->is_active && laser_collides_with_alien(alien, shot)) {
           destroy_alien(alien, shot, &model->armada);
-          explosion_effect();
           reset_shot(shot, model);
+          stop_sound();
           update_scorebox(&model->scorebox, alien->score_val);
 
           /* break out of all loops since collision happened */
