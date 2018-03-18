@@ -49,6 +49,7 @@ void on_laser_hit_alien(Model *model) {
         alien = &model->armada.aliens[row][col];
         if (shot->is_active && laser_collides_with_alien(alien, shot)) {
           destroy_alien(alien, shot, &model->armada);
+          explosion_effect();
           reset_shot(shot, model);
           update_scorebox(&model->scorebox, alien->score_val);
 
