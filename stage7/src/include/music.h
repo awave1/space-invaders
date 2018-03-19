@@ -16,6 +16,8 @@
 #define NOTE_A 268
 #define NOTE_B_FLAT 253
 
+extern const int main_melody[];
+
 /**
  * Starts playing the song by loading the data for the first note into the PSG
  */
