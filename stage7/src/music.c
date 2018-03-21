@@ -1,9 +1,5 @@
 #include "include/music.h"
 
-const int main_melody[] = {
-  
-};
-
 void start_music() {
 
 }

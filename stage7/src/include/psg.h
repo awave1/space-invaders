@@ -29,7 +29,17 @@
 
 #define NOISE_FREQUENCY_REG 0x6
 #define MIXER_REG 0x7
-#define ENVELOPE_REG 0xd
+
+#define ENVELOPE_FINE_REG 0xb
+#define ENVELOPE_ROUGH_REG 0xc
+#define ENVELOPE_SHAPE_CONTROL_REG 0xd
+
+#define ENV_SAW_SHAPE 0xc
+#define ENV_SAW_SHAPE_INV 0x8
+#define ENV_TRIANGLE_SHAPE 0xe
+#define ENV_TRIANGLE_INV_SHAPE 0xa
+#define ENV_TRIANGLE_INV_PERIOD_SHAPE 0x00
+#define ENV_TRIANGLE_PERIOD_SHAPE  0xd
 
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)
@@ -83,7 +93,7 @@ void set_noise(int tuning);
  * Loads the PSG envelope control registers with the given envelope
  * shape and 16-bit sustain
  */
-void set_envelope();
+void set_envelope(env_shape_t shape, uint16 sustain);
 
 /**
  * Loads the volume register for the given channel
