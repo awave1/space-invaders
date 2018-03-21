@@ -7,7 +7,12 @@ void laser_shot_effect() {
 }
 
 void explosion_effect() {
-  set_noise(EXPLOSION_NOISE_TUNE);
+  int vol = 16;
+  int noise_tone = 31;
+  int sustain = 30;
+
+  set_noise(noise_tone);
   enable_channel(ch_a, false, true);
-  set_volume(ch_a, 11);
+  set_volume(ch_a, vol);
+  set_envelope(triangle_inv_period, sustain);
 }

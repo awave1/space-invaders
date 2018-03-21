@@ -34,8 +34,33 @@ void set_noise(int tuning) {
   write_psg(NOISE_FREQUENCY_REG, tuning);
 }
 
-void set_envelope() {
+void set_envelope(env_shape_t shape, uint16 sustain) {
+  int shape_val;
+  write_psg(ENVELOPE_FINE_REG, sustain);
+  write_psg(ENVELOPE_ROUGH_REG, sustain);
 
+  switch(shape) {
+    case saw:
+      shape_val = ENV_SAW_SHAPE;
+      break;
+    case saw_inv:
+      shape_val = ENV_SAW_SHAPE_INV;
+      break;
+    case triangle:
+      shape_val = ENV_TRIANGLE_SHAPE;
+      break;
+    case triangle_inv:
+      shape_val = ENV_TRIANGLE_INV_SHAPE;
+      break;
+    case triangle_period:
+      shape_val = ENV_TRIANGLE_PERIOD_SHAPE;
+      break;
+    case triangle_inv_period:
+      shape_val = ENV_TRIANGLE_INV_PERIOD_SHAPE;
+      break;
+  }
+
+  write_psg(ENVELOPE_SHAPE_CONTROL_REG, shape_val);
 }
 
 void set_volume(channel_t channel, int vol) {

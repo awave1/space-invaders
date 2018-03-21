@@ -34,4 +34,9 @@ typedef enum {
   ch_a, ch_b, ch_c
 } channel_t;
 
+typedef enum {
+  saw, saw_inv, saw_period, saw_inv_period, 
+  triangle, triangle_inv, triangle_period, triangle_inv_period
+} env_shape_t;
+
 #endif /* SPACE_INVADERS_TYPES_H */
