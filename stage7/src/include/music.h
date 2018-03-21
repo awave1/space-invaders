@@ -16,7 +16,12 @@
 #define NOTE_A 268
 #define NOTE_B_FLAT 253
 
-extern const int main_melody[];
+extern const note_t main_melody[];
+
+typedef struct {
+  int freq;
+  int duration;
+} note_t;
 
 /**
  * Starts playing the song by loading the data for the first note into the PSG
