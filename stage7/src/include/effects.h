@@ -14,6 +14,6 @@ void laser_shot_effect();
 /**
  * Plays an explosion effect when called
  */
-void explosion_effect();
+void explosion_effect(bool is_alien);
 
 #endif /* SPACE_INVADERS_EFFECTS_H */
