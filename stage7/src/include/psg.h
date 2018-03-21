@@ -36,10 +36,11 @@
 
 #define ENV_SAW_SHAPE 0xc
 #define ENV_SAW_SHAPE_INV 0x8
+#define ENV_SAW_PERIOD_SHAPE  0xf
 #define ENV_TRIANGLE_SHAPE 0xe
 #define ENV_TRIANGLE_INV_SHAPE 0xa
-#define ENV_TRIANGLE_INV_PERIOD_SHAPE 0x00
 #define ENV_TRIANGLE_PERIOD_SHAPE  0xd
+#define ENV_TRIANGLE_INV_PERIOD_SHAPE 0x00
 
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)

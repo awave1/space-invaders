@@ -46,6 +46,8 @@ void set_envelope(env_shape_t shape, uint16 sustain) {
     case saw_inv:
       shape_val = ENV_SAW_SHAPE_INV;
       break;
+    case saw_period:
+      shape_val = ENV_SAW_PERIOD_SHAPE;
     case triangle:
       shape_val = ENV_TRIANGLE_SHAPE;
       break;
