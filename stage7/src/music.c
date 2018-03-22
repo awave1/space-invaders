@@ -2,13 +2,13 @@
 
 static int current_note = 0;
 
-const int notes[] = { 268, 301, 338, 379 };
-const int note_durations[] = { 24, 14, 24, 14 };
+const int notes[NOTES_SZ] =          { 168, 0, 201, 0, 238, 0, 148, 0 };
+const int note_durations[NOTES_SZ] = { 20, 20, 20, 20, 20, 20, 20, 20 };
 
 void start_music() {
   music_t music;
 
-	set_tone(ch_c, 268);
+  set_envelope(triangle_inv_period, 10);
 	enable_channel(ch_c, true, false);
 	set_volume(ch_c, 11);
 }
