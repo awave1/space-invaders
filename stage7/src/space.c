@@ -54,14 +54,19 @@ void game_loop() {
   bool swap_screens = true;
   uint8 *base = Physbase();
   void *screen2;
+  unsigned long prev_call = get_time();
   setup_game(&model, base);
 
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
+  start_music();
 
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
     process_sync_events(&model);
+
+    if (update_music(get_time() - prev_call))
+      prev_call = get_time();
     
     if (model.armada.alive_count == 0)
       on_next_wave(&model);

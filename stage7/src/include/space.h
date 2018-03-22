@@ -12,6 +12,7 @@
 #include "event.h"
 #include "render.h"
 #include "psg.h"
+#include "music.h"
 #include "clear_qk.h"
 #include "clear_ga.h"
 
