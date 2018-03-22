@@ -11,6 +11,10 @@
 
 #include "types.h"
 
+/* splash screen constants */
+#define SPLASH_WIDTH 640
+#define SPLASH_HEIGHT 400
+
 /* event constants */
 #define EVENT_DEBUG false
 #define ESC_KEY 0x0001001b
