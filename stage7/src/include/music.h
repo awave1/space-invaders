@@ -17,9 +17,8 @@
 #define NOTE_A 268
 #define NOTE_B_FLAT 253
 
-#define NOTES_SZ 4
+#define NOTES_SZ 8
 
-/* 268 301 338 379 */
 
 typedef struct {
   int freq;
