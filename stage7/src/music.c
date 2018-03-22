@@ -9,7 +9,7 @@ void start_music() {
   music_t music;
 
   set_envelope(triangle_inv_period, 10);
-	enable_channel(ch_c, true, false);
+  enable_channel_(MIXER_TONE_CH_C, false, false);
 	set_volume(ch_c, 11);
 }
 
