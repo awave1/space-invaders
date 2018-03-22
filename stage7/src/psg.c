@@ -112,6 +112,14 @@ void enable_channel(channel_t channel, bool tone_on, bool noise_on) {
   }
 }
 
+void enable_channel_(int channel, bool tone_on, bool noise_on) {
+  bool tone_only = tone_on && !noise_on;
+  bool noise_only = !tone_on && noise_on;
+  bool tone_and_noise = tone_on && noise_on;
+
+  write_psg(MIXER_REG, channel);
+}
+
 void stop_sound() {
   set_volume(ch_a, 0);
   set_volume(ch_b, 0);
