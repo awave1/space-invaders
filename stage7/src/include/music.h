@@ -1,6 +1,7 @@
 #ifndef SPACE_INVADERS_MUSIC_H
 #define SPACE_INVADERS_MUSIC_H
 
+#include "psg.h"
 #include "types.h"
 
 #define NOTE_C_FLAT 478
@@ -16,12 +17,18 @@
 #define NOTE_A 268
 #define NOTE_B_FLAT 253
 
-extern const note_t main_melody[];
+#define NOTES_SZ 4
+
+/* 268 301 338 379 */
 
 typedef struct {
   int freq;
   int duration;
 } note_t;
+
+typedef struct {
+  note_t notes[NOTES_SZ];
+} music_t;
 
 /**
  * Starts playing the song by loading the data for the first note into the PSG
@@ -36,6 +43,8 @@ void start_music();
  * 
  * @param time_elapsed - time elapsed since the prev. call
  */
-void update_music(uint32 time_elapsed);
+bool update_music(uint32 time_elapsed);
+
+void _init_music(music_t* music);
 
 #endif /* SPACE_INVADERS_MUSIC_H */
