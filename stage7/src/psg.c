@@ -12,8 +12,19 @@ void write_psg(int reg, uint8 val) {
   }
 }
 
-uint8 read_psg(int reg) {
-  return 0;
+int read_psg(int reg) {
+  long old_ssp;
+  int val = -1;
+  
+  old_ssp = Super(0);
+  
+  if (reg_is_valid(reg)) {
+    *psg_reg_select = reg;
+    val = *psg_reg_write;
+  }
+
+  Super(old_ssp);
+  return val;
 }
 
 void set_tone(channel_t channel, int tuning) {
