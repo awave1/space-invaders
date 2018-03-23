@@ -19,7 +19,7 @@ const note_t main_song[] = {
 
 void start_music() {
   set_envelope(triangle_inv_period, 10);
-  enable_channel_(MIXER_TONE_CH_C, false, false);
+  enable_channel(ch_c, true, false);
 	set_volume(ch_c, 11);
 }
 
