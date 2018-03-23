@@ -25,10 +25,6 @@ typedef struct {
   int duration;
 } note_t;
 
-typedef struct {
-  note_t notes[NOTES_SZ];
-} music_t;
-
 /**
  * Starts playing the song by loading the data for the first note into the PSG
  */
@@ -43,7 +39,5 @@ void start_music();
  * @param time_elapsed - time elapsed since the prev. call
  */
 bool update_music(uint32 time_elapsed);
-
-void _init_music(music_t* music);
 
 #endif /* SPACE_INVADERS_MUSIC_H */
