@@ -15,12 +15,13 @@ void write_psg(int reg, uint8 val) {
 int read_psg(int reg) {
   long old_ssp;
   int val = -1;
-  
+
   old_ssp = Super(0);
+
   
   if (reg_is_valid(reg)) {
     *psg_reg_select = reg;
-    val = *psg_reg_write;
+    val = *psg_reg_select;
   }
 
   Super(old_ssp);
@@ -94,33 +95,49 @@ void enable_channel(channel_t channel, bool tone_on, bool noise_on) {
   bool tone_only = tone_on && !noise_on;
   bool noise_only = !tone_on && noise_on;
   bool tone_and_noise = tone_on && noise_on;
+  int existing_mixer_val = read_psg(MIXER_REG);
+  int channel_val;
 
   switch(channel) {
     case ch_a:
       if (tone_only)
-        write_psg(MIXER_REG, MIXER_TONE_CH_A);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_TONE_CH_A : MIXER_TONE_CH_A;
       else if (noise_only)
-        write_psg(MIXER_REG, MIXER_NOISE_CH_A);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_NOISE_CH_A : MIXER_NOISE_CH_A;
       else if (tone_and_noise)
-        write_psg(MIXER_REG, MIXER_TONE_CH_A & MIXER_NOISE_CH_A);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & (MIXER_TONE_CH_A & MIXER_NOISE_CH_A) : 
+          (MIXER_TONE_CH_A & MIXER_NOISE_CH_A);
       break;
     case ch_b:
       if (tone_only)
-        write_psg(MIXER_REG, MIXER_TONE_CH_B);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_TONE_CH_B : MIXER_TONE_CH_B;
       else if (noise_only)
-        write_psg(MIXER_REG, MIXER_NOISE_CH_B);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_NOISE_CH_B : MIXER_NOISE_CH_B;
       else if (tone_and_noise)
-        write_psg(MIXER_REG, MIXER_TONE_CH_B & MIXER_NOISE_CH_B);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & (MIXER_TONE_CH_B & MIXER_NOISE_CH_B) : 
+          (MIXER_TONE_CH_B & MIXER_NOISE_CH_B);
       break;
     case ch_c:
       if (tone_only)
-        write_psg(MIXER_REG, MIXER_TONE_CH_C);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_TONE_CH_C : MIXER_TONE_CH_C;
       else if (noise_only)
-        write_psg(MIXER_REG, MIXER_NOISE_CH_C);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & MIXER_NOISE_CH_C : MIXER_NOISE_CH_C;
       else if (tone_and_noise)
-        write_psg(MIXER_REG, MIXER_TONE_CH_C & MIXER_NOISE_CH_C);
+        channel_val = existing_mixer_val != -1 ? 
+          existing_mixer_val & (MIXER_TONE_CH_C & MIXER_NOISE_CH_C) : 
+          (MIXER_TONE_CH_C & MIXER_NOISE_CH_C);
       break;
   }
+
+  write_psg(MIXER_REG, channel_val);
 }
 
 void enable_channel_(int channel, bool tone_on, bool noise_on) {
