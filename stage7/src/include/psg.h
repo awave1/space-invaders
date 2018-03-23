@@ -72,7 +72,7 @@ void write_psg(int reg, uint8 val);
  * @param reg - register
  * @return uint8 - value stored in register
  */
-uint8 read_psg(int reg);
+int read_psg(int reg);
 
 /**
  * Loads the tone registers (coarse and fine) for the given channel
