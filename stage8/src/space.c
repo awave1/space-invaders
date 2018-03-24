@@ -112,7 +112,8 @@ void setup_game(Model *model, void *base) {
 }
 
 int main() {
-  game_loop();
-  stop_sound();
+  menu();
+/*  game_loop();
+  stop_sound();*/
   return 0;
 }

@@ -2,6 +2,8 @@
 
 void menu() {
   /*TODO: draw splash screen*/
+  uint16 *base = Physbase();
+  plot_bitmap_16(base, 0, 0, splash_screen, 640);
   process_keyboard_choice();
 }
 

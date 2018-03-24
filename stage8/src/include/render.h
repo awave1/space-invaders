@@ -8,6 +8,7 @@
 
 #include <osbind.h>
 
+#include "menu.h"
 #include "model.h"
 #include "event.h"
 #include "raster.h"
