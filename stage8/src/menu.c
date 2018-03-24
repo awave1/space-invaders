@@ -9,15 +9,15 @@ void menu() {
 void process_keyboard_choice() {
   unsigned long input;
   int choice = 1;
-  while (input != ENTER_KEY || input != ESC_KEY) {
+  while (input != ENTER_KEY && input != ESC_KEY) {
     if (has_user_input()) {
       input = get_user_input();
       switch (input) {
-        case UP_ARROW:
+        case UP_KEY:
           if (choice > 1)
             choice--;
               break;
-        case DOWN_ARROW:
+        case DOWN_KEY:
           if (choice < 3)
             choice++;
               break;
