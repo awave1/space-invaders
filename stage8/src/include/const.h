@@ -21,7 +21,9 @@
 #define LEFT_KEY 0x004b0000
 #define RIGHT_KEY 0x004d0000
 #define SPACE_KEY 0x00390020
-
+#define UP_KEY 0x00480000
+#define DOWN_KEY 0x00500000
+#define ENTER_KEY 0x001C000D
 
 /* model constants */
 #define MODEL_DEBUG false
