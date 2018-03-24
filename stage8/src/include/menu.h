@@ -8,7 +8,12 @@
 
 #include <osbind.h>
 #include <stdio.h>
+#include "types.h"
+#include "const.h"
 #include "event.h"
+#include "splash.h"
+#include "space.h"
+#include "raster.h"
 
 void menu();
 
