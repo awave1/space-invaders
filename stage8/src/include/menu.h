@@ -10,5 +10,10 @@
 #include <stdio.h>
 #include "event.h"
 
+void menu();
+
+void process_keyboard_choice();
+
+void select_option(int choice);
 
 #endif /*SPACE_INVADERS_MENU_H*/
