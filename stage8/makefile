@@ -1,4 +1,4 @@
-OBJ_FILES=bin\space.o bin\menu.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear_qk.o bin\clear_game.o
+OBJ_FILES=bin\space.o bin\splash.o bin\menu.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear_qk.o bin\clear_game.o
 EXE_NAME=space
 
 $(EXE_NAME).tos: $(OBJ_FILES)
@@ -36,6 +36,9 @@ bin\music.o: src\music.c src\include\music.h
 
 bin\effects.o: src\effects.c src\include\effects.h
 	cc68x -g -c src\effects.c -o bin\effects.o
+
+bin\splash.o: src\splash.c src\include\splash.h
+	cc68x -g -c src\splash.c -o bin\splash.o
 
 bin\clear_qk.o: src\asm\clear_qk.s src\include\clear_qk.h
 	gen -D -L2 src\asm\clear_qk.s -obin\clear_qk.o
