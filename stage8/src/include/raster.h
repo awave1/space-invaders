@@ -7,6 +7,7 @@
 #define SPACE_INVADERS_RASTER_H
 
 #include "types.h"
+#include "const.h"
 #include "font.h"
 
 /*
@@ -87,6 +88,8 @@ void plot_bitmap_8(uint8 *base, int x, int y, uint8 *bitmap, int height);
  * Height specifies the height of the bitmap
  */
 void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height);
+
+void plot_screen(uint32* base, uint32* splash);
 
 /* Prints a character
  * prints a specified character at given x,y coordinates

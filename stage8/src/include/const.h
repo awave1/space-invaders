@@ -14,6 +14,7 @@
 /* splash screen constants */
 #define SPLASH_WIDTH 640
 #define SPLASH_HEIGHT 400
+#define SPLASH_BMP_SIZE 8000
 
 /* event constants */
 #define EVENT_DEBUG false

@@ -3,7 +3,7 @@
 void menu() {
   /*TODO: draw splash screen*/
   uint16 *base = Physbase();
-  plot_bitmap_16(base, 0, 0, splash_screen, 640);
+
   process_keyboard_choice();
 }
 
@@ -18,11 +18,11 @@ void process_keyboard_choice() {
         case UP_KEY:
           if (choice > 1)
             choice--;
-              break;
+          break;
         case DOWN_KEY:
           if (choice < 3)
             choice++;
-              break;
+          break;
         default:
           break;
       }
@@ -40,8 +40,8 @@ void select_option(int choice) {
   switch (choice) {
     case 1:
       game_loop();
-          stop_sound();
-          break;
+      stop_sound();
+      break;
     case 2:
       /*Two player game mode here*/
     case 3:

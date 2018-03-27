@@ -116,6 +116,12 @@ void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height) {
   }
 }
 
+void plot_screen(uint32* base, uint32* bitmap) {
+  int i;	
+	for(i = 0; i < SPLASH_BMP_SIZE; i++)
+		*(base + i) = bitmap[i];
+}
+
 /*
  * todo: make more generic
  */
