@@ -54,6 +54,11 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
   print_num(base, scorebox->x, scorebox->y, scorebox->score);
 }
 
+void render_splashscreen(uint32* base) {
+  clear_qk(base);
+  plot_screen(base, splash_screen);
+}
+
 void disable_cursor() {
   printf("\033f");
   fflush(stdout);

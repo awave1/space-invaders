@@ -65,6 +65,13 @@ void render_shots(const Shot shots[], shot_t shot_type, uint16 *base);
 void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 
 /**
+ * Render the splashscreen
+ * 
+ * @param base - Screen
+ */
+void render_splashscreen(uint32* base);
+
+/**
  * Disable the cursor using terminal command
  */
 void disable_cursor();
