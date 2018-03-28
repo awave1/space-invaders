@@ -1,9 +1,6 @@
 #include "include/menu.h"
 
 void menu() {
-  /*TODO: draw splash screen*/
-  uint16 *base = Physbase();
-
   process_keyboard_choice();
 }
 
@@ -26,7 +23,7 @@ void process_keyboard_choice() {
         default:
           break;
       }
-      /*TODO: process drawing selection icon*/
+      draw_choice_selector(choice);
       if (input == ENTER_KEY)
         select_option(choice);
       if (input == ESC_KEY)
@@ -48,5 +45,25 @@ void select_option(int choice) {
     default:
       /*Quit option*/
       break;
+  }
+}
+
+void draw_choice_selector(int choice) {
+  uint16 *base = Physbase();
+
+  switch (choice) {
+    default:
+    case 1:
+      plot_bitmap_16(base, SELECTION_X, SELECTION_1Y, menu_pointer,
+                     SPRITE_SIZE);
+          break;
+    case 2:
+      plot_bitmap_16(base, SELECTION_X, SELECTION_2Y, menu_pointer,
+                     SPRITE_SIZE);
+          break;
+    case 3:
+      plot_bitmap_16(base, SELECTION_X, SELECTION_3Y, menu_pointer,
+                     SPRITE_SIZE);
+          break;
   }
 }
