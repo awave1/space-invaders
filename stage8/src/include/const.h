@@ -77,4 +77,12 @@
 #define SYSTEM_CLOCK 0x462
 #define SCREEN_BUFFER_SIZE 32256
 
+
+/*Menu Constants*/
+#define SELECTION_X 220
+#define SELECTION_1Y 247
+#define SELECTION_1Y 293
+#define SELECTION_1Y 337
+
+
 #endif /* SPACE_INVADERS_CONSTANTS_H */
