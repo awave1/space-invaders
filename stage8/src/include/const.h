@@ -81,8 +81,8 @@
 /*Menu Constants*/
 #define SELECTION_X 220
 #define SELECTION_1Y 247
-#define SELECTION_1Y 293
-#define SELECTION_1Y 337
+#define SELECTION_2Y 293
+#define SELECTION_3Y 337
 
 
 #endif /* SPACE_INVADERS_CONSTANTS_H */

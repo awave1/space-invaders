@@ -111,10 +111,15 @@ void setup_game(Model *model, void *base) {
   render(model, base);
 }
 
-int main() {
+void show_menu() {
   void *base = Physbase();
+  disable_cursor();
+  clear_qk(base);
   render_splashscreen(base);
-/*  game_loop();
-  stop_sound();*/
+  menu();
+}
+
+int main() {
+  show_menu();
   return 0;
 }
