@@ -94,6 +94,7 @@ void game_loop() {
   render(&model, base);
   Setscreen(-1, base, -1);
   Vsync();
+  stop_sound();
 }
 
 long get_time() {
@@ -113,6 +114,5 @@ void setup_game(Model *model, void *base) {
 
 int main() {
   game_loop();
-  stop_sound();
   return 0;
 }
