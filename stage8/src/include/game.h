@@ -3,8 +3,8 @@
  *  Authors: Artem Golovin, Daniel Artuso 
  */
 
-#ifndef SPACE_INVADERS_GAME
-#define SPACE_INVADERS_GAME
+#ifndef SPACE_INVADERS_GAME_LOOP
+#define SPACE_INVADERS_GAME_LOOP
 
 #include <osbind.h>
 #include <stdio.h>
@@ -58,4 +58,4 @@ long get_time();
  */
 uint8 *get_base(uint8 *second_buffer);
 
-#endif /* SPACE_INVADERS_GAME */
+#endif /* SPACE_INVADERS_GAME_LOOP */
