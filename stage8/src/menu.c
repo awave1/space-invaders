@@ -55,7 +55,9 @@ void select_option(int choice) {
 
 
 void draw_choice_selector(int choice) {
+  long old = Super(0);
   uint16 *base = Physbase();
+  Super(old);
 
   switch (choice) {
     default:
@@ -75,7 +77,9 @@ void draw_choice_selector(int choice) {
 }
 
 void clear_choice_selector(int choice) {
+  long old = Super(0);
   uint16 *base = Physbase();
+  Super(old);
 
   switch (choice) {
     default:

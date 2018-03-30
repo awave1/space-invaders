@@ -52,7 +52,7 @@ uint8 *get_base(uint8 *second_buffer) {
 void game_loop() {
   Model model;
   bool swap_screens = true;
-  uint8 *base = Physbase();
+  uint8 *base = get_video_base();
   void *screen2;
   unsigned long prev_call = get_time();
   setup_game(&model, base);
