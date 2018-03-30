@@ -45,8 +45,8 @@
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)
 
-volatile char *psg_reg_select = 0xFF8800;
-volatile char *psg_reg_write = 0xFF8802;
+volatile char* psg_reg_select = 0xFF8800;
+volatile char* psg_reg_write  = 0xFF8802;
 
 /**
  * The usual order of writing data to the registers of SSG:
@@ -72,7 +72,7 @@ void write_psg(int reg, uint8 val);
  * @param reg - register
  * @return uint8 - value stored in register
  */
-uint8 read_psg(int reg);
+int read_psg(int reg);
 
 /**
  * Loads the tone registers (coarse and fine) for the given channel
@@ -112,6 +112,7 @@ void set_volume(channel_t channel, int vol);
  * @param noise_on - true, to turn on
  */
 void enable_channel(channel_t channel, bool tone_on, bool noise_on);
+void enable_channel_(int channel, bool tone_on, bool noise_on);
 
 /**
  * Silences all PSG sound
