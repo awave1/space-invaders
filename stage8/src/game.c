@@ -1,4 +1,4 @@
-#include "include/space.h"
+#include "include/game.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
 int next_shot = 50; /* TODO: Replace asap */
@@ -109,17 +109,4 @@ void setup_game(Model *model, void *base) {
   on_game_start(model);
   clear_qk(base);
   render(model, base);
-}
-
-void show_menu() {
-  void *base = Physbase();
-  disable_cursor();
-  clear_qk(base);
-  render_splashscreen(base);
-  menu();
-}
-
-int main() {
-  show_menu();
-  return 0;
 }

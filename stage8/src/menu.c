@@ -4,10 +4,9 @@ void menu() {
   process_keyboard_choice();
 }
 
-
 void process_keyboard_choice() {
   unsigned long input;
-  int choice = 1;
+  int choice = MENU_CHOICE_START_1_PLAYER;
   int prev_choice = choice;
 
   draw_choice_selector(choice);
@@ -17,36 +16,37 @@ void process_keyboard_choice() {
       prev_choice = choice;
       switch (input) {
         case UP_KEY:
-          if (choice > 1)
+          if (choice > MENU_CHOICE_START_1_PLAYER)
             choice--;
           break;
         case DOWN_KEY:
-          if (choice < 3)
+          if (choice < MENU_CHOICE_EXIT)
             choice++;
           break;
         default:
           break;
       }
+      
       clear_choice_selector(prev_choice);
       draw_choice_selector(choice);
+
       if (input == ENTER_KEY)
         select_option(choice);
       if (input == ESC_KEY)
-        select_option(3);
+        select_option(MENU_CHOICE_EXIT);
     }
   }
 }
 
-
 void select_option(int choice) {
   switch (choice) {
-    case 1:
+    case MENU_CHOICE_START_1_PLAYER:
       game_loop();
       stop_sound();
       break;
-    case 2:
+    case MENU_CHOICE_START_2_PLAYERS:
       /*Two player game mode here*/
-    case 3:
+    case MENU_CHOICE_EXIT:
     default:
       /*Quit option*/
       break;

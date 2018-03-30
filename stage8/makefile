@@ -1,11 +1,14 @@
-OBJ_FILES=bin\space.o bin\splash.o bin\menu.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear_qk.o bin\clear_game.o
-EXE_NAME=space
+OBJ_FILES=bin\spaceinv.o bin\game.o bin\splash.o bin\menu.o bin\render.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear_qk.o bin\clear_game.o
+EXE_NAME=spaceinv
 
 $(EXE_NAME).tos: $(OBJ_FILES)
 	cc68x -g $(OBJ_FILES) -o $(EXE_NAME).tos
 
-bin\space.o: src\space.c src\include\space.h
-	cc68x -g -c src\space.c -o bin\space.o
+bin\spaceinv.o: src\spaceinv.c src\include\spaceinv.h
+	cc68x -g -c src\spaceinv.c -o bin\spaceinv.o
+
+bin\game.o: src\game.c src\include\game.h
+	cc68x -g -c src\game.c -o bin\game.o
 
 bin\menu.o: src\menu.c src\include\menu.h
 	cc68x -g -c src\menu.c -o bin\menu.o

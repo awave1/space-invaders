@@ -12,9 +12,14 @@
 #include "const.h"
 #include "event.h"
 #include "splash.h"
-#include "space.h"
+#include "game.h"
 #include "raster.h"
 #include "sprites.h"
+
+#define MENU_CHOICE_START_1_PLAYER 1
+#define MENU_CHOICE_START_2_PLAYERS 2
+#define MENU_CHOICE_EXIT 3
+
 
 void menu();
 
