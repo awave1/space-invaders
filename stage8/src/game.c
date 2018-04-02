@@ -52,9 +52,15 @@ uint8 *get_base(uint8 *second_buffer) {
 void game_loop() {
   Model model;
   bool swap_screens = true;
-  uint8 *base = get_video_base();
   void *screen2;
+  uint16* base;
   unsigned long prev_call = get_time();
+  long old_ssp;
+
+  old_ssp = Super(0);
+  base = get_video_base();
+  Super(old_ssp);
+
   setup_game(&model, base);
 
   screen2 = get_base(second_buffer);
@@ -75,11 +81,18 @@ void game_loop() {
       if (swap_screens) {
         clear_game(base); /* clears only game part of the screen */
         render(&model, base);
-        Setscreen(-1, base, -1);
+
+        old_ssp = Super(0);
+        set_video_base(base);
+        Super(old_ssp);
+
       } else {
         clear_game(screen2);
         render(&model, screen2);
-        Setscreen(-1, screen2, -1);
+
+        old_ssp = Super(0);
+        set_video_base(screen2);
+        Super(old_ssp);
       }
       Vsync();
       swap_screens = !swap_screens;
@@ -92,7 +105,11 @@ void game_loop() {
     }
   }
   render(&model, base);
-  Setscreen(-1, base, -1);
+
+  old_ssp = Super(0);
+  set_video_base(base);
+  Super(old_ssp);
+
   Vsync();
 }
 
