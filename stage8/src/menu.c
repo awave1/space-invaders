@@ -56,7 +56,7 @@ void select_option(int choice) {
 
 void draw_choice_selector(int choice) {
   long old = Super(0);
-  uint16 *base = Physbase();
+  uint16 *base = get_video_base();
   Super(old);
 
   switch (choice) {
@@ -78,7 +78,7 @@ void draw_choice_selector(int choice) {
 
 void clear_choice_selector(int choice) {
   long old = Super(0);
-  uint16 *base = Physbase();
+  uint16 *base = get_video_base();
   Super(old);
 
   switch (choice) {
