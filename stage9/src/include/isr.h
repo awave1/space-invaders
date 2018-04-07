@@ -8,9 +8,15 @@
 
 extern int G_MUSIC_TIMER;
 extern int G_GAME_TIMER;
-extern bool render_request;
+extern bool G_RENDER_REQUEST;
+
+extern Vector vbl_vector;
 
 void vbl_isr_request();
+
+void install_vectors();
+
+void remove_vectors();
 
 #endif /* SPACE_INVADERS_INTERRUPTS */
 

@@ -1,6 +1,8 @@
 #ifndef SPACE_INVADERS_VECTOR_H
 #define SPACE_INVADERS_VECTOR_H
 
+#include <osbind.h>
+
 #define VBL_ISR 28
 
 typedef void (*Vector) ();
