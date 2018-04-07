@@ -1,8 +1,9 @@
 #include "include/game.h"
-#include "include/isr.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
-
+extern bool G_RENDER_REQUEST;
+extern int G_SHOT_TIMER;
+extern int G_GAME_TIMER;
 
 
 void process_async_events(Model *model) {
@@ -94,9 +95,8 @@ void game_loop() {
           set_video_base(screen2);
           Super(old_ssp);
         }
-        Vsync();
-        swap_screens = !swap_screens;
         G_RENDER_REQUEST = false;
+        swap_screens = !swap_screens;
       }
     } else {
       /* 

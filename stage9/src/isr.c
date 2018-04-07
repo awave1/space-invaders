@@ -14,10 +14,9 @@ void vbl_req() {
     G_MUSIC_TIMER = 0;  
   }
 */
+  G_RENDER_REQUEST = true;
   G_GAME_TIMER++;
   G_SHOT_TIMER++;
-
-  G_RENDER_REQUEST = true;
 }
 
 

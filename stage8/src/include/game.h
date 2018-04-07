@@ -16,6 +16,7 @@
 #include "clear_qk.h"
 #include "clear_ga.h"
 #include "video.h"
+#include "isr.h"
 
 /**
  * Game loop, that processes async/sync events and handles double buffering
