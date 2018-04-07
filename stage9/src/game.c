@@ -22,7 +22,10 @@ void process_sync_events(Model *model) {
   int prev_score = model->scorebox.score;
 
   if (G_GAME_TIMER > 0) {
-    if (G_SHOT_TIMER >= 150) {
+    if (model->armada.alive_count >= 20 && G_SHOT_TIMER >= 150) {
+      on_alien_shoot(model);
+      G_SHOT_TIMER = 0;
+    } else if (model->armada.alive_count < 20 && G_SHOT_TIMER >= 75) {
       on_alien_shoot(model);
       G_SHOT_TIMER = 0;
     }
@@ -40,7 +43,7 @@ void process_sync_events(Model *model) {
       on_armada_move(model);
     }
 
-    if (G_SHOT_MOVE_TIMER >= 2) {
+    if(G_SHOT_MOVE_TIMER >= 2) {
       on_bomb_move(model);
       on_laser_move(model);
       G_SHOT_MOVE_TIMER = 0;
@@ -78,6 +81,8 @@ void game_loop() {
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
   start_music();
+
+  model.armada.alive_count = 15;
 
   install_vectors();
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
