@@ -12,6 +12,7 @@
 #include "game.h"
 #include "clear_qk.h"
 #include "clear_ga.h"
+#include "isr.h"
 
 void start();
 

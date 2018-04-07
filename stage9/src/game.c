@@ -82,7 +82,7 @@ void game_loop() {
 
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
-  start_music();
+  /*start_music();*/
 
   install_vectors();
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
@@ -124,7 +124,6 @@ void game_loop() {
       break;
     }
   }
-  remove_vectors();
   render(&model, base);
 
   old_ssp = Super(0);

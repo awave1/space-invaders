@@ -1,9 +1,5 @@
 #include "include/event.h"
 
-extern uint8 G_IKBD_BUFFER[256];
-extern unsigned int G_IKBD_BUFF_HEAD;
-extern unsigned int G_IKBD_BUFF_TAIL;
-
 /*
  * basic spaceship movement
  */
@@ -94,9 +90,9 @@ void on_next_wave(Model *model) {
 }
 
 bool has_user_input() {
-  return Cconis();
+  return ikbd_is_waiting();
 }
 
 unsigned long get_user_input() {
-  return Cnecin();
+  return read_from_ikbd_buffer();
 }
