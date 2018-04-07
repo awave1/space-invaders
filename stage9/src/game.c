@@ -30,9 +30,14 @@ void process_sync_events(Model *model) {
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 
-    if (G_ARMADA_MOVE_TIMER >= 3) {
+    if (model->armada.alive_count >= 20 && G_ARMADA_MOVE_TIMER >= 3) {
       on_armada_move(model);
       G_ARMADA_MOVE_TIMER = 0;
+    } else if (model->armada.alive_count < 20 && G_ARMADA_MOVE_TIMER >= 2) {
+      on_armada_move(model);
+      G_ARMADA_MOVE_TIMER = 0;
+    } else if (model->armada.alive_count < 10) {
+      on_armada_move(model);
     }
 
     if (G_SHOT_MOVE_TIMER >= 2) {
