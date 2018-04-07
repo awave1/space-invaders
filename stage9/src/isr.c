@@ -8,13 +8,16 @@ int G_ARMADA_MOVE_TIMER = 0;
 bool G_RENDER_REQUEST = true;
 
 Vector vbl_vector;
+Vector ikbd_vector;
 
 volatile uint8* const ikbd_control = 0xfffc00;
 volatile uint8* const ikbd_status = 0xfffc00;
 volatile uint8* const ikbd_reader = 0xfffc02;
 volatile uint8* const mfp_register = 0xfffa11; /* clear bit #6 */ 
 
-uint8 ikbd_buffed[256];
+volatile uint8* const ascii_table = 0xFFFE829C;
+
+uint8 G_IKBD_BUFFER[256];
 
 unsigned int G_IKBD_BUFF_HEAD = 0;
 unsigned int G_IKBD_BUFF_TAIL = 0;
@@ -65,10 +68,12 @@ void ikbd_req() {
 
 void install_vectors() {
   vbl_vector = install_vector(VBL_ISR, vbl_isr);
+  ikbd_vector = install_vector(IKBD_ISR, ikbd_isr);
 }
 
 void remove_vectors() {
   install_vector(VBL_ISR, vbl_vector);
+  install_vector(IKBD_ISR, ikbd_vector);
 }
 
 Vector install_vector(int num, Vector vector) {
@@ -83,6 +88,29 @@ Vector install_vector(int num, Vector vector) {
   return orig;
 }
 
+bool ikbd_is_waiting() {
+  return G_IKBD_BUFF_HEAD != G_IKBD_BUFF_TAIL;
+}
+
 void write_to_ikbd_buffer(uint8 scancode) {
-  ikbd_buffed[++G_IKBD_BUFF_TAIL] = scancode;
+  G_IKBD_BUFFER[G_IKBD_BUFF_TAIL] = scancode;
+  G_IKBD_BUFF_TAIL++;
+}
+
+unsigned long read_from_ikbd_buffer() {
+  unsigned long ch;
+  long old_ssp = Super(0);
+
+  *mfp_register &= 0xbf;
+
+  ch = G_IKBD_BUFFER[G_IKBD_BUFF_HEAD];
+  ch = ch << 16;
+  ch = ch + *(ascii_table + G_IKBD_BUFFER[G_IKBD_BUFF_HEAD]);
+
+  G_IKBD_BUFF_HEAD++;
+
+  *mfp_register |= 0x40;
+
+  Super(old_ssp);
+  return ch;
 }

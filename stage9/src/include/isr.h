@@ -32,6 +32,7 @@ extern unsigned int G_IKBD_BUFF_HEAD;
 extern unsigned int G_IKBD_BUFF_TAIL;
 
 extern Vector vbl_vector;
+extern Vector ikbd_vector;
 
 
 void vbl_req();
@@ -46,6 +47,10 @@ void install_vectors();
 
 void remove_vectors();
 
+bool ikbd_is_waiting();
+
 void write_to_ikbd_buffer(uint8 scancode);
+
+unsigned long read_from_ikbd_buffer();
 
 #endif /* SPACE_INVADERS_INTERRUPTS */

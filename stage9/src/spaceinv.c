@@ -12,6 +12,8 @@ void start() {
 }
 
 int main() {
+  install_vectors();
   start();
+  remove_vectors();
   return 0;
 }
