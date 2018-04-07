@@ -57,3 +57,6 @@ bin\video.o: src\asm\video.s src\include\video.h
 
 bin\vbl.o: src\asm\vbl.s src\include\vbl.h
 	gen -D -L2 src\asm\vbl.s -obin\vbl.o
+
+bin\ikbd.o: src\asm\ikbd.s src\include\ikbd.h
+	gen -D -L2 src\asm\ikbd.s -obin\ikbd.o
