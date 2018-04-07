@@ -129,6 +129,7 @@ void game_loop() {
   old_ssp = Super(0);
   set_video_base(base);
   Super(old_ssp);
+  clear_ikbd_buffer();
 }
 
 long get_time() {

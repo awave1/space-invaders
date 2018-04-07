@@ -114,3 +114,10 @@ unsigned long read_from_ikbd_buffer() {
   Super(old_ssp);
   return ch;
 }
+
+void clear_ikbd_buffer() {
+  while(ikbd_is_waiting())
+    G_IKBD_BUFF_HEAD++;
+  
+  G_IKBD_BUFFER[G_IKBD_BUFF_TAIL] = 0x00;
+}
