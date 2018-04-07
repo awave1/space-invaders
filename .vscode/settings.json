@@ -10,6 +10,8 @@
         "types.h": "c",
         "const.h": "c",
         "space.h": "c",
-        "interrupts.h": "c"
+        "interrupts.h": "c",
+        "spaceinv.h": "c",
+        "xutility": "c"
     }
 }

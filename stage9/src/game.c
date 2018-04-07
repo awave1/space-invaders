@@ -1,7 +1,9 @@
 #include "include/game.h"
+#include "include/isr.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
-int next_shot = 50; /* TODO: Replace asap */
+
+
 
 void process_async_events(Model *model) {
   unsigned long input;
@@ -17,12 +19,13 @@ void process_sync_events(Model *model) {
   unsigned long time_then, time_now, time_elapsed;
   int prev_score = model->scorebox.score;
 
-  time_now = get_time();
+  /*time_now = get_time();
   time_elapsed = time_now - time_then;
-  if (time_elapsed > 0) {
-    if (next_shot == 0) {
+  */
+  if (G_GAME_TIMER > 0) {
+    if (G_SHOT_TIMER == 50) {
       on_alien_shoot(model);
-      next_shot = 50;
+      G_SHOT_TIMER = 0;
     }
 
     on_laser_hit_alien(model);
@@ -31,9 +34,6 @@ void process_sync_events(Model *model) {
     on_armada_move(model);
     on_bomb_move(model);
     on_laser_move(model);
-
-    next_shot--;
-    time_then = time_now;
   }
 }
 
@@ -54,48 +54,50 @@ void game_loop() {
   bool swap_screens = true;
   void *screen2;
   uint16* base;
-  unsigned long prev_call = get_time();
+  /*unsigned long prev_call = get_time();*/
   long old_ssp;
 
   old_ssp = Super(0);
   base = get_video_base();
   Super(old_ssp);
 
+
   setup_game(&model, base);
 
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
-  start_music();
+  /*start_music();*/
 
+  install_vectors();
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
     process_sync_events(&model);
-
-    if (update_music(get_time() - prev_call))
-      prev_call = get_time();
 
     if (model.armada.alive_count == 0)
       on_next_wave(&model);
 
     if (!model.is_game_over) {
-      if (swap_screens) {
-        clear_game(base); /* clears only game part of the screen */
-        render(&model, base);
+      if (G_RENDER_REQUEST) {
+        if (swap_screens) {
+          clear_game(base); /* clears only game part of the screen */
+          render(&model, base);
 
-        old_ssp = Super(0);
-        set_video_base(base);
-        Super(old_ssp);
+          old_ssp = Super(0);
+          set_video_base(base);
+          Super(old_ssp);
 
-      } else {
-        clear_game(screen2);
-        render(&model, screen2);
+        } else {
+          clear_game(screen2);
+          render(&model, screen2);
 
-        old_ssp = Super(0);
-        set_video_base(screen2);
-        Super(old_ssp);
+          old_ssp = Super(0);
+          set_video_base(screen2);
+          Super(old_ssp);
+        }
+        Vsync();
+        swap_screens = !swap_screens;
+        G_RENDER_REQUEST = false;
       }
-      Vsync();
-      swap_screens = !swap_screens;
     } else {
       /* 
         The only solution that worked. We tried adding a boolean flag, but it wouldn't break out of the loop 
@@ -104,6 +106,7 @@ void game_loop() {
       break;
     }
   }
+  remove_vectors();
   render(&model, base);
 
   old_ssp = Super(0);
