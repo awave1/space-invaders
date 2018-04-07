@@ -9,6 +9,10 @@ bool G_RENDER_REQUEST = true;
 
 Vector vbl_vector;
 
+volatile uint8* const ikbd_control = 0xfffc00;
+volatile uint8* const ikbd_status = 0xfffc00;
+volatile uint8* const ikbd_rdr = 0xfffc02;
+
 void vbl_req() {
   G_MUSIC_TIMER++;
   
@@ -18,6 +22,10 @@ void vbl_req() {
   G_SHOT_MOVE_TIMER++;
 
   G_RENDER_REQUEST = true;
+}
+
+void ikbd_req() {
+  
 }
 
 void install_vectors() {
