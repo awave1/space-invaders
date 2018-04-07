@@ -1,4 +1,4 @@
-OBJ_FILES=bin\spaceinv.o bin\game.o bin\splash.o bin\menu.o bin\render.o bin\isr.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear_qk.o bin\clear_game.o bin\video.o bin\vbl.o
+OBJ_FILES=bin\spaceinv.o bin\game.o bin\splash.o bin\menu.o bin\render.o bin\isr.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear.o bin\video.o bin\vbl.o
 EXE_NAME=spaceinv
 
 $(EXE_NAME).tos: $(OBJ_FILES)
@@ -49,11 +49,8 @@ bin\isr.o: src\isr.c src\include\isr.h
 bin\vector.o: src\vector.c src\include\vector.h
 	cc68x -g -c src\vector.c -o bin\vector.o
 
-bin\clear_qk.o: src\asm\clear_qk.s src\include\clear_qk.h
-	gen -D -L2 src\asm\clear_qk.s -obin\clear_qk.o
-
-bin\clear_game.o: src\asm\clear_game.s src\include\clear_game.h
-	gen -D -L2 src\asm\clear_game.s -obin\clear_game.o
+bin\clear.o: src\asm\clear.s src\include\clear.h
+	gen -D -L2 src\asm\clear.s -obin\clear.o
 
 bin\video.o: src\asm\video.s src\include\video.h
 	gen -D -L2 src\asm\video.s -obin\video.o
