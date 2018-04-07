@@ -30,4 +30,3 @@ void install_vectors();
 void remove_vectors();
 
 #endif /* SPACE_INVADERS_INTERRUPTS */
-

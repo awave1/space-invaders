@@ -1,11 +1,13 @@
 #include "include/game.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
+
 extern bool G_RENDER_REQUEST;
 extern int G_SHOT_TIMER;
 extern int G_GAME_TIMER;
 extern int G_SHOT_MOVE_TIMER;
 extern int G_ARMADA_MOVE_TIMER;
+extern int G_MUSIC_TIMER;
 
 
 void process_async_events(Model *model) {
@@ -88,6 +90,9 @@ void game_loop() {
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
     process_sync_events(&model);
+
+    if (update_music(G_MUSIC_TIMER))
+      G_MUSIC_TIMER = 0;
 
     if (model.armada.alive_count == 0)
       on_next_wave(&model);
