@@ -9,6 +9,7 @@
         "sprites.h": "c",
         "types.h": "c",
         "const.h": "c",
-        "space.h": "c"
+        "space.h": "c",
+        "interrupts.h": "c"
     }
 }
