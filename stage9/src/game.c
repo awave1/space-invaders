@@ -4,6 +4,8 @@ const uint8 second_buffer[32256]; /*Second Screen for double buffering */
 extern bool G_RENDER_REQUEST;
 extern int G_SHOT_TIMER;
 extern int G_GAME_TIMER;
+extern int G_SHOT_MOVE_TIMER;
+extern int G_ARMADA_MOVE_TIMER;
 
 
 void process_async_events(Model *model) {
@@ -17,14 +19,10 @@ void process_async_events(Model *model) {
 }
 
 void process_sync_events(Model *model) {
-  unsigned long time_then, time_now, time_elapsed;
   int prev_score = model->scorebox.score;
 
-  /*time_now = get_time();
-  time_elapsed = time_now - time_then;
-  */
   if (G_GAME_TIMER > 0) {
-    if (G_SHOT_TIMER == 50) {
+    if (G_SHOT_TIMER >= 150) {
       on_alien_shoot(model);
       G_SHOT_TIMER = 0;
     }
@@ -32,9 +30,16 @@ void process_sync_events(Model *model) {
     on_laser_hit_alien(model);
     on_bomb_hit_player(model);
 
-    on_armada_move(model);
-    on_bomb_move(model);
-    on_laser_move(model);
+    if (G_ARMADA_MOVE_TIMER >= 3) {
+      on_armada_move(model);
+      G_ARMADA_MOVE_TIMER = 0;
+    }
+
+    if (G_SHOT_MOVE_TIMER >= 2) {
+      on_bomb_move(model);
+      on_laser_move(model);
+      G_SHOT_MOVE_TIMER = 0;
+    }
   }
 }
 
@@ -67,7 +72,7 @@ void game_loop() {
 
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
-  /*start_music();*/
+  start_music();
 
   install_vectors();
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
@@ -112,8 +117,6 @@ void game_loop() {
   old_ssp = Super(0);
   set_video_base(base);
   Super(old_ssp);
-
-  Vsync();
 }
 
 long get_time() {
