@@ -3,20 +3,24 @@
 int G_MUSIC_TIMER = 0;
 int G_GAME_TIMER = 0;
 int G_SHOT_TIMER = 0;
+int G_SHOT_MOVE_TIMER = 0;
+int G_ARMADA_MOVE_TIMER = 0;
 bool G_RENDER_REQUEST = true;
 
 Vector vbl_vector;
 
 void vbl_req() {
-  /*
+/*
   G_MUSIC_TIMER++;
-  if (update_music(G_MUSIC_TIMER)) {
+  if (update_music(G_MUSIC_TIMER))
     G_MUSIC_TIMER = 0;  
-  }
 */
-  G_RENDER_REQUEST = true;
   G_GAME_TIMER++;
   G_SHOT_TIMER++;
+  G_ARMADA_MOVE_TIMER++;
+  G_SHOT_MOVE_TIMER++;
+
+  G_RENDER_REQUEST = true;
 }
 
 

@@ -12,6 +12,8 @@ typedef void (*Vector) ();
 extern int G_MUSIC_TIMER;
 extern int G_GAME_TIMER;
 extern int G_SHOT_TIMER;
+extern int G_SHOT_MOVE_TIMER;
+extern int G_ARMADA_MOVE_TIMER;
 extern bool G_RENDER_REQUEST;
 
 extern Vector vbl_vector;
