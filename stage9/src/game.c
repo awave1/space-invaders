@@ -84,8 +84,6 @@ void game_loop() {
   clear_qk(screen2);
   start_music();
 
-  model.armada.alive_count = 15;
-
   install_vectors();
   while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
