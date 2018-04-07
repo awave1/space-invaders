@@ -9,6 +9,7 @@
 #include <osbind.h>
 #include "model.h"
 #include "effects.h"
+#include "isr.h"
 
 /**
  * Event that moves spaceship and shoots on keypress. 

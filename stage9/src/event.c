@@ -1,5 +1,9 @@
 #include "include/event.h"
 
+extern uint8 G_IKBD_BUFFER[256];
+extern unsigned int G_IKBD_BUFF_HEAD;
+extern unsigned int G_IKBD_BUFF_TAIL;
+
 /*
  * basic spaceship movement
  */
