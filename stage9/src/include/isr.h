@@ -25,6 +25,7 @@ extern int G_GAME_TIMER;
 extern int G_SHOT_TIMER;
 extern int G_SHOT_MOVE_TIMER;
 extern int G_ARMADA_MOVE_TIMER;
+extern int G_KEY_REPEAT_TICKS;
 extern bool G_RENDER_REQUEST;
 
 extern uint8 G_IKBD_BUFFER[256];

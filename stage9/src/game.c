@@ -8,13 +8,17 @@ extern int G_GAME_TIMER;
 extern int G_SHOT_MOVE_TIMER;
 extern int G_ARMADA_MOVE_TIMER;
 extern int G_MUSIC_TIMER;
+extern int G_KEY_REPEAT_TICKS;
 
 
 void process_async_events(Model *model) {
   unsigned long input;
   if (has_user_input()) {
-    input = get_user_input();
-    on_spaceship_move(&model->player, input);
+    if (G_KEY_REPEAT_TICKS >= 2) {
+      input = get_user_input();
+      on_spaceship_move(&model->player, input);
+      G_KEY_REPEAT_TICKS = 0;
+    }
     if (input == ESC_KEY)
       on_game_over(model);
   }
@@ -124,12 +128,14 @@ void game_loop() {
       break;
     }
   }
-  render(&model, base);
 
+  clear_ikbd_buffer();
+  remove_vectors();
+  
+  render(&model, base);
   old_ssp = Super(0);
   set_video_base(base);
   Super(old_ssp);
-  clear_ikbd_buffer();
 }
 
 long get_time() {
