@@ -28,6 +28,8 @@ extern int G_ARMADA_MOVE_TIMER;
 extern int G_KEY_REPEAT_TICKS;
 extern bool G_RENDER_REQUEST;
 
+extern bool key_repeat;
+
 extern uint8 G_IKBD_BUFFER[256];
 extern unsigned int G_IKBD_BUFF_HEAD;
 extern unsigned int G_IKBD_BUFF_TAIL;
@@ -53,5 +55,7 @@ bool ikbd_is_waiting();
 void write_to_ikbd_buffer(uint8 scancode);
 
 unsigned long read_from_ikbd_buffer();
+
+void clear_ikbd_buffer();
 
 #endif /* SPACE_INVADERS_INTERRUPTS */

@@ -14,7 +14,7 @@ Vector ikbd_vector;
 volatile uint8* const ikbd_control = 0xfffc00;
 volatile uint8* const ikbd_status = 0xfffc00;
 volatile uint8* const ikbd_reader = 0xfffc02;
-volatile uint8* const mfp_register = 0xfffa11; /* clear bit #6 */ 
+volatile uint8* const isrb_mfp_register = 0xfffa11;
 
 volatile uint8* const ascii_table = 0xFFFE829C;
 
@@ -42,30 +42,37 @@ void vbl_req() {
 }
 
 void ikbd_req() {
-  uint8 scancode = *ikbd_reader;
+  uint8 scancode;
 
-  if (mouse_state == MOUSE_STATE_FIRST_PACKET) {
-    /*
-      check if scancode is mouse event 
-    */
-    if (scancode >= 0xf8) {
-      mouse_button = scancode;
-      mouse_state = 1;
-    } else if ((scancode & 0x80) == 0x00) { /* check if it's a make code */
-      write_to_ikbd_buffer(scancode);
-      key_repeat = true;
-    } else if ((scancode & 0x80) == 0x80) { /* check if it's a break code */
-      key_repeat = false;
+  *ikbd_control = 0x16;
+  /* check if data was recieved */
+  if (*ikbd_status & 0x1) {
+    scancode = *ikbd_reader;
+    if (mouse_state == MOUSE_STATE_FIRST_PACKET) {
+      /*
+        check if scancode is mouse event 
+      */
+      if (scancode >= 0xf8) {
+        mouse_button = scancode;
+        mouse_state = 1;
+      } else if ((scancode & 0x80) == 0x00) { /* check if it's a make code */
+        write_to_ikbd_buffer(scancode);
+        key_repeat = true;
+      } else if ((scancode & 0x80) == 0x80) { /* check if it's a break code */
+        key_repeat = false;
+      }
+    } else if (mouse_state == MOUSE_STATE_DELTA_X) { /* delta_x */
+      mouse_state = MOUSE_STATE_DELTA_Y;
+      mouse_delta_x = scancode;
+    } else if (mouse_state == MOUSE_STATE_DELTA_Y) { /* delta_x */
+      mouse_state = MOUSE_STATE_FIRST_PACKET;
+      mouse_delta_y = scancode;
     }
-  } else if (mouse_state == MOUSE_STATE_DELTA_X) { /* delta_x */
-    mouse_state = MOUSE_STATE_DELTA_Y;
-    mouse_delta_x = scancode;
-  } else if (mouse_state == MOUSE_STATE_DELTA_Y) { /* delta_x */
-    mouse_state = MOUSE_STATE_FIRST_PACKET;
-    mouse_delta_y = scancode;
+
+    *isrb_mfp_register &= 0xbf; /* clear bit 6 */
   }
 
-  *mfp_register &= 0xbf;
+  *ikbd_control = 0x96;
 }
 
 void install_vectors() {
@@ -103,23 +110,22 @@ unsigned long read_from_ikbd_buffer() {
   unsigned long ch;
   long old_ssp = Super(0);
 
-  *mfp_register &= 0xbf;
+  *isrb_mfp_register &= 0xbf;
 
   ch = G_IKBD_BUFFER[G_IKBD_BUFF_HEAD];
   ch = ch << 16;
-  ch = ch + *(ascii_table + G_IKBD_BUFFER[G_IKBD_BUFF_HEAD]);
+  ch = ch + *(ascii_table + G_IKBD_BUFFER[G_IKBD_BUFF_HEAD++]);
 
-  G_IKBD_BUFF_HEAD++;
-
-  *mfp_register |= 0x40;
+  *isrb_mfp_register |= 0x40; /* turn bit 6 back on */
 
   Super(old_ssp);
   return ch;
 }
 
 void clear_ikbd_buffer() {
-  while(ikbd_is_waiting())
+  while(ikbd_is_waiting()) {
     G_IKBD_BUFF_HEAD++;
+  }
   
   G_IKBD_BUFFER[G_IKBD_BUFF_TAIL] = 0x00;
 }

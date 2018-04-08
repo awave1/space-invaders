@@ -10,8 +10,7 @@
 #include "psg.h"
 #include "music.h"
 #include "game.h"
-#include "clear_qk.h"
-#include "clear_ga.h"
+#include "clear.h"
 #include "isr.h"
 
 void start();

@@ -12,6 +12,8 @@
         "space.h": "c",
         "interrupts.h": "c",
         "spaceinv.h": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "clear.h": "c",
+        "game.h": "c"
     }
 }
