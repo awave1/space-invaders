@@ -5,6 +5,7 @@ int G_GAME_TIMER = 0;
 int G_SHOT_TIMER = 0;
 int G_SHOT_MOVE_TIMER = 0;
 int G_ARMADA_MOVE_TIMER = 0;
+int G_KEY_REPEAT_TICKS = 0;
 bool G_RENDER_REQUEST = true;
 
 Vector vbl_vector;
@@ -30,6 +31,7 @@ bool key_repeat = false;
 
 void vbl_req() {
   G_MUSIC_TIMER++;
+  G_KEY_REPEAT_TICKS++;
   
   G_GAME_TIMER++;
   G_SHOT_TIMER++;
