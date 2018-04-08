@@ -9,12 +9,13 @@ extern int G_SHOT_MOVE_TIMER;
 extern int G_ARMADA_MOVE_TIMER;
 extern int G_MUSIC_TIMER;
 extern int G_KEY_REPEAT_TICKS;
+extern bool key_repeat;
 
 
 void process_async_events(Model *model) {
   unsigned long input;
   if (has_user_input()) {
-    if (G_KEY_REPEAT_TICKS >= 2) {
+    if (key_repeat && G_KEY_REPEAT_TICKS >= 2) {
       input = get_user_input();
       on_spaceship_move(&model->player, input);
       G_KEY_REPEAT_TICKS = 0;
