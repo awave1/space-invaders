@@ -7,6 +7,7 @@ int G_SHOT_MOVE_TIMER = 0;
 int G_ARMADA_MOVE_TIMER = 0;
 int G_KEY_REPEAT_TICKS = 0;
 bool G_RENDER_REQUEST = true;
+bool G_RENDER_MOUSE_REQUEST = false;
 
 Vector vbl_vector;
 Vector ikbd_vector;
@@ -28,6 +29,11 @@ uint8 mouse_delta_x;
 uint8 mouse_delta_y;
 bool key_repeat = false;
 
+int G_MOUSE_X = 0;
+int G_MOUSE_Y = 0;
+int prev_mouse_x = 0;
+int prev_mouse_y = 0;
+
 void vbl_req() {
   G_MUSIC_TIMER++;
   G_KEY_REPEAT_TICKS++;
@@ -38,6 +44,7 @@ void vbl_req() {
   G_SHOT_MOVE_TIMER++;
 
   G_RENDER_REQUEST = true;
+  G_RENDER_MOUSE_REQUEST = true;
 }
 
 void ikbd_req() {
@@ -74,6 +81,43 @@ void ikbd_req() {
   *ikbd_control = 0x96;
 }
 
+void init_mouse(uint16* base) {
+  G_MOUSE_X = 320;
+  G_MOUSE_Y = 200;
+  prev_mouse_x = G_MOUSE_X;
+  prev_mouse_y = G_MOUSE_Y;
+  plot_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
+}
+
+void upd_mouse_events(uint16* base) {
+
+  G_MOUSE_X += (int) ((char) mouse_delta_x);
+  G_MOUSE_Y += (int) ((char) mouse_delta_y);
+
+  if (G_MOUSE_X < 0)
+    G_MOUSE_X = 0;
+  else if (G_MOUSE_X > 628)
+    G_MOUSE_X = 628;
+
+  if (G_MOUSE_Y < 0)
+    G_MOUSE_Y = 0;
+  else if (G_MOUSE_Y > 378)
+    G_MOUSE_Y = 378;
+
+  mouse_delta_x = 0;
+  mouse_delta_y = 0;
+
+  if (G_RENDER_MOUSE_REQUEST) {
+    clear_region(base, prev_mouse_x, prev_mouse_y, 8, 8);
+    plot_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
+
+    prev_mouse_x = G_MOUSE_X;
+    prev_mouse_y = G_MOUSE_Y;
+
+    G_RENDER_MOUSE_REQUEST = false;
+  }
+}
+
 void install_vectors() {
   vbl_vector = install_vector(VBL_ISR, vbl_isr);
   ikbd_vector = install_vector(IKBD_ISR, ikbd_isr);
@@ -101,6 +145,9 @@ bool ikbd_is_waiting() {
 }
 
 void write_to_ikbd_buffer(uint8 scancode) {
+  if (buff_tail == IKBD_BUFFER_SIZE - 1)
+    buff_tail = 0;
+    
   ikbd_buffer[buff_tail] = scancode;
   buff_tail++;
 }
@@ -108,6 +155,10 @@ void write_to_ikbd_buffer(uint8 scancode) {
 unsigned long read_from_ikbd_buffer() {
   unsigned long ch;
   long old_ssp = Super(0);
+
+  if (buff_head == IKBD_BUFFER_SIZE - 1)
+    buff_head = 0;
+
 
   *isrb_mfp_register &= 0xbf;
 

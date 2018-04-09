@@ -89,6 +89,15 @@ void plot_bitmap_8(uint8 *base, int x, int y, uint8 *bitmap, int height);
  */
 void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height);
 
+/**
+ * Plots simple mouse pointer as rectangle
+ * 
+ * @param base - screen
+ * @param x    - x position
+ * @param y    - y position
+ */
+void plot_mouse_ptr(uint16* base, int x, int y);
+
 void plot_screen(uint32* base, uint32* splash);
 
 /* Prints a character

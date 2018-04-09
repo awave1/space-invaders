@@ -27,8 +27,8 @@ void process_keyboard_choice();
 
 void select_option(int choice);
 
-void draw_choice_selector(int choice);
+void draw_choice_selector(int choice, uint16* base);
 
-void clear_choice_selector(int choice);
+void clear_choice_selector(int choice, uint16* base);
 
 #endif /*SPACE_INVADERS_MENU_H*/
