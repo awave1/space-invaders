@@ -1,4 +1,4 @@
-/*
+/**
  *  File: psg.h
  *  Authors: Artem Golovin, Daniel Artuso
  */
@@ -49,8 +49,8 @@
 
 #define reg_is_valid(reg) (reg >= 0 && reg <= 15)
 
-volatile char* psg_reg_select = 0xFF8800;
-volatile char* psg_reg_write  = 0xFF8802;
+extern volatile char* psg_reg_select = 0xFF8800;
+extern volatile char* psg_reg_write  = 0xFF8802;
 
 /**
  * The usual order of writing data to the registers of SSG:

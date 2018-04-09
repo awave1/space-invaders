@@ -1,4 +1,4 @@
-/*
+/**
  *  File: psg.c
  *  Authors: Artem Golovin, Daniel Artuso
  */
