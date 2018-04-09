@@ -20,8 +20,10 @@ void process_async_events(Model *model) {
       on_spaceship_move(&model->player, input);
       G_KEY_REPEAT_TICKS = 0;
     }
-    if (input == ESC_KEY)
+    if (input == ESC_KEY) {
       on_game_over(model);
+      clear_interrupts();
+    }
   }
 }
 
