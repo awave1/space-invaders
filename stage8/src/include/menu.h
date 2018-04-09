@@ -29,8 +29,6 @@ void select_option(int choice);
 
 void draw_choice_selector(int choice);
 
-void draw_menu_underlines(uint16* base);
-
 void clear_choice_selector(int choice);
 
 #endif /*SPACE_INVADERS_MENU_H*/

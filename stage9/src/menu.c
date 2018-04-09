@@ -18,7 +18,6 @@ void process_menu_choice() {
   init_mouse(base);
 
   draw_choice_selector(choice, base);
-  draw_menu_underlines(base);
 
   while (MENU_STATE != MENU_CHOICE_EXIT) {
     upd_mouse_events(base);
@@ -93,18 +92,6 @@ void draw_choice_selector(int choice, uint16* base) {
                      SPRITE_SIZE);
       break;
   }
-}
-
-void draw_menu_underlines(uint16* base) {
-  int y1 = SELECTION_1Y + 25;
-  int y2 = SELECTION_2Y + 25;
-  int y3 = SELECTION_3Y + 25;
-  int x = SELECTION_X + 30;
-  int width = 148;
-  int height = 5;
-  plot_rectangle__inverse((uint8*) base, x, y1, width, height);
-  plot_rectangle__inverse((uint8*) base, x, y2, width, height);
-  plot_rectangle__inverse((uint8*) base, x, y3, width, height);
 }
 
 void clear_choice_selector(int choice, uint16* base) {

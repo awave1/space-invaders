@@ -17,6 +17,7 @@ extern uint16 alien_bomb_test[SPRITE_HEIGHT];
 extern uint16 player_shot[SPRITE_HEIGHT];
 extern uint16 menu_pointer[SPRITE_HEIGHT];
 extern uint16 mouse_bg[38];
+extern uint16 mouse_pointer[SPRITE_HEIGHT];
 
 #endif /* SPACE_INVADERS_SPRITES_H */
 
