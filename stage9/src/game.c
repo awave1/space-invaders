@@ -130,8 +130,6 @@ void game_loop() {
     }
   }
 
-  clear_ikbd_buffer();
-  remove_vectors();
   
   render(&model, base);
   old_ssp = Super(0);

@@ -14,5 +14,7 @@ void start() {
 int main() {
   install_vectors();
   start();
+  clear_ikbd_buffer();
+  remove_vectors();
   return 0;
 }
