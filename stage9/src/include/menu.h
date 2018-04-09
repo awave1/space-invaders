@@ -20,6 +20,11 @@
 #define MENU_CHOICE_START_2_PLAYERS 2
 #define MENU_CHOICE_EXIT 3
 
+#define INVALID_MOUSE_CHOICE -1
+
+extern int MENU_STATE;
+extern bool VALID_CLICK;
+
 void menu();
 
 void process_keyboard_choice();

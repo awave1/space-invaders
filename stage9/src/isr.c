@@ -28,6 +28,7 @@ uint8 mouse_button;
 uint8 mouse_delta_x;
 uint8 mouse_delta_y;
 bool key_repeat = false;
+bool mouse_moved = false;
 
 int G_MOUSE_X = 0;
 int G_MOUSE_Y = 0;
@@ -61,7 +62,9 @@ void ikbd_req() {
       */
       if (scancode >= 0xf8) {
         mouse_button = scancode;
-        mouse_state = 1;
+        mouse_state = MOUSE_STATE_DELTA_X;
+
+        mouse_moved = scancode == 0xf8;
       } else if ((scancode & 0x80) == 0x00) { /* check if it's a make code */
         write_to_ikbd_buffer(scancode);
         key_repeat = true;
@@ -148,6 +151,10 @@ Vector install_vector(int num, Vector vector) {
 
 bool ikbd_is_waiting() {
   return buff_head != buff_tail;
+}
+
+bool ikdb_mouse_moved() {
+  return mouse_moved;
 }
 
 void write_to_ikbd_buffer(uint8 scancode) {

@@ -1,5 +1,8 @@
 #include "include/menu.h"
 
+int MENU_STATE = MENU_CHOICE_START_1_PLAYER;
+bool VALID_CLICK = false;
+
 void menu() {
   process_keyboard_choice();
 }
@@ -7,17 +10,20 @@ void menu() {
 void process_keyboard_choice() {
   unsigned long input;
   int choice = MENU_CHOICE_START_1_PLAYER;
-  int mouse_choice;
   int prev_choice = choice;
+  int mouse_choice;
+  int prev_mouse_choice;
   uint16 *base = get_video_base();
-  bool exit = false;
 
   init_mouse(base);
 
   draw_choice_selector(choice, base);
-  while (input != ENTER_KEY && input != ESC_KEY) {
+
+  while (MENU_STATE != MENU_CHOICE_EXIT) {
     upd_mouse_events(base);
+
     if (has_user_input()) {
+      clear_choice_selector(mouse_choice, base);
       prev_choice = choice;
       input = get_user_input();
       switch (input) {
@@ -32,26 +38,24 @@ void process_keyboard_choice() {
         default:
           break;
       }
-      
+
       clear_choice_selector(prev_choice, base);
       draw_choice_selector(choice, base);
 
-      if (input == ENTER_KEY || G_MOUSE_LEFT_CLICK)
-        select_option(choice);
-      if (input == ESC_KEY)
-        select_option(MENU_CHOICE_EXIT);
-    }
+    } else if (has_mouse_input()) {
+      clear_choice_selector(choice, base);
 
-    if (mouse_location() != -1) {
-      prev_choice = choice;
-      choice = mouse_location();
-      clear_choice_selector(prev_choice, base);
-      draw_choice_selector(choice, base);
+      mouse_choice = mouse_location(); 
+      if (mouse_choice != INVALID_MOUSE_CHOICE) {
+        prev_mouse_choice = mouse_choice;
 
-/*
-      if (G_MOUSE_LEFT_CLICK)
-        select_option(mouse_choice);
-        */
+        clear_choice_selector(prev_mouse_choice, base);
+        draw_choice_selector(mouse_choice, base);
+
+        if (VALID_CLICK && G_MOUSE_LEFT_CLICK)
+          select_option(mouse_choice);   
+        
+      }
     }
 
   }
@@ -60,13 +64,17 @@ void process_keyboard_choice() {
 void select_option(int choice) {
   switch (choice) {
     case MENU_CHOICE_START_1_PLAYER:
+      MENU_STATE = MENU_CHOICE_START_1_PLAYER;
+
       game_loop();
       stop_sound();
       break;
     case MENU_CHOICE_START_2_PLAYERS:
+      MENU_STATE = MENU_CHOICE_START_2_PLAYERS;
       /*Two player game mode here*/
     case MENU_CHOICE_EXIT:
     default:
+      MENU_STATE = MENU_CHOICE_EXIT;
       /*Quit option*/
       clear_interrupts();
       break;
@@ -109,15 +117,23 @@ void clear_choice_selector(int choice, uint16* base) {
 }
 
 int mouse_location() {
-  int mouse_location = -1;
+  int mouse_location = INVALID_MOUSE_CHOICE;
   bool valid_x = (G_MOUSE_X >= 220 && G_MOUSE_X <= 580);
+  bool valid_y_choice1 = (G_MOUSE_Y >= 247 && G_MOUSE_Y <= 263);
+  bool valid_y_choice2 = (G_MOUSE_Y >= 293 && G_MOUSE_Y <= 309);
+  bool valid_y_choice3 = (G_MOUSE_Y >= 337 && G_MOUSE_Y <= 353);
 
-  if (valid_x && (G_MOUSE_Y >= 247 && G_MOUSE_Y <= 263))
+  if (valid_x && valid_y_choice1)
     mouse_location = MENU_CHOICE_START_1_PLAYER;
-  else if (valid_x && (G_MOUSE_Y >= 293 && G_MOUSE_Y <= 309))
+  else if (valid_x && valid_y_choice2)
     mouse_location = MENU_CHOICE_START_2_PLAYERS;
-  else if (valid_x && (G_MOUSE_Y >= 337 && G_MOUSE_Y <= 353))
+  else if (valid_x && valid_y_choice2)
     mouse_location = MENU_CHOICE_EXIT;
+
+  VALID_CLICK = (valid_x && valid_y_choice1) || 
+                (valid_x && valid_y_choice2) ||
+                (valid_x && valid_y_choice3);
   
   return mouse_location;
 }
+
