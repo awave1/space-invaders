@@ -72,14 +72,31 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 void render_splashscreen(uint32* base);
 
 /**
- * @brief 
+ * Plots simple mouse pointer as rectangle
  * 
+ * @param base - screen
+ * @param x    - x position
+ * @param y    - y position
  */
 void render_mouse_ptr(uint16* base, int x, int y);
 
+/**
+ * @brief 
+ * 
+ * @param base 
+ * @param x 
+ * @param y 
+ */
 void save_mouse_bg(uint16 *base, int x, int y);
 
-void restore_mouse_bkgd(uint16 *base, int x, int y);
+/**
+ * @brief 
+ * 
+ * @param base 
+ * @param x 
+ * @param y 
+ */
+void restore_mouse_bg(uint16 *base, int x, int y);
 
 /**
  * Disable the cursor using terminal command
