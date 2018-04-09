@@ -1,9 +1,7 @@
 #include "include/spaceinv.h"
 
 void start() {
-  long old = Super(0);
   uint16 *base = get_video_base();
-  Super(old);
 
   disable_cursor();
   clear_qk(base);
@@ -14,7 +12,7 @@ void start() {
 int main() {
   install_vectors();
   start();
-  clear_ikbd_buffer();
-  remove_vectors();
+  stop_sound();
+  clear_interrupts();
   return 0;
 }

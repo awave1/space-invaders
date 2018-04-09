@@ -44,11 +44,9 @@ void process_sync_events(Model *model);
 void setup_game(Model *model, void *base);
 
 /**
- * Get the system time
- * 
- * @return long - system time
+ * Removes the installed vectors and cleard ikbd buffer 
  */
-long get_time();
+void clear_interrupts();
 
 /**
  * @brief Get the 256 byte aligned base

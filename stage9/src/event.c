@@ -10,7 +10,6 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
     move_spaceship(spaceship, right);
   else if (key == SPACE_KEY) {
     spaceship_shoot(spaceship);
-    laser_shot_effect();
   }
 }
 

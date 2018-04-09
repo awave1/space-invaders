@@ -77,20 +77,17 @@ void game_loop() {
   uint16* base;
   /*unsigned long prev_call = get_time();*/
   long old_ssp;
+  bool game_is_running = true;
 
-  old_ssp = Super(0);
   base = get_video_base();
-  Super(old_ssp);
-
 
   setup_game(&model, base);
 
   screen2 = get_base(second_buffer);
   clear_qk(screen2);
-  /*start_music();*/
 
-  install_vectors();
-  while (!model.is_game_over || model.scorebox.score >= MAX_SCORE) {
+  start_music();
+  while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
     process_async_events(&model);
     process_sync_events(&model);
 
@@ -105,44 +102,29 @@ void game_loop() {
         if (swap_screens) {
           clear_game(base); /* clears only game part of the screen */
           render(&model, base);
-
-          old_ssp = Super(0);
           set_video_base(base);
-          Super(old_ssp);
 
         } else {
           clear_game(screen2);
           render(&model, screen2);
-
-          old_ssp = Super(0);
           set_video_base(screen2);
-          Super(old_ssp);
         }
         G_RENDER_REQUEST = false;
         swap_screens = !swap_screens;
       }
     } else {
-      /* 
-        The only solution that worked. We tried adding a boolean flag, but it wouldn't break out of the loop 
-        That is why we had to use break statement here.
-      */
-      break;
+      clear_interrupts();
+      game_is_running = false;
     }
   }
 
-  
   render(&model, base);
-  old_ssp = Super(0);
   set_video_base(base);
-  Super(old_ssp);
 }
 
-long get_time() {
-  long *timer = (long *) SYSTEM_CLOCK;
-  long old_ssp = Super(0);
-  long time_now = *timer;
-  Super(old_ssp);
-  return time_now;
+void clear_interrupts() {
+  clear_ikbd_buffer();
+  remove_vectors();
 }
 
 void setup_game(Model *model, void *base) {

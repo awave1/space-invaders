@@ -39,6 +39,8 @@ void spaceship_shoot(Spaceship *spaceship) {
           spaceship->shots[i].y + SHOT_HEIGHT;
 
         spaceship->shot_count++;
+
+        laser_shot_effect();
       }
     }
   }
