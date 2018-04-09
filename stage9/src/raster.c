@@ -116,9 +116,6 @@ void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height) {
   }
 }
 
-void plot_mouse_ptr(uint16* base, int x, int y) {
-  plot_rectangle__inverse(base, x, y, 8, 8);
-}
 
 void plot_screen(uint32* base, uint32* bitmap) {
   int i;	

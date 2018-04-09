@@ -9,6 +9,7 @@
 #include "types.h"
 #include "const.h"
 #include "font.h"
+#include "sprites.h"
 
 /*
  * For each function you develop, write a short header block comment which specifies:
@@ -96,7 +97,6 @@ void plot_bitmap_16(uint16 *base, int x, int y, uint16 *bitmap, int height);
  * @param x    - x position
  * @param y    - y position
  */
-void plot_mouse_ptr(uint16* base, int x, int y);
 
 void plot_screen(uint32* base, uint32* splash);
 

@@ -60,6 +60,7 @@
 
 #define SPRITE_SIZE 16
 #define SPRITE_HEIGHT 16
+#define MOUSE_BG_SIZE 16
 
 #define SHOT_WIDTH 8
 #define SHOT_HEIGHT 8
