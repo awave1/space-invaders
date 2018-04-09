@@ -49,7 +49,7 @@ void setup_game(Model *model, void *base);
 void clear_interrupts();
 
 /**
- * @brief Get the 256 byte aligned base
+ * Get the 256 byte aligned base
  * 
  * @param second_buffer - second buffere used for double buffering technique
  * @return uint8* - 256 byte aligned screen base

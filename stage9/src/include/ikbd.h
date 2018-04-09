@@ -6,7 +6,7 @@
 #define SPACE_INVADERS_IKBD
 
 /**
- * creates keyboard interupt
+ * Creates keyboard interupt
  */
 void ikbd_isr();
 

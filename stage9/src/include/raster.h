@@ -1,6 +1,8 @@
 /*
  *  File: raster.h 
  *  Authors: Artem Golovin, Daniel Artuso 
+ *  Note: all function with "__inverse" suffix perform the same operation as original function but instead,
+ *        plot white on black.
  */
 
 #ifndef SPACE_INVADERS_RASTER_H
@@ -27,17 +29,14 @@ void plot_vertical_line(uint8 *base, int x, int y, int height);
 /* Plots horizontal_line
  * Require x,y of starting location
  * Width specifies how many pixels to the right the line will go
- *
+ * 
+ * @param
+ * @param
+ * @param
+ * @param
  */
 void plot_horizontal_line(uint8 *base, int x, int y, int width);
-
 void plot_horizontal_line__inverse(uint8 *base, int x, int y, int width);
-
-
-/** Plot line
- * 
- * 
- */
 
 /**
  * Require starting x,y coordinates (x1,y2)

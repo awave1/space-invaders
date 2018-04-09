@@ -20,6 +20,8 @@ void laser_shot_effect();
 
 /**
  * Plays an explosion effect when called
+ * 
+ * @param is_alien - true, if want to play effect for alien explosion
  */
 void explosion_effect(bool is_alien);
 

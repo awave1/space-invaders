@@ -71,6 +71,11 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base);
  */
 void render_splashscreen(uint32* base);
 
+/**
+ * Render game over screen 
+ * 
+ * @param base - screen
+ */
 void render_game_over(uint32* base);
 
 /**

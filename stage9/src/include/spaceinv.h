@@ -16,8 +16,8 @@
 #include "clear.h"
 #include "isr.h"
 
-/*
- * Starts menu
+/**
+ * Starts menu, prepares screen for the game
  */
 void start();
 
