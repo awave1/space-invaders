@@ -70,7 +70,7 @@ void remove_vectors();
 
 bool ikbd_is_waiting();
 
-bool ikdb_mouse_moved();
+bool ikbd_mouse_moved();
 
 void write_to_ikbd_buffer(uint8 scancode);
 

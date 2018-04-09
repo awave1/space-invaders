@@ -153,7 +153,7 @@ bool ikbd_is_waiting() {
   return buff_head != buff_tail;
 }
 
-bool ikdb_mouse_moved() {
+bool ikbd_mouse_moved() {
   return mouse_moved;
 }
 
