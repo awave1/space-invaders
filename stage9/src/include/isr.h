@@ -46,6 +46,7 @@ extern Vector ikbd_vector;
 
 extern int G_MOUSE_X;
 extern int G_MOUSE_Y;
+extern bool G_MOUSE_LEFT_CLICK;
 
 extern int prev_mouse_x;
 extern int prev_mouse_y;

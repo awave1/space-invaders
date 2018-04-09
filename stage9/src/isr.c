@@ -31,6 +31,7 @@ bool key_repeat = false;
 
 int G_MOUSE_X = 0;
 int G_MOUSE_Y = 0;
+bool G_MOUSE_LEFT_CLICK = false;
 int prev_mouse_x = 0;
 int prev_mouse_y = 0;
 
@@ -97,20 +98,22 @@ void upd_mouse_events(uint16* base) {
 
   if (G_MOUSE_X < 0)
     G_MOUSE_X = 0;
-  else if (G_MOUSE_X > 628)
-    G_MOUSE_X = 628;
+  else if (G_MOUSE_X > 600)
+    G_MOUSE_X = 600;
 
   if (G_MOUSE_Y < 0)
     G_MOUSE_Y = 0;
-  else if (G_MOUSE_Y > 378)
-    G_MOUSE_Y = 378;
+  else if (G_MOUSE_Y > 380)
+    G_MOUSE_Y = 380;
+
+  G_MOUSE_LEFT_CLICK = mouse_button == 0xfa;
 
   mouse_delta_x = 0;
   mouse_delta_y = 0;
 
   if (G_RENDER_MOUSE_REQUEST) {
     clear_region(base, prev_mouse_x, prev_mouse_y, 8, 8);
-    restore_mouse_bkgd(base, prev_mouse_x, prev_mouse_y);
+    restore_mouse_bg(base, prev_mouse_x, prev_mouse_y);
     save_mouse_bg(base, G_MOUSE_X, G_MOUSE_Y);
     plot_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
 
