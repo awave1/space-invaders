@@ -36,6 +36,7 @@ extern uint8 mouse_button;
 extern uint8 mouse_delta_y;
 extern uint8 mouse_delta_x;
 extern bool key_repeat;
+extern bool mouse_moved;
 
 extern uint8 ikbd_buffer[IKBD_BUFFER_SIZE];
 extern unsigned int buff_head;
@@ -68,6 +69,8 @@ void install_vectors();
 void remove_vectors();
 
 bool ikbd_is_waiting();
+
+bool ikdb_mouse_moved();
 
 void write_to_ikbd_buffer(uint8 scancode);
 

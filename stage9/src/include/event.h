@@ -105,6 +105,12 @@ void on_next_wave(Model *model);
 bool has_user_input();
 
 /**
+ *
+ *
+ */
+bool has_mouse_input();
+
+/**
  * Get the user input from keyboard
  * 
  * @return unsigned long - keycode

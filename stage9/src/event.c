@@ -92,6 +92,10 @@ bool has_user_input() {
   return ikbd_is_waiting();
 }
 
+bool has_mouse_input() {
+  return ikbd_mouse_moved();
+}
+
 unsigned long get_user_input() {
   return read_from_ikbd_buffer();
 }
