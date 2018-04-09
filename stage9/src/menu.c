@@ -42,22 +42,23 @@ void process_keyboard_choice() {
       clear_choice_selector(prev_choice, base);
       draw_choice_selector(choice, base);
 
+      if (input == ENTER_KEY)
+        select_option(choice);
+      if (input == ESC_KEY)
+        select_option(MENU_CHOICE_EXIT);
+
     } else if (has_mouse_input()) {
-      clear_choice_selector(choice, base);
 
-      mouse_choice = mouse_location(); 
+      prev_mouse_choice = mouse_choice;
+      clear_choice_selector(prev_mouse_choice, base);
+
+      mouse_choice = mouse_location();
       if (mouse_choice != INVALID_MOUSE_CHOICE) {
-        prev_mouse_choice = mouse_choice;
-
-        clear_choice_selector(prev_mouse_choice, base);
         draw_choice_selector(mouse_choice, base);
-
         if (VALID_CLICK && G_MOUSE_LEFT_CLICK)
-          select_option(mouse_choice);   
-        
+          select_option(mouse_choice);
       }
     }
-
   }
 }
 
@@ -65,17 +66,14 @@ void select_option(int choice) {
   switch (choice) {
     case MENU_CHOICE_START_1_PLAYER:
       MENU_STATE = MENU_CHOICE_START_1_PLAYER;
-
       game_loop();
       stop_sound();
       break;
     case MENU_CHOICE_START_2_PLAYERS:
       MENU_STATE = MENU_CHOICE_START_2_PLAYERS;
-      /*Two player game mode here*/
     case MENU_CHOICE_EXIT:
     default:
       MENU_STATE = MENU_CHOICE_EXIT;
-      /*Quit option*/
       clear_interrupts();
       break;
   }
@@ -86,15 +84,15 @@ void draw_choice_selector(int choice, uint16* base) {
 
   switch (choice) {
     default:
-    case 1:
+    case MENU_CHOICE_START_1_PLAYER:
       plot_bitmap_16(base, SELECTION_X, SELECTION_1Y, menu_pointer,
                      SPRITE_SIZE);
       break;
-    case 2:
+    case MENU_CHOICE_START_2_PLAYERS:
       plot_bitmap_16(base, SELECTION_X, SELECTION_2Y, menu_pointer,
                      SPRITE_SIZE);
       break;
-    case 3:
+    case MENU_CHOICE_EXIT:
       plot_bitmap_16(base, SELECTION_X, SELECTION_3Y, menu_pointer,
                      SPRITE_SIZE);
       break;
@@ -104,13 +102,13 @@ void draw_choice_selector(int choice, uint16* base) {
 void clear_choice_selector(int choice, uint16* base) {
   switch (choice) {
     default:
-    case 1:
+    case MENU_CHOICE_START_1_PLAYER:
       clear_region(base, SELECTION_X, SELECTION_1Y, 16, 16);
       break;
-    case 2:
+    case MENU_CHOICE_START_2_PLAYERS:
       clear_region(base, SELECTION_X, SELECTION_2Y, 16, 16);
       break;
-    case 3:
+    case MENU_CHOICE_EXIT:
       clear_region(base, SELECTION_X, SELECTION_3Y, 16, 16);
       break;
   }
@@ -127,7 +125,7 @@ int mouse_location() {
     mouse_location = MENU_CHOICE_START_1_PLAYER;
   else if (valid_x && valid_y_choice2)
     mouse_location = MENU_CHOICE_START_2_PLAYERS;
-  else if (valid_x && valid_y_choice2)
+  else if (valid_x && valid_y_choice3)
     mouse_location = MENU_CHOICE_EXIT;
 
   VALID_CLICK = (valid_x && valid_y_choice1) || 
