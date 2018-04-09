@@ -17,7 +17,6 @@ int read_psg(int reg) {
   int val = -1;
 
   old_ssp = Super(0);
-
   
   if (reg_is_valid(reg)) {
     *psg_reg_select = reg;
@@ -141,6 +140,12 @@ void enable_channel(channel_t channel, bool tone_on, bool noise_on) {
 }
 
 void stop_sound() {
+  write_psg(MIXER_REG, 0x00);
+  write_psg(NOISE_FREQUENCY_REG, 0x00);
+  write_psg(ENVELOPE_FINE_REG, 0x00);
+  write_psg(ENVELOPE_ROUGH_REG, 0x00);
+  write_psg(ENVELOPE_SHAPE_CONTROL_REG, 0x00);
+
   set_volume(ch_a, 0);
   set_volume(ch_b, 0);
   set_volume(ch_c, 0);

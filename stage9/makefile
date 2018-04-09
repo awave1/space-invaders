@@ -1,4 +1,4 @@
-OBJ_FILES=bin\spaceinv.o bin\game.o bin\splash.o bin\menu.o bin\render.o bin\isr.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\clear.o bin\video.o bin\vbl.o bin\ikbd.o
+OBJ_FILES=bin\spaceinv.o bin\game.o bin\splash.o bin\menu.o bin\render.o bin\isr.o bin\event.o bin\model.o bin\raster.o bin\font.o bin\sprites.o bin\psg.o bin\effects.o bin\music.o bin\super.o bin\clear.o bin\video.o bin\vbl.o bin\ikbd.o
 EXE_NAME=spaceinv
 
 $(EXE_NAME).tos: $(OBJ_FILES)
