@@ -55,30 +55,66 @@ extern bool G_MOUSE_LEFT_CLICK;
 extern int prev_mouse_x;
 extern int prev_mouse_y;
 
+
+/**
+ * Updates timer
+ */
 void vbl_req();
 
+/**
+ * Processes keyboard and mouse input
+ */
 void ikbd_req();
 
+/**
+ * @brief
+ */
 void init_mouse(uint16* base);
 
+/**
+ * Update the mouse position, and draws cursor
+ */
 void upd_mouse_events(uint16* base);
 
+/**
+ * Installs or remove single vector
+ */
 Vector install_vector(int num, Vector vector);
 
+/**
+ * Installs vector vbl and ikbd vectors
+ */
 void install_vectors();
 
-void install_vectors();
-
+/**
+ * Removes vector
+ */
 void remove_vectors();
 
+/**
+ * Check if keyboard is waiting for input
+ */
 bool ikbd_is_waiting();
 
+/**
+ * @brief
+ */
 bool ikbd_mouse_moved();
 
+/**
+ * Write keyboard value to keyboard buffer
+ * @param: uint8 scancode - key code
+ */
 void write_to_ikbd_buffer(uint8 scancode);
 
+/**
+ * Read keyboard value from keyboard buffer
+ */
 unsigned long read_from_ikbd_buffer();
 
+/**
+ * Clears keyboard buffer
+ */
 void clear_ikbd_buffer();
 
 #endif /* SPACE_INVADERS_INTERRUPTS */

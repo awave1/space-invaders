@@ -11,15 +11,6 @@
 #include "font.h"
 #include "sprites.h"
 
-/*
- * For each function you develop, write a short header block comment which specifies:
-1. its purpose, from the caller’s perspective (if not perfectly clear from the name);
-2. the purpose of each input parameter (if not perfectly clear from the name);
-3. the purpose of each output parameter and return value (if not perfectly clear from the name);
-4. any assumptions, limitations or known bugs.
- */
-
-
 /* Plot Pixel
  * Require x,y of pixel to place
  *
@@ -111,7 +102,7 @@ void print_string(uint8 *base, int x, int y, char *str);
 void print_num(uint8 *base, int x, int y, uint16 num);
 
 /*
- * Clears the entire screen
+ * Various clearing functions
  */
 void clear_region(void *base, int x, int y, int width, int height);
 

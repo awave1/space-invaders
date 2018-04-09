@@ -22,14 +22,14 @@
 void game_loop();
 
 /**
- * Process all async events
+ * Process all asynchronous events
  * 
  * @param model - Game model
  */
 void process_async_events(Model *model);
 
 /**
- * Process all sync events
+ * Process all synchronous events
  * 
  * @param model - Game model
  */

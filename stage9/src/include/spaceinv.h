@@ -16,6 +16,9 @@
 #include "clear.h"
 #include "isr.h"
 
+/*
+ * Starts menu
+ */
 void start();
 
 #endif /* SPACE_INVADERS_GAME */
