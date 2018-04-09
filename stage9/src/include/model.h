@@ -21,6 +21,7 @@
 #include <osbind.h>
 #include "const.h"
 #include "types.h"
+#include "effects.h"
 
 
 typedef struct {

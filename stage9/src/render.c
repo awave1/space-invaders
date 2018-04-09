@@ -123,6 +123,6 @@ void restore_mouse_bg(uint16 *base, int x, int y) {
     *(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
 }
 
-void plot_mouse_ptr(uint16 *base, int x, int y) {
+void render_mouse_ptr(uint16 *base, int x, int y) {
   plot_bitmap_16(base, x, y, mouse_pointer, SPRITE_SIZE);
 }

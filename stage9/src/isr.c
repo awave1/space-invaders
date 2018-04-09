@@ -95,7 +95,7 @@ void init_mouse(uint16* base) {
   prev_mouse_x = G_MOUSE_X;
   prev_mouse_y = G_MOUSE_Y;
   save_mouse_bg(base, G_MOUSE_X, G_MOUSE_Y);
-  plot_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
+  render_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
 }
 
 void upd_mouse_events(uint16* base) {
@@ -122,7 +122,7 @@ void upd_mouse_events(uint16* base) {
     clear_region(base, prev_mouse_x, prev_mouse_y, 8, 8);
     restore_mouse_bg(base, prev_mouse_x, prev_mouse_y);
     save_mouse_bg(base, G_MOUSE_X, G_MOUSE_Y);
-    plot_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
+    render_mouse_ptr(base, G_MOUSE_X, G_MOUSE_Y);
 
     prev_mouse_x = G_MOUSE_X;
     prev_mouse_y = G_MOUSE_Y;

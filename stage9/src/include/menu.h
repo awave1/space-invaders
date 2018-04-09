@@ -40,7 +40,7 @@ void menu();
 /**
  * Updates selection from keyboard input
  */
-void process_keyboard_choice();
+void process_menu_choice();
 
 /**
  * Select option selected upon enter key/mouse click

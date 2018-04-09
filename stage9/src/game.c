@@ -140,7 +140,7 @@ void game_loop() {
   */
 
   clear_qk(base);
-  render_splashscreen(base);
+  render_splashscreen((uint32*) base);
 }
 
 void clear_interrupts() {

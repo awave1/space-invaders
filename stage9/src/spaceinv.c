@@ -9,7 +9,7 @@ void start() {
 
   disable_cursor();
   clear_qk(base);
-  render_splashscreen(base);
+  render_splashscreen((uint32*) base);
   menu();
 }
 
