@@ -200,9 +200,12 @@ const note_t main_song[] = {
 };
 
 void start_music() {
-  set_envelope(triangle_inv_period, 10);
+  int sustain = 10;
+  int vol = 11;
+
+  set_envelope(triangle_inv_period, sustain);
   enable_channel(ch_c, true, false);
-	set_volume(ch_c, 11);
+	set_volume(ch_c, vol);
 }
 
 bool update_music(uint32 time_elapsed) {
