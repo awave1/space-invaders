@@ -60,3 +60,6 @@ bin\vbl.o: src\asm\vbl.s src\include\vbl.h
 
 bin\ikbd.o: src\asm\ikbd.s src\include\ikbd.h
 	gen -D -L2 src\asm\ikbd.s -obin\ikbd.o
+
+bin\super.o: src\asm\super.s
+	gen -D -L2 src\asm\super.s -obin\super.o
