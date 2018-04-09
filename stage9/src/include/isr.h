@@ -21,9 +21,15 @@
 #define IKBD_RX_DEFAULT 0xfffc96
 #define IKBD_RX_INTERRUPT_OFF 0xfffc16
 
+#define MFB_BIT_6_MASK_ON 0x40
+#define MFB_BIT_6_MASK_OFF 0xbf
+
 #define MOUSE_STATE_FIRST_PACKET 0
 #define MOUSE_STATE_DELTA_X 1
 #define MOUSE_STATE_DELTA_Y 2
+
+#define MOUSE_MOVE_CODE 0xf8
+#define MOUSE_LEFT_BUTTON_CODE 0xfa
 
 #define IKBD_BUFFER_SIZE 256
 
@@ -67,6 +73,7 @@ extern bool mouse_moved;
 extern uint8 ikbd_buffer[IKBD_BUFFER_SIZE];
 extern unsigned int buff_head;
 extern unsigned int buff_tail;
+extern uint8 repeated_key;
 
 extern Vector vbl_vector;
 extern Vector ikbd_vector;

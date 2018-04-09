@@ -16,6 +16,8 @@
 #include "clear.h"
 #include "video.h"
 
+extern int player_num;
+
 /**
  * Game loop, that processes async/sync events and handles double buffering
  */

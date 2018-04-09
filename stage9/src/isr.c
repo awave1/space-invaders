@@ -26,6 +26,7 @@ volatile uint8* const ascii_table = 0xFFFE829C;
 uint8 ikbd_buffer[IKBD_BUFFER_SIZE];
 unsigned int buff_head = 0;
 unsigned int buff_tail = 0;
+uint8 repeated_key = 0;
 
 int mouse_state = 0;
 uint8 mouse_button;
@@ -39,6 +40,7 @@ int G_MOUSE_Y = 0;
 bool G_MOUSE_LEFT_CLICK = false;
 int prev_mouse_x = 0;
 int prev_mouse_y = 0;
+
 
 void vbl_req() {
   G_MUSIC_TIMER++;
@@ -64,11 +66,11 @@ void ikbd_req() {
       /*
         check if scancode is mouse event 
       */
-      if (scancode >= 0xf8) {
+      if (scancode >= MOUSE_MOVE_CODE) {
         mouse_button = scancode;
         mouse_state = MOUSE_STATE_DELTA_X;
 
-        mouse_moved = scancode == 0xf8;
+        mouse_moved = scancode == MOUSE_MOVE_CODE;
       } else if ((scancode & 0x80) == 0x00) { /* check if it's a make code */
         write_to_ikbd_buffer(scancode);
         key_repeat = true;
@@ -83,7 +85,7 @@ void ikbd_req() {
       mouse_delta_y = scancode;
     }
 
-    *isrb_mfp_register &= 0xbf; /* clear bit 6 */
+    *isrb_mfp_register &= MFB_BIT_6_MASK_OFF; /* clear bit 6 */
   }
 
   *ikbd_control = 0x96;
@@ -113,7 +115,7 @@ void upd_mouse_events(uint16* base) {
   else if (G_MOUSE_Y > 380)
     G_MOUSE_Y = 380;
 
-  G_MOUSE_LEFT_CLICK = mouse_button == 0xfa;
+  G_MOUSE_LEFT_CLICK = mouse_button == MOUSE_LEFT_BUTTON_CODE;
 
   mouse_delta_x = 0;
   mouse_delta_y = 0;
@@ -176,14 +178,13 @@ unsigned long read_from_ikbd_buffer() {
   if (buff_head == IKBD_BUFFER_SIZE - 1)
     buff_head = 0;
 
-
-  *isrb_mfp_register &= 0xbf;
+  *isrb_mfp_register &= MFB_BIT_6_MASK_OFF;
 
   ch = ikbd_buffer[buff_head];
   ch = ch << 16;
   ch = ch + *(ascii_table + ikbd_buffer[buff_head++]);
 
-  *isrb_mfp_register |= 0x40; /* turn bit 6 back on */
+  *isrb_mfp_register |= MFB_BIT_6_MASK_ON; /* turn bit 6 back on */
 
   Super(old_ssp);
   return ch;
@@ -195,4 +196,8 @@ void clear_ikbd_buffer() {
   }
 
   ikbd_buffer[buff_tail] = 0x00;
+}
+
+uint8 get_repeated_key() {
+  return repeated_key;
 }

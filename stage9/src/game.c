@@ -4,6 +4,7 @@
  */
 #include "include/game.h"
 
+
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
 
 extern bool G_RENDER_REQUEST;
@@ -15,21 +16,22 @@ extern int G_MUSIC_TIMER;
 extern int G_KEY_REPEAT_TICKS;
 extern bool key_repeat;
 
-
 bool game_is_running = true;
+
+int player_count = 1;
 
 void process_async_events(Model* model) {
   unsigned long input;
   if (has_user_input()) {
-    if (key_repeat && G_KEY_REPEAT_TICKS >= 2) {
-      input = get_user_input();
+    input = get_user_input();
 
+    if (input != MOUSE_MOVE_CODE) {
       if (input == ESC_KEY)
         game_is_running = false;
 
-      on_spaceship_move(&model->player, input);
-      G_KEY_REPEAT_TICKS = 0;
-    }
+      if (key_repeat)
+        on_spaceship_move(&model->player, input);
+    } 
   }
 }
 
@@ -66,9 +68,6 @@ void process_sync_events(Model* model) {
   }
 }
 
-void process_game_over() {
-}
-
 uint8* get_base(uint8 *second_buffer) {
   uint8* base;
   uint16 difference;
@@ -85,7 +84,6 @@ void game_loop() {
   uint16* base;
   uint16* base2 = (uint16*) get_base(second_buffer);
   long old_ssp;
-  bool game_over_screen_flag = false;
 
   base = get_video_base();
 
@@ -125,7 +123,7 @@ void game_loop() {
 
   set_video_base(base);
 
-  show_game_over();
+  show_game_over(base);
   
   clear_ikbd_buffer();
 
@@ -133,7 +131,8 @@ void game_loop() {
   render_splashscreen((uint32*) base);
 }
 
-void show_game_over() {
+void show_game_over(uint16* base) {
+  bool game_over_screen_flag = false;
   clear_game(base);
   render_game_over((uint32*) base);
   while (!game_over_screen_flag)
