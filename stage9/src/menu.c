@@ -8,9 +8,13 @@ void process_keyboard_choice() {
   unsigned long input;
   int choice = MENU_CHOICE_START_1_PLAYER;
   int prev_choice = choice;
+  uint16 *base = get_video_base();
 
-  draw_choice_selector(choice);
+  init_mouse(base);
+
+  draw_choice_selector(choice, base);
   while (input != ENTER_KEY && input != ESC_KEY) {
+    upd_mouse_events(base);
     if (has_user_input()) {
       input = get_user_input();
       prev_choice = choice;
@@ -27,8 +31,8 @@ void process_keyboard_choice() {
           break;
       }
       
-      clear_choice_selector(prev_choice);
-      draw_choice_selector(choice);
+      clear_choice_selector(prev_choice, base);
+      draw_choice_selector(choice, base);
 
       if (input == ENTER_KEY)
         select_option(choice);
@@ -55,8 +59,7 @@ void select_option(int choice) {
 }
 
 
-void draw_choice_selector(int choice) {
-  uint16 *base = get_video_base();
+void draw_choice_selector(int choice, uint16* base) {
 
   switch (choice) {
     default:
@@ -75,9 +78,7 @@ void draw_choice_selector(int choice) {
   }
 }
 
-void clear_choice_selector(int choice) {
-  uint16 *base = get_video_base();
-
+void clear_choice_selector(int choice, uint16* base) {
   switch (choice) {
     default:
     case 1:
