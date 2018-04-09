@@ -1,3 +1,7 @@
+/*
+ *  File: psg.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_PSG_H
 #define SPACE_INVADERS_PSG_H
 

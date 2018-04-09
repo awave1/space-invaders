@@ -1,3 +1,7 @@
+/*
+ *  File: isr.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_INTERRUPTS
 #define SPACE_INVADERS_INTERRUPTS
 
@@ -18,7 +22,6 @@
 #define MOUSE_STATE_DELTA_Y 2
 
 #define IKBD_BUFFER_SIZE 256
-
 
 
 typedef void (*Vector) ();

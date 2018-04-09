@@ -1,5 +1,5 @@
 /*
- *  File: space.h 
+ *  File: game.h
  *  Authors: Artem Golovin, Daniel Artuso 
  */
 

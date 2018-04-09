@@ -1,4 +1,7 @@
-
+/*
+ *  File: spaceinv.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_GAME
 #define SPACE_INVADERS_GAME
 

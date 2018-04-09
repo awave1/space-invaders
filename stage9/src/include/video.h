@@ -1,3 +1,7 @@
+/*
+ *  File: video.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_VIDEOBASE
 #define SPACE_INVADERS_VIDEOBASE
 

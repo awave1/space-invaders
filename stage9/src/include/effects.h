@@ -1,3 +1,10 @@
+/*
+ *  File: effects.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ *
+ *  Description:
+ *      Contains functions for sound effects
+ */
 #ifndef SPACE_INVADERS_EFFECTS_H
 #define SPACE_INVADERS_EFFECTS_H
 
