@@ -1,3 +1,5 @@
+; File: 	super.s
+; Author: 	Artem Golovinm, Daniel Artuso
 	xdef	super_on
 	xdef	super_off
 
