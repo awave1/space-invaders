@@ -16,6 +16,8 @@
 #define MOUSE_STATE_DELTA_X 1
 #define MOUSE_STATE_DELTA_Y 2
 
+#define IKBD_BUFFER_SIZE 256
+
 
 
 typedef void (*Vector) ();
@@ -30,9 +32,9 @@ extern bool G_RENDER_REQUEST;
 
 extern bool key_repeat;
 
-extern uint8 G_IKBD_BUFFER[256];
-extern unsigned int G_IKBD_BUFF_HEAD;
-extern unsigned int G_IKBD_BUFF_TAIL;
+extern uint8 ikbd_buffer[IKBD_BUFFER_SIZE];
+extern unsigned int buff_head;
+extern unsigned int buff_tail;
 
 extern Vector vbl_vector;
 extern Vector ikbd_vector;

@@ -18,10 +18,9 @@ volatile uint8* const isrb_mfp_register = 0xfffa11;
 
 volatile uint8* const ascii_table = 0xFFFE829C;
 
-uint8 G_IKBD_BUFFER[256];
-
-unsigned int G_IKBD_BUFF_HEAD = 0;
-unsigned int G_IKBD_BUFF_TAIL = 0;
+uint8 ikbd_buffer[IKBD_BUFFER_SIZE];
+unsigned int buff_head = 0;
+unsigned int buff_tail = 0;
 
 int mouse_state = 0;
 uint8 mouse_button;
@@ -98,12 +97,12 @@ Vector install_vector(int num, Vector vector) {
 }
 
 bool ikbd_is_waiting() {
-  return G_IKBD_BUFF_HEAD != G_IKBD_BUFF_TAIL;
+  return buff_head != buff_tail;
 }
 
 void write_to_ikbd_buffer(uint8 scancode) {
-  G_IKBD_BUFFER[G_IKBD_BUFF_TAIL] = scancode;
-  G_IKBD_BUFF_TAIL++;
+  ikbd_buffer[buff_tail] = scancode;
+  buff_tail++;
 }
 
 unsigned long read_from_ikbd_buffer() {
@@ -112,9 +111,9 @@ unsigned long read_from_ikbd_buffer() {
 
   *isrb_mfp_register &= 0xbf;
 
-  ch = G_IKBD_BUFFER[G_IKBD_BUFF_HEAD];
+  ch = ikbd_buffer[buff_head];
   ch = ch << 16;
-  ch = ch + *(ascii_table + G_IKBD_BUFFER[G_IKBD_BUFF_HEAD++]);
+  ch = ch + *(ascii_table + ikbd_buffer[buff_head++]);
 
   *isrb_mfp_register |= 0x40; /* turn bit 6 back on */
 
@@ -124,8 +123,8 @@ unsigned long read_from_ikbd_buffer() {
 
 void clear_ikbd_buffer() {
   while(ikbd_is_waiting()) {
-    G_IKBD_BUFF_HEAD++;
+    buff_head++;
   }
   
-  G_IKBD_BUFFER[G_IKBD_BUFF_TAIL] = 0x00;
+  ikbd_buffer[buff_tail] = 0x00;
 }
