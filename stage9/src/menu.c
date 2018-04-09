@@ -4,10 +4,10 @@ int MENU_STATE = MENU_CHOICE_START_1_PLAYER;
 bool VALID_CLICK = false;
 
 void menu() {
-  process_keyboard_choice();
+  process_menu_choice();
 }
 
-void process_keyboard_choice() {
+void process_menu_choice() {
   unsigned long input;
   int choice = MENU_CHOICE_START_1_PLAYER;
   int prev_choice = choice;
@@ -18,6 +18,7 @@ void process_keyboard_choice() {
   init_mouse(base);
 
   draw_choice_selector(choice, base);
+  draw_menu_underlines(base);
 
   while (MENU_STATE != MENU_CHOICE_EXIT) {
     upd_mouse_events(base);
@@ -48,13 +49,9 @@ void process_keyboard_choice() {
         select_option(MENU_CHOICE_EXIT);
 
     } else if (has_mouse_input()) {
-
       prev_mouse_choice = mouse_choice;
-      clear_choice_selector(prev_mouse_choice, base);
-
       mouse_choice = mouse_location();
       if (mouse_choice != INVALID_MOUSE_CHOICE) {
-        draw_choice_selector(mouse_choice, base);
         if (VALID_CLICK && G_MOUSE_LEFT_CLICK)
           select_option(mouse_choice);
       }
@@ -74,7 +71,6 @@ void select_option(int choice) {
     case MENU_CHOICE_EXIT:
     default:
       MENU_STATE = MENU_CHOICE_EXIT;
-      clear_interrupts();
       break;
   }
 }
@@ -97,6 +93,18 @@ void draw_choice_selector(int choice, uint16* base) {
                      SPRITE_SIZE);
       break;
   }
+}
+
+void draw_menu_underlines(uint16* base) {
+  int y1 = SELECTION_1Y + 25;
+  int y2 = SELECTION_2Y + 25;
+  int y3 = SELECTION_3Y + 25;
+  int x = SELECTION_X + 30;
+  int width = 148;
+  int height = 5;
+  plot_rectangle__inverse((uint8*) base, x, y1, width, height);
+  plot_rectangle__inverse((uint8*) base, x, y2, width, height);
+  plot_rectangle__inverse((uint8*) base, x, y3, width, height);
 }
 
 void clear_choice_selector(int choice, uint16* base) {

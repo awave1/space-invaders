@@ -59,6 +59,15 @@ void render_splashscreen(uint32* base) {
   plot_screen(base, splash_screen);
 }
 
+void render_game_over(uint32* base) {
+  int x1 = 284;
+  int x2 = 212;
+  int y1 = 200;
+  int y2 = 216;
+  print_string((uint8*) base, x1, y1, "GAME OVER");
+  print_string((uint8*) base, x2, y2, "(PRESS ANY KEY TO CONTINUE)");
+}
+
 void disable_cursor() {
   printf("\033f");
   fflush(stdout);

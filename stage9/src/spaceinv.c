@@ -12,7 +12,7 @@ void start() {
 int main() {
   install_vectors();
   start();
-  stop_sound();
   clear_interrupts();
+  stop_sound();
   return 0;
 }
