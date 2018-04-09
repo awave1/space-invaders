@@ -1,4 +1,4 @@
-/*
+/**
  *  File: spaceinv.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

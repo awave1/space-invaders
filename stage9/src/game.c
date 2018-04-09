@@ -1,4 +1,4 @@
-/*
+/**
  *  File: game.c
  *  Authors: Artem Golovin, Daniel Artuso
  */
@@ -18,7 +18,7 @@ extern bool key_repeat;
 
 bool game_is_running = true;
 
-void process_async_events(Model *model) {
+void process_async_events(Model* model) {
   unsigned long input;
   if (has_user_input()) {
     if (key_repeat && G_KEY_REPEAT_TICKS >= 2) {
@@ -33,7 +33,7 @@ void process_async_events(Model *model) {
   }
 }
 
-void process_sync_events(Model *model) {
+void process_sync_events(Model* model) {
   int prev_score = model->scorebox.score;
 
   if (G_GAME_TIMER > 0) {
@@ -69,10 +69,8 @@ void process_sync_events(Model *model) {
 void process_game_over() {
 }
 
-/*get base function*/
-uint8 *get_base(uint8 *second_buffer) {
-  /*make sure byte aligned*/
-  uint8 *base;
+uint8* get_base(uint8 *second_buffer) {
+  uint8* base;
   uint16 difference;
   base = second_buffer;
   difference = (int) base;
@@ -84,17 +82,15 @@ uint8 *get_base(uint8 *second_buffer) {
 void game_loop() {
   Model model;
   bool swap_screens = true;
-  void *screen2;
   uint16* base;
+  uint16* base2 = (uint16*) get_base(second_buffer);
   long old_ssp;
   bool game_over_screen_flag = false;
 
   base = get_video_base();
 
   setup_game(&model, base);
-
-  screen2 = get_base(second_buffer);
-  clear_qk(screen2);
+  clear_qk(base2);
 
   start_music();
   while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
@@ -115,9 +111,9 @@ void game_loop() {
           set_video_base(base);
 
         } else {
-          clear_game(screen2);
-          render(&model, screen2);
-          set_video_base(screen2);
+          clear_game(base2);
+          render(&model, base2);
+          set_video_base(base2);
         }
         G_RENDER_REQUEST = false;
         swap_screens = !swap_screens;
@@ -126,21 +122,22 @@ void game_loop() {
       game_is_running = false;
     }
   }
+
   set_video_base(base);
 
-/*
-  if (!game_is_running) {
-    clear_game(base);
-    render_game_over(base);
-
-    do {
-      game_over_screen_flag = has_user_input();
-    } while (!game_over_screen_flag);
-  }
-  */
+  show_game_over();
+  
+  clear_ikbd_buffer();
 
   clear_qk(base);
   render_splashscreen((uint32*) base);
+}
+
+void show_game_over() {
+  clear_game(base);
+  render_game_over((uint32*) base);
+  while (!game_over_screen_flag)
+    game_over_screen_flag = has_user_input();
 }
 
 void clear_interrupts() {
@@ -148,7 +145,7 @@ void clear_interrupts() {
   remove_vectors();
 }
 
-void setup_game(Model *model, void *base) {
+void setup_game(Model* model, void* base) {
   disable_cursor();
   on_game_start(model);
   clear_qk(base);

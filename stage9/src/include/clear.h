@@ -1,5 +1,5 @@
 /*
- *  File: clear_qk.h 
+ *  File: clear.h 
  *  Authors: Artem Golovin, Daniel Artuso 
  */
 
@@ -11,13 +11,13 @@
  * 
  * @param base - Screen to clear
  */
-void clear_qk(void *base);
+void clear_qk(void* base);
 
 /**
  * Clear the entire screen. 
  * 
  * @param base - Screen to clear
  */
-void clear_game(void *base);
+void clear_game(void* base);
 
-#endif /* CLEAR_QK_H */
+#endif /* SPACE_INVADERS_CLEAR_H */

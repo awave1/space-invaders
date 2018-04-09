@@ -1,4 +1,4 @@
-/*
+/**
  *  File: font.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

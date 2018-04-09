@@ -1,4 +1,4 @@
-/*
+/**
  *  File: isr.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

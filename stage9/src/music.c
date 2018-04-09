@@ -1,4 +1,4 @@
-/*
+/**
  *  File: music.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

@@ -1,4 +1,4 @@
-/*
+/**
  *  File: menu.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

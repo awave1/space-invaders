@@ -1,4 +1,4 @@
-/*
+/**
  *  File: raster.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

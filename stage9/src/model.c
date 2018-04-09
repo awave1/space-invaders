@@ -1,4 +1,4 @@
-/*
+/**
  *  File: model.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

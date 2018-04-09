@@ -1,4 +1,4 @@
-/*
+/**
  *  File: sprites.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

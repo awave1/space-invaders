@@ -1,4 +1,4 @@
-/*
+/**
  *  File: event.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

@@ -1,4 +1,4 @@
-/*
+/**
  *  File: render.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

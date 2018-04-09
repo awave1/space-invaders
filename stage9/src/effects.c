@@ -1,4 +1,4 @@
-/*
+/**
  *  File: effects.c
  *  Authors: Artem Golovin, Daniel Artuso
  */

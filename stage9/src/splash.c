@@ -1,4 +1,4 @@
-/*
+/**
  *  File: splash.c
  *  Authors: Artem Golovin, Daniel Artuso
  */
