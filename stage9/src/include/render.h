@@ -72,6 +72,16 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base);
 void render_splashscreen(uint32* base);
 
 /**
+ * @brief 
+ * 
+ */
+void render_mouse_ptr(uint16* base, int x, int y);
+
+void save_mouse_bg(uint16 *base, int x, int y);
+
+void restore_mouse_bkgd(uint16 *base, int x, int y);
+
+/**
  * Disable the cursor using terminal command
  */
 void disable_cursor();

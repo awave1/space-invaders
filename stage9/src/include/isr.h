@@ -4,7 +4,7 @@
 #include "vbl.h"
 #include "ikbd.h"
 #include "music.h"
-#include "raster.h"
+#include "render.h"
 #include "types.h"
 
 #define VBL_ISR 28
