@@ -6,11 +6,8 @@
 #include "model.h"
 #include "types.h"
 #include "const.h"
-
-/* 
- * note: these are temporary, todo: need to figure out how to swap
- * so we can get for example instead of 0x004b0000 -> 0x4b
- */
+#include "isr.h"
+#include "psg.h"
 
 
 void on_spaceship_move(Spaceship* spaceship, unsigned long key);
@@ -33,6 +30,7 @@ void on_bomb_hit_player(Model* model);
 void on_game_start(Model* model);
 void on_game_pause(Model* model);
 void on_game_over(Model* model);
+void on_game_exit();
 
 void _log_event(const char* event_name, const char* message, ...);
 

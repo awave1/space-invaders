@@ -88,6 +88,11 @@ void on_game_over(Model *model) {
   game_over(model);
 }
 
+void on_game_exit() {
+  stop_sound();
+  clear_interrupts();
+}
+
 void on_next_wave(Model *model) {
   init_armada(&model->armada);
 }

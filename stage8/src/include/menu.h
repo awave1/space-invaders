@@ -23,7 +23,7 @@
 
 void menu();
 
-void process_keyboard_choice();
+void process_menu_choice();
 
 void select_option(int choice);
 

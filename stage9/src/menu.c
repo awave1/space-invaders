@@ -8,10 +8,10 @@ int MENU_STATE = MENU_CHOICE_START_1_PLAYER;
 bool VALID_CLICK = false;
 
 void menu() {
-  process_keyboard_choice();
+  process_menu_choice();
 }
 
-void process_keyboard_choice() {
+void process_menu_choice() {
   unsigned long input;
   int choice = MENU_CHOICE_START_1_PLAYER;
   int prev_choice = choice;
@@ -52,13 +52,9 @@ void process_keyboard_choice() {
         select_option(MENU_CHOICE_EXIT);
 
     } else if (has_mouse_input()) {
-
       prev_mouse_choice = mouse_choice;
-      clear_choice_selector(prev_mouse_choice, base);
-
       mouse_choice = mouse_location();
       if (mouse_choice != INVALID_MOUSE_CHOICE) {
-        draw_choice_selector(mouse_choice, base);
         if (VALID_CLICK && G_MOUSE_LEFT_CLICK)
           select_option(mouse_choice);
       }
@@ -78,8 +74,7 @@ void select_option(int choice) {
     case MENU_CHOICE_EXIT:
     default:
       MENU_STATE = MENU_CHOICE_EXIT;
-          clear_interrupts();
-          break;
+      break;
   }
 }
 

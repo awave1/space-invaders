@@ -16,17 +16,19 @@ extern int G_KEY_REPEAT_TICKS;
 extern bool key_repeat;
 
 
+bool game_is_running = true;
+
 void process_async_events(Model *model) {
   unsigned long input;
   if (has_user_input()) {
     if (key_repeat && G_KEY_REPEAT_TICKS >= 2) {
       input = get_user_input();
+
+      if (input == ESC_KEY)
+        game_is_running = false;
+
       on_spaceship_move(&model->player, input);
       G_KEY_REPEAT_TICKS = 0;
-    }
-    if (input == ESC_KEY) {
-      on_game_over(model);
-      clear_interrupts();
     }
   }
 }
@@ -64,6 +66,9 @@ void process_sync_events(Model *model) {
   }
 }
 
+void process_game_over() {
+}
+
 /*get base function*/
 uint8 *get_base(uint8 *second_buffer) {
   /*make sure byte aligned*/
@@ -81,9 +86,8 @@ void game_loop() {
   bool swap_screens = true;
   void *screen2;
   uint16* base;
-  /*unsigned long prev_call = get_time();*/
   long old_ssp;
-  bool game_is_running = true;
+  bool game_over_screen_flag = false;
 
   base = get_video_base();
 
@@ -119,13 +123,24 @@ void game_loop() {
         swap_screens = !swap_screens;
       }
     } else {
-      clear_interrupts();
       game_is_running = false;
     }
   }
-
-  render(&model, base);
   set_video_base(base);
+
+/*
+  if (!game_is_running) {
+    clear_game(base);
+    render_game_over(base);
+
+    do {
+      game_over_screen_flag = has_user_input();
+    } while (!game_over_screen_flag);
+  }
+  */
+
+  clear_qk(base);
+  render_splashscreen(base);
 }
 
 void clear_interrupts() {
