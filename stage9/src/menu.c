@@ -1,3 +1,7 @@
+/*
+ *  File: menu.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/menu.h"
 
 int MENU_STATE = MENU_CHOICE_START_1_PLAYER;
@@ -30,11 +34,11 @@ void process_keyboard_choice() {
         case UP_KEY:
           if (choice > MENU_CHOICE_START_1_PLAYER)
             choice--;
-          break;
+              break;
         case DOWN_KEY:
           if (choice < MENU_CHOICE_EXIT)
             choice++;
-          break;
+              break;
         default:
           break;
       }
@@ -66,16 +70,16 @@ void select_option(int choice) {
   switch (choice) {
     case MENU_CHOICE_START_1_PLAYER:
       MENU_STATE = MENU_CHOICE_START_1_PLAYER;
-      game_loop();
-      stop_sound();
-      break;
+          game_loop();
+          stop_sound();
+          break;
     case MENU_CHOICE_START_2_PLAYERS:
       MENU_STATE = MENU_CHOICE_START_2_PLAYERS;
     case MENU_CHOICE_EXIT:
     default:
       MENU_STATE = MENU_CHOICE_EXIT;
-      clear_interrupts();
-      break;
+          clear_interrupts();
+          break;
   }
 }
 
@@ -87,15 +91,15 @@ void draw_choice_selector(int choice, uint16* base) {
     case MENU_CHOICE_START_1_PLAYER:
       plot_bitmap_16(base, SELECTION_X, SELECTION_1Y, menu_pointer,
                      SPRITE_SIZE);
-      break;
+          break;
     case MENU_CHOICE_START_2_PLAYERS:
       plot_bitmap_16(base, SELECTION_X, SELECTION_2Y, menu_pointer,
                      SPRITE_SIZE);
-      break;
+          break;
     case MENU_CHOICE_EXIT:
       plot_bitmap_16(base, SELECTION_X, SELECTION_3Y, menu_pointer,
                      SPRITE_SIZE);
-      break;
+          break;
   }
 }
 
@@ -104,13 +108,13 @@ void clear_choice_selector(int choice, uint16* base) {
     default:
     case MENU_CHOICE_START_1_PLAYER:
       clear_region(base, SELECTION_X, SELECTION_1Y, 16, 16);
-      break;
+          break;
     case MENU_CHOICE_START_2_PLAYERS:
       clear_region(base, SELECTION_X, SELECTION_2Y, 16, 16);
-      break;
+          break;
     case MENU_CHOICE_EXIT:
       clear_region(base, SELECTION_X, SELECTION_3Y, 16, 16);
-      break;
+          break;
   }
 }
 
@@ -128,10 +132,10 @@ int mouse_location() {
   else if (valid_x && valid_y_choice3)
     mouse_location = MENU_CHOICE_EXIT;
 
-  VALID_CLICK = (valid_x && valid_y_choice1) || 
-                (valid_x && valid_y_choice2) ||
-                (valid_x && valid_y_choice3);
-  
+  VALID_CLICK = (valid_x && valid_y_choice1) ||
+    (valid_x && valid_y_choice2) ||
+    (valid_x && valid_y_choice3);
+
   return mouse_location;
 }
 

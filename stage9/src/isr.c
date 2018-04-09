@@ -1,3 +1,7 @@
+/*
+ *  File: isr.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/isr.h"
 
 int G_MUSIC_TIMER = 0;
@@ -39,7 +43,7 @@ int prev_mouse_y = 0;
 void vbl_req() {
   G_MUSIC_TIMER++;
   G_KEY_REPEAT_TICKS++;
-  
+
   G_GAME_TIMER++;
   G_SHOT_TIMER++;
   G_ARMADA_MOVE_TIMER++;
@@ -160,7 +164,7 @@ bool ikbd_mouse_moved() {
 void write_to_ikbd_buffer(uint8 scancode) {
   if (buff_tail == IKBD_BUFFER_SIZE - 1)
     buff_tail = 0;
-    
+
   ikbd_buffer[buff_tail] = scancode;
   buff_tail++;
 }
@@ -189,6 +193,6 @@ void clear_ikbd_buffer() {
   while(ikbd_is_waiting()) {
     buff_head++;
   }
-  
+
   ikbd_buffer[buff_tail] = 0x00;
 }

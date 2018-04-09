@@ -1,3 +1,7 @@
+/*
+ *  File: psg.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/psg.h"
 
 void write_psg(int reg, uint8 val) {
@@ -17,7 +21,7 @@ int read_psg(int reg) {
   int val = -1;
 
   old_ssp = Super(0);
-  
+
   if (reg_is_valid(reg)) {
     *psg_reg_select = reg;
     val = *psg_reg_select;
@@ -31,13 +35,13 @@ void set_tone(channel_t channel, int tuning) {
   switch (channel) {
     case ch_a:
       write_psg(CH_A_TONE, tuning);
-      break;
+          break;
     case ch_b:
       write_psg(CH_B_TONE, tuning);
-      break;
+          break;
     case ch_c:
       write_psg(CH_C_TONE, tuning);
-      break;
+          break;
   }
 }
 
@@ -53,24 +57,24 @@ void set_envelope(env_shape_t shape, uint16 sustain) {
   switch(shape) {
     case saw:
       shape_val = ENV_SAW_SHAPE;
-      break;
+          break;
     case saw_inv:
       shape_val = ENV_SAW_SHAPE_INV;
-      break;
+          break;
     case saw_period:
       shape_val = ENV_SAW_PERIOD_SHAPE;
     case triangle:
       shape_val = ENV_TRIANGLE_SHAPE;
-      break;
+          break;
     case triangle_inv:
       shape_val = ENV_TRIANGLE_INV_SHAPE;
-      break;
+          break;
     case triangle_period:
       shape_val = ENV_TRIANGLE_PERIOD_SHAPE;
-      break;
+          break;
     case triangle_inv_period:
       shape_val = ENV_TRIANGLE_INV_PERIOD_SHAPE;
-      break;
+          break;
   }
 
   write_psg(ENVELOPE_SHAPE_CONTROL_REG, shape_val);
@@ -80,13 +84,13 @@ void set_volume(channel_t channel, int vol) {
   switch(channel) {
     case ch_a:
       write_psg(CH_A_VOL, vol);
-      break;
+          break;
     case ch_b:
       write_psg(CH_B_VOL, vol);
-      break;
+          break;
     case ch_c:
       write_psg(CH_C_VOL, vol);
-      break;
+          break;
   }
 }
 
@@ -100,40 +104,40 @@ void enable_channel(channel_t channel, bool tone_on, bool noise_on) {
   switch(channel) {
     case ch_a:
       if (tone_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_TONE_CH_A : MIXER_TONE_CH_A;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_TONE_CH_A : MIXER_TONE_CH_A;
       else if (noise_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_NOISE_CH_A : MIXER_NOISE_CH_A;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_NOISE_CH_A : MIXER_NOISE_CH_A;
       else if (tone_and_noise)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & (MIXER_TONE_CH_A & MIXER_NOISE_CH_A) : 
-          (MIXER_TONE_CH_A & MIXER_NOISE_CH_A);
-      break;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & (MIXER_TONE_CH_A & MIXER_NOISE_CH_A) :
+                      (MIXER_TONE_CH_A & MIXER_NOISE_CH_A);
+          break;
     case ch_b:
       if (tone_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_TONE_CH_B : MIXER_TONE_CH_B;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_TONE_CH_B : MIXER_TONE_CH_B;
       else if (noise_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_NOISE_CH_B : MIXER_NOISE_CH_B;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_NOISE_CH_B : MIXER_NOISE_CH_B;
       else if (tone_and_noise)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & (MIXER_TONE_CH_B & MIXER_NOISE_CH_B) : 
-          (MIXER_TONE_CH_B & MIXER_NOISE_CH_B);
-      break;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & (MIXER_TONE_CH_B & MIXER_NOISE_CH_B) :
+                      (MIXER_TONE_CH_B & MIXER_NOISE_CH_B);
+          break;
     case ch_c:
       if (tone_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_TONE_CH_C : MIXER_TONE_CH_C;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_TONE_CH_C : MIXER_TONE_CH_C;
       else if (noise_only)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & MIXER_NOISE_CH_C : MIXER_NOISE_CH_C;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & MIXER_NOISE_CH_C : MIXER_NOISE_CH_C;
       else if (tone_and_noise)
-        channel_val = existing_mixer_val != -1 ? 
-          existing_mixer_val & (MIXER_TONE_CH_C & MIXER_NOISE_CH_C) : 
-          (MIXER_TONE_CH_C & MIXER_NOISE_CH_C);
-      break;
+        channel_val = existing_mixer_val != -1 ?
+                      existing_mixer_val & (MIXER_TONE_CH_C & MIXER_NOISE_CH_C) :
+                      (MIXER_TONE_CH_C & MIXER_NOISE_CH_C);
+          break;
   }
 
   write_psg(MIXER_REG, channel_val);

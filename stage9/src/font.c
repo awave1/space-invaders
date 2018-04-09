@@ -1,3 +1,7 @@
+/*
+ *  File: font.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/font.h"
 
 const uint8 font[] = {

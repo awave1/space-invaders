@@ -1,3 +1,7 @@
+/*
+ *  File: sprites.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/sprites.h"
 
 uint16 spaceship_bitmap[SPRITE_HEIGHT] = {

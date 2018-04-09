@@ -1,3 +1,7 @@
+/*
+ *  File: game.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/game.h"
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */

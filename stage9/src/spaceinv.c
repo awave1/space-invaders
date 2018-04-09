@@ -1,3 +1,7 @@
+/*
+ *  File: spaceinv.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/spaceinv.h"
 
 void start() {

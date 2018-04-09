@@ -1,3 +1,7 @@
+/*
+ *  File: render.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/render.h"
 
 void render(Model *model, void *base) {
@@ -86,17 +90,17 @@ void clear_shots(Shot shots[], uint8 *base) {
 }
 
 void save_mouse_bg(uint16 *base, int x, int y) {
-	int i, j;
-	
-	for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
-		mouse_bg[j++] = *(base + (y + i) * 40 + (x >> 4));
+  int i, j;
+
+  for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
+    mouse_bg[j++] = *(base + (y + i) * 40 + (x >> 4));
 }
 
 void restore_mouse_bg(uint16 *base, int x, int y) {
-	int i, j;
-	
-	for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
-		*(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
+  int i, j;
+
+  for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
+    *(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
 }
 
 void plot_mouse_ptr(uint16 *base, int x, int y) {
