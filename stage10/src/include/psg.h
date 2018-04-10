@@ -116,7 +116,6 @@ void set_volume(channel_t channel, int vol);
  * @param noise_on - true, to turn on
  */
 void enable_channel(channel_t channel, bool tone_on, bool noise_on);
-void enable_channel_(int channel, bool tone_on, bool noise_on);
 
 /**
  * Silences all PSG sound

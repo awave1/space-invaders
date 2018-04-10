@@ -7,7 +7,7 @@
 /*
  * basic spaceship movement
  */
-void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
+void on_spaceship_move(Spaceship* spaceship, unsigned long key) {
   if (key == LEFT_KEY)
     move_spaceship(spaceship, left);
   else if (key == RIGHT_KEY)
@@ -17,15 +17,15 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key) {
   }
 }
 
-void on_armada_move(Model *model) {
+void on_armada_move(Model* model) {
   move_armada(model);
 }
 
-void on_alien_shoot(Model *model) {
+void on_alien_shoot(Model* model) {
   alien_shoot(&model->armada);
 }
 
-void on_laser_move(Model *model) {
+void on_laser_move(Model* model) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (model->player.shots[i].is_active)
@@ -33,7 +33,7 @@ void on_laser_move(Model *model) {
   }
 }
 
-void on_bomb_move(Model *model) {
+void on_bomb_move(Model* model) {
   int i;
   for (i = 0; i < ALIEN_MAX_BOMBS; i++) {
     if (model->armada.shots[i].is_active)
@@ -41,7 +41,7 @@ void on_bomb_move(Model *model) {
   }
 }
 
-void on_laser_hit_alien(Model *model) {
+void on_laser_hit_alien(Model* model) {
   int i, row, col;
   bool collided = false;
   Alien *alien;
@@ -66,7 +66,7 @@ void on_laser_hit_alien(Model *model) {
   }
 }
 
-void on_bomb_hit_player(Model *model) {
+void on_bomb_hit_player(Model* model) {
   int i;
   bool collided = false;
   for (i = 0; i < model->armada.shot_count && !collided; i++) {
@@ -80,11 +80,11 @@ void on_bomb_hit_player(Model *model) {
   }
 }
 
-void on_game_start(Model *model) {
+void on_game_start(Model* model) {
   init_model(model);
 }
 
-void on_game_over(Model *model) {
+void on_game_over(Model* model) {
   game_over(model);
 }
 
@@ -93,7 +93,7 @@ void on_game_exit() {
   clear_interrupts();
 }
 
-void on_next_wave(Model *model) {
+void on_next_wave(Model* model) {
   init_armada(&model->armada);
 }
 

@@ -34,11 +34,11 @@ void process_menu_choice() {
         case UP_KEY:
           if (choice > MENU_CHOICE_START_1_PLAYER)
             choice--;
-              break;
+          break;
         case DOWN_KEY:
           if (choice < MENU_CHOICE_EXIT)
             choice++;
-              break;
+          break;
         default:
           break;
       }
@@ -66,9 +66,9 @@ void select_option(int choice) {
   switch (choice) {
     case MENU_CHOICE_START_1_PLAYER:
       MENU_STATE = MENU_CHOICE_START_1_PLAYER;
-          game_loop();
-          stop_sound();
-          break;
+      game_loop();
+      stop_sound();
+      break;
     case MENU_CHOICE_START_2_PLAYERS:
       MENU_STATE = MENU_CHOICE_START_2_PLAYERS;
     case MENU_CHOICE_EXIT:
@@ -86,15 +86,15 @@ void draw_choice_selector(int choice, uint16* base) {
     case MENU_CHOICE_START_1_PLAYER:
       plot_bitmap_16(base, SELECTION_X, SELECTION_1Y, menu_pointer,
                      SPRITE_SIZE);
-          break;
+      break;
     case MENU_CHOICE_START_2_PLAYERS:
       plot_bitmap_16(base, SELECTION_X, SELECTION_2Y, menu_pointer,
                      SPRITE_SIZE);
-          break;
+      break;
     case MENU_CHOICE_EXIT:
       plot_bitmap_16(base, SELECTION_X, SELECTION_3Y, menu_pointer,
                      SPRITE_SIZE);
-          break;
+      break;
   }
 }
 
@@ -103,13 +103,13 @@ void clear_choice_selector(int choice, uint16* base) {
     default:
     case MENU_CHOICE_START_1_PLAYER:
       clear_region(base, SELECTION_X, SELECTION_1Y, 16, 16);
-          break;
+      break;
     case MENU_CHOICE_START_2_PLAYERS:
       clear_region(base, SELECTION_X, SELECTION_2Y, 16, 16);
-          break;
+      break;
     case MENU_CHOICE_EXIT:
       clear_region(base, SELECTION_X, SELECTION_3Y, 16, 16);
-          break;
+      break;
   }
 }
 

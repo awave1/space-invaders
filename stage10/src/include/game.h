@@ -61,6 +61,6 @@ void show_game_over();
  * @param second_buffer - second buffere used for double buffering technique
  * @return uint8* - 256 byte aligned screen base
  */
-uint8* get_base(uint8 *second_buffer);
+uint8* get_base(uint8* second_buffer);
 
 #endif /* SPACE_INVADERS_GAME_LOOP */

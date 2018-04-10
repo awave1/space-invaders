@@ -21,7 +21,7 @@
  * @param model - Game model
  * @param base  - Screen
  */
-void render(Model *model, void *base);
+void render(Model* model, void* base);
 
 /**
  * Render spaceship
@@ -29,7 +29,7 @@ void render(Model *model, void *base);
  * @param spaceship - Spaceship
  * @param base      - Screen
  */
-void render_spaceship(const Spaceship *spaceship, uint16 *base);
+void render_spaceship(const Spaceship* spaceship, uint16* base);
 
 /**
  * Render the armada
@@ -37,7 +37,7 @@ void render_spaceship(const Spaceship *spaceship, uint16 *base);
  * @param armada - Armada
  * @param base   - Screen
  */
-void render_armada(const Armada *armada, uint16 *base);
+void render_armada(const Armada* armada, uint16* base);
 
 /**
  * Render single alien
@@ -45,7 +45,7 @@ void render_armada(const Armada *armada, uint16 *base);
  * @param alien - Alien
  * @param base  - Screen
  */
-void render_alien(const Alien *alien, uint16 *base);
+void render_alien(const Alien* alien, uint16* base);
 
 /**
  * Render shots based on the type
@@ -54,7 +54,7 @@ void render_alien(const Alien *alien, uint16 *base);
  * @param shot_type - Shot type
  * @param base      - Screen
  */
-void render_shots(const Shot shots[], shot_t shot_type, uint16 *base);
+void render_shots(const Shot shots[], shot_t shot_type, uint16* base);
 
 /**
  * Render the scorebox
@@ -62,7 +62,7 @@ void render_shots(const Shot shots[], shot_t shot_type, uint16 *base);
  * @param scorebox - Scorebox
  * @param base     - Screen
  */
-void render_scoreboard(const Scorebox *scorebox, uint8 *base);
+void render_scoreboard(const Scorebox* scorebox, uint8* base);
 
 /**
  * Render the splashscreen
@@ -79,7 +79,7 @@ void render_splashscreen(uint32* base);
 void render_game_over(uint32* base);
 
 /**
- * Plots simple mouse pointer as rectangle
+ * Plots simple mouse pointer
  * 
  * @param base - screen
  * @param x    - x position
@@ -88,22 +88,22 @@ void render_game_over(uint32* base);
 void render_mouse_ptr(uint16* base, int x, int y);
 
 /**
- * @brief 
+ * Saves background at specified location
  * 
- * @param base 
- * @param x 
- * @param y 
+ * @param base - screen base
+ * @param x - x position
+ * @param y - y position
  */
-void save_mouse_bg(uint16 *base, int x, int y);
+void save_mouse_bg(uint16* base, int x, int y);
 
 /**
- * @brief 
+ * Restores background at specified location
  * 
- * @param base 
- * @param x 
- * @param y 
+ * @param base - screen base
+ * @param x - x position
+ * @param y - y position
  */
-void restore_mouse_bg(uint16 *base, int x, int y);
+void restore_mouse_bg(uint16* base, int x, int y);
 
 /**
  * Disable the cursor using terminal command

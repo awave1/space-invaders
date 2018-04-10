@@ -68,7 +68,7 @@ void process_sync_events(Model* model) {
   }
 }
 
-uint8* get_base(uint8 *second_buffer) {
+uint8* get_base(uint8* second_buffer) {
   uint8* base;
   uint16 difference;
   base = second_buffer;

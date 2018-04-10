@@ -4,7 +4,7 @@
  */
 #include "include/render.h"
 
-void render(Model *model, void *base) {
+void render(Model* model, void* base) {
   render_spaceship(&model->player, (uint16 *) base);
   render_armada(&model->armada, (uint16 *) base);
   render_shots(model->armada.shots, alien_bomb, base);
@@ -12,12 +12,12 @@ void render(Model *model, void *base) {
   render_scoreboard(&model->scorebox, (uint8 *) base);
 }
 
-void render_spaceship(const Spaceship *spaceship, uint16 *base) {
+void render_spaceship(const Spaceship* spaceship, uint16* base) {
   plot_bitmap_16(base, spaceship->x, spaceship->y, spaceship_bitmap,
                  SPRITE_SIZE);
 }
 
-void render_armada(const Armada *armada, uint16 *base) {
+void render_armada(const Armada* armada, uint16* base) {
   int i, j;
   for (i = 0; i < ALIENS_ROWS; ++i) {
     for (j = 0; j < ALIENS_COLS; ++j) {
@@ -27,21 +27,21 @@ void render_armada(const Armada *armada, uint16 *base) {
   }
 }
 
-void render_alien(const Alien *alien, uint16 *base) {
+void render_alien(const Alien* alien, uint16* base) {
   switch (alien->score_val) {
     case ALIEN_A_SCORE:
       plot_bitmap_16(base, alien->x, alien->y, alien1_bitmap, SPRITE_SIZE);
-          break;
+      break;
     case ALIEN_B_SCORE:
       plot_bitmap_16(base, alien->x, alien->y, alien2_bitmap, SPRITE_SIZE);
-          break;
+      break;
     case ALIEN_C_SCORE:
       plot_bitmap_16(base, alien->x, alien->y, alien3_bitmap, SPRITE_SIZE);
-          break;
+      break;
   }
 }
 
-void render_shots(const Shot shots[], shot_t shot_type, uint16 *base) {
+void render_shots(const Shot shots[], shot_t shot_type, uint16* base) {
   int i;
   int max_shots =
     shot_type == spaceship_laser ? SPACESHIP_MAX_LASERS : ALIEN_MAX_BOMBS;
@@ -53,7 +53,7 @@ void render_shots(const Shot shots[], shot_t shot_type, uint16 *base) {
 }
 
 /*change base size if sprite different*/
-void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
+void render_scoreboard(const Scorebox* scorebox, uint8* base) {
   print_string(base, scorebox->x, scorebox->y - 8, "Score");
   print_num(base, scorebox->x, scorebox->y, scorebox->score);
 }
@@ -88,7 +88,7 @@ void disable_cursor() {
   fflush(stdout);
 }
 
-void clear_aliens(Armada *armada, uint16 *base) {
+void clear_aliens(Armada* armada, uint16* base) {
   int i, j, x, y;
   /* TODO: Clear by row */
   for (i = 0; i < ALIENS_ROWS; i++) {
@@ -101,7 +101,7 @@ void clear_aliens(Armada *armada, uint16 *base) {
   }
 }
 
-void clear_shots(Shot shots[], uint8 *base) {
+void clear_shots(Shot shots[], uint8* base) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (shots[i].is_active)
@@ -109,20 +109,20 @@ void clear_shots(Shot shots[], uint8 *base) {
   }
 }
 
-void save_mouse_bg(uint16 *base, int x, int y) {
+void save_mouse_bg(uint16* base, int x, int y) {
   int i, j;
 
   for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
     mouse_bg[j++] = *(base + (y + i) * 40 + (x >> 4));
 }
 
-void restore_mouse_bg(uint16 *base, int x, int y) {
+void restore_mouse_bg(uint16* base, int x, int y) {
   int i, j;
 
   for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
     *(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
 }
 
-void render_mouse_ptr(uint16 *base, int x, int y) {
+void render_mouse_ptr(uint16* base, int x, int y) {
   plot_bitmap_16(base, x, y, mouse_pointer, SPRITE_SIZE);
 }

@@ -10,8 +10,8 @@ SCREEN	equ 	$FFFF8201
 OFFSET 	equ 	8
 
 ; 
-; 
-; 
+; Subroutine: _get_video_base
+; Description: gets video base and returns its address
 _get_video_base:
 	move.l	a0,-(sp) 	
 	clr.l	d0		
@@ -27,6 +27,10 @@ _get_video_base:
 	move.l 	(sp)+,a0
 	rts
 
+; 
+; Subroutine: _set_video_base
+; Parameters: video base
+; Description: sets passed video base
 _set_video_base:
 	link	a6,#0
 	movem.l	d0/a0,-(sp)
