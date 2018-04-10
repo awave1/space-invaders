@@ -83,6 +83,15 @@ void render_game_over(uint32* base) {
   print_string((uint8*) base, x2, y2, "(PRESS ANY KEY TO CONTINUE)");
 }
 
+void render_next_player(uint32* base) {
+  int x1 = 284;
+  int x2 = 212;
+  int y1 = 200;
+  int y2 = 216;
+  print_string((uint8*) base, x1, y1, "READY PLAYER TWO");
+  print_string((uint8*) base, x2, y2, "(PRESS ANY KEY TO CONTINUE)");
+}
+
 void disable_cursor() {
   printf("\033f");
   fflush(stdout);

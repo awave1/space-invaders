@@ -79,6 +79,13 @@ void render_splashscreen(uint32* base);
 void render_game_over(uint32* base);
 
 /**
+ * Render next player notification
+ * 
+ * @param base - screen
+ */
+void render_next_player(uint32* base);
+
+/**
  * Plots simple mouse pointer as rectangle
  * 
  * @param base - screen

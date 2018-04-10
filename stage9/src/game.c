@@ -124,7 +124,8 @@ void game_loop() {
     }
 
     set_video_base(base);
-    show_game_over(base);
+    if (player != player_count)
+      show_start_player(base);
     game_is_running = true;
   }
 
@@ -137,11 +138,19 @@ void game_loop() {
 }
 
 void show_game_over(uint16* base) {
-  bool game_over_screen_flag = false;
+  bool has_input = false;
   clear_game(base);
   render_game_over((uint32*) base);
-  while (!game_over_screen_flag)
-    game_over_screen_flag = has_user_input();
+  while (!has_input)
+    has_input = has_user_input();
+}
+
+void show_next_player(uint16* base) {
+  bool has_input = false;
+  clear_game(base);
+  render_next_player((uint32*) base);
+  while (!has_input)
+    has_input = has_user_input();
 }
 
 void clear_interrupts() {
