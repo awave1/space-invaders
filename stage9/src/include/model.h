@@ -21,6 +21,7 @@
 #include <osbind.h>
 #include "const.h"
 #include "types.h"
+#include "effects.h"
 
 
 typedef struct {
@@ -92,21 +93,21 @@ typedef struct Model {
  * @param spaceship - Spaceship 
  * @param direction - direction
  */
-void move_spaceship(Spaceship *spaceship, direction_t direction);
+void move_spaceship(Spaceship* spaceship, direction_t direction);
 
 /**
  * Shoot laser
  * 
  * @param spaceship - Spaceship
  */
-void spaceship_shoot(Spaceship *spaceship);
+void spaceship_shoot(Spaceship* spaceship);
 
 /**
  * Initialize spaceship model
  * 
  * @param spaceship - Spaceship
  */
-void init_spaceship(Spaceship *spaceship);
+void init_spaceship(Spaceship* spaceship);
 
 /* alien functions */
 /**
@@ -116,7 +117,7 @@ void init_spaceship(Spaceship *spaceship);
  * @param shot   - laser that destroyed the alien
  * @param armada - Armada
  */
-void destroy_alien(Alien *alien, Shot *shot, Armada *armada);
+void destroy_alien(Alien* alien, Shot* shot, Armada* armada);
 
 /* armada functions */
 /**
@@ -126,21 +127,21 @@ void destroy_alien(Alien *alien, Shot *shot, Armada *armada);
  * 
  * @param model - Game model
  */
-void move_armada(Model *model);
+void move_armada(Model* model);
 
 /**
  * Random alien from the armada shoots a bomb.
  * 
  * @param armada - Armada
  */
-void alien_shoot(Armada *armada);
+void alien_shoot(Armada* armada);
 
 /**
  * Initialize aliens, their starting position and shots
  * 
  * @param armada - Armada
  */
-void init_armada(Armada *armada);
+void init_armada(Armada* armada);
 
 /* shot functions */
 /**
@@ -149,7 +150,7 @@ void init_armada(Armada *armada);
  * @param shot  - Shot to move
  * @param model - Game model
  */
-void move_shot(Shot *shot, Model *model);
+void move_shot(Shot* shot, Model* model);
 
 /**
  * Check if laser collides with a single alien
@@ -158,7 +159,7 @@ void move_shot(Shot *shot, Model *model);
  * @param laser - Spaceship's laser
  * @return true, if collision was successful
  */
-bool laser_collides_with_alien(Alien *alien, Shot *laser);
+bool laser_collides_with_alien(Alien* alien, Shot* laser);
 
 /**
  * Check if bomb collides with the spaceship
@@ -167,7 +168,7 @@ bool laser_collides_with_alien(Alien *alien, Shot *laser);
  * @param bomb      - Alien's bomb
  * @return true, if collision was successful
  */
-bool bomb_collides_with_spaceship(Spaceship *spaceship, Shot *bomb);
+bool bomb_collides_with_spaceship(Spaceship* spaceship, Shot* bomb);
 
 /**
  * Reset given shot to its initial position and state
@@ -175,7 +176,7 @@ bool bomb_collides_with_spaceship(Spaceship *spaceship, Shot *bomb);
  * @param shot  - Shot to reset
  * @param model - Game model
  */
-void reset_shot(Shot *shot, Model *model);
+void reset_shot(Shot* shot, Model* model);
 
 
 /* scorebox functions */
@@ -185,7 +186,7 @@ void reset_shot(Shot *shot, Model *model);
  * @param scorebox    - Scorebox
  * @param alien_score - score of destroyed alien
  */
-void update_scorebox(Scorebox *scorebox, int alien_score);
+void update_scorebox(Scorebox* scorebox, int alien_score);
 
 /* model functions */
 /**
@@ -193,14 +194,14 @@ void update_scorebox(Scorebox *scorebox, int alien_score);
  * 
  * @param model - Game model
  */
-void init_model(Model *model);
+void init_model(Model* model);
 
 /**
  * Set game state to "game over"
  * 
  * @param model - Game model
  */
-void game_over(Model *model);
+void game_over(Model* model);
 
 /**
  * Helper function that checks if two given hitboxes collide with each other
@@ -222,14 +223,14 @@ bool collides(hitbox_t box1, hitbox_t box2);
  * @param col   - Alien's col position in 2d array
  * @param score - Alien's score value
  */
-void _init_alien(Alien *alien, int x, int y, int row, int col, int score);
+void _init_alien(Alien* alien, int x, int y, int row, int col, int score);
 
 /**
  * Initialize hitbox for the entire armada.
  * 
  * @param armada - Armada
  */
-void _init_armada_hitbox(Armada *armada);
+void _init_armada_hitbox(Armada* armada);
 
 /**
  * Initialize shot position and count for aliens and player
@@ -239,7 +240,7 @@ void _init_armada_hitbox(Armada *armada);
  * @param type      - shot type
  * @param max_shots - maximum number of shots
  */
-void _init_shots(Shot shots[], Armada *armada, shot_t type, int max_shots);
+void _init_shots(Shot shots[], Armada* armada, shot_t type, int max_shots);
 
 /**
  * Change x and y position of aliens
@@ -247,7 +248,7 @@ void _init_shots(Shot shots[], Armada *armada, shot_t type, int max_shots);
  * @param armada    - Armada
  * @param direction - direction
  */
-void _move_aliens(Armada *armada, direction_t direction);
+void _move_aliens(Armada* armada, direction_t direction);
 
 /**
  * Move a single alien
@@ -255,7 +256,7 @@ void _move_aliens(Armada *armada, direction_t direction);
  * @param alien     - Alien to move
  * @param direction - direction
  */
-void _move_alien(Alien *alien, direction_t direction);
+void _move_alien(Alien* alien, direction_t direction);
 
 /**
  * Update hitbox for a given shot
@@ -263,6 +264,6 @@ void _move_alien(Alien *alien, direction_t direction);
  * @param hitbox - hitbox to update
  * @param dy     - change in y position
  */
-void _update_shot_hitbox(hitbox_t *hitbox, int dy);
+void _update_shot_hitbox(hitbox_t* hitbox, int dy);
 
 #endif /* SPACE_INVADERS_MODEL_H */

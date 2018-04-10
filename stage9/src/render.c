@@ -1,3 +1,7 @@
+/**
+ *  File: render.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/render.h"
 
 void render(Model *model, void *base) {
@@ -55,8 +59,28 @@ void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
 }
 
 void render_splashscreen(uint32* base) {
+  int y1 = SELECTION_1Y + 25;
+  int y2 = SELECTION_2Y + 25;
+  int y3 = SELECTION_3Y + 25;
+  int x = SELECTION_X + 30;
+  int width = 148;
+  int height = 5;
+
   clear_qk(base);
   plot_screen(base, splash_screen);
+
+  plot_rectangle__inverse((uint8*) base, x, y1, width, height);
+  plot_rectangle__inverse((uint8*) base, x, y2, width, height);
+  plot_rectangle__inverse((uint8*) base, x, y3, width, height);
+}
+
+void render_game_over(uint32* base) {
+  int x1 = 284;
+  int x2 = 212;
+  int y1 = 200;
+  int y2 = 216;
+  print_string((uint8*) base, x1, y1, "GAME OVER");
+  print_string((uint8*) base, x2, y2, "(PRESS ANY KEY TO CONTINUE)");
 }
 
 void disable_cursor() {
@@ -86,19 +110,19 @@ void clear_shots(Shot shots[], uint8 *base) {
 }
 
 void save_mouse_bg(uint16 *base, int x, int y) {
-	int i, j;
-	
-	for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
-		mouse_bg[j++] = *(base + (y + i) * 40 + (x >> 4));
+  int i, j;
+
+  for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
+    mouse_bg[j++] = *(base + (y + i) * 40 + (x >> 4));
 }
 
 void restore_mouse_bg(uint16 *base, int x, int y) {
-	int i, j;
-	
-	for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
-		*(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
+  int i, j;
+
+  for(i = 0, j = 0; i < MOUSE_BG_SIZE; i++)
+    *(base + (y + i) * 40 + (x >> 4)) = mouse_bg[j++];
 }
 
-void plot_mouse_ptr(uint16 *base, int x, int y) {
-  plot_rectangle__inverse(base, x, y, 8, 8);
+void render_mouse_ptr(uint16 *base, int x, int y) {
+  plot_bitmap_16(base, x, y, mouse_pointer, SPRITE_SIZE);
 }

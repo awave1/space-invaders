@@ -1,8 +1,5 @@
-; 
-; 
-; 
-; 
-; 
+; File: 	ikbd.s
+; Author: 	Artem Golovinm, Daniel Artuso
 
 	xdef	_ikbd_isr
 	xref	_ikbd_req

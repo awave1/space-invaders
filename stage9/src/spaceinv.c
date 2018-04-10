@@ -1,3 +1,7 @@
+/**
+ *  File: spaceinv.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/spaceinv.h"
 
 void start() {
@@ -5,14 +9,14 @@ void start() {
 
   disable_cursor();
   clear_qk(base);
-  render_splashscreen(base);
+  render_splashscreen((uint32*) base);
   menu();
 }
 
 int main() {
   install_vectors();
   start();
-  stop_sound();
   clear_interrupts();
+  stop_sound();
   return 0;
 }

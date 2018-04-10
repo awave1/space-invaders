@@ -1,7 +1,5 @@
-;
-; 
-; 
-;
+; File: 	video.s
+; Author: 	Artem Golovinm, Daniel Artuso
 
 	xdef	_get_video_base
 	xdef	_set_video_base

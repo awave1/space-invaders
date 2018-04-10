@@ -39,7 +39,7 @@ void on_armada_move(Model *model);
 void on_laser_move(Model *model);
 
 /**
- * Event taht moves alien bombs.
+ * Event that moves alien bombs.
  * 
  * @param model - Game model
  */
@@ -98,15 +98,16 @@ void on_game_over(Model *model);
 void on_next_wave(Model *model);
 
 /**
- * Checks, if user entered a character
+ * Checks if user entered a character
  * 
  * @return true if user entered a character
  */
 bool has_user_input();
 
 /**
+ * Checks if user has moved mouse (created mouse input)
  *
- *
+ * @return true if user has moved the mouse
  */
 bool has_mouse_input();
 

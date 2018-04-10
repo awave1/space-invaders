@@ -1,3 +1,7 @@
+/**
+ *  File: music.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/music.h"
 
 /**
@@ -205,7 +209,7 @@ void start_music() {
 
   set_envelope(triangle_inv_period, sustain);
   enable_channel(ch_c, true, false);
-	set_volume(ch_c, vol);
+  set_volume(ch_c, vol);
 }
 
 bool update_music(uint32 time_elapsed) {

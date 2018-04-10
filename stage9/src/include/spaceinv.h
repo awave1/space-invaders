@@ -1,4 +1,7 @@
-
+/*
+ *  File: spaceinv.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_GAME
 #define SPACE_INVADERS_GAME
 
@@ -13,6 +16,9 @@
 #include "clear.h"
 #include "isr.h"
 
+/**
+ * Starts menu, prepares screen for the game
+ */
 void start();
 
 #endif /* SPACE_INVADERS_GAME */

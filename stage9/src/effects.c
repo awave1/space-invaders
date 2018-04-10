@@ -1,3 +1,7 @@
+/**
+ *  File: effects.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/effects.h"
 
 void laser_shot_effect() {

@@ -1,3 +1,7 @@
+/*
+ *  File: music.h
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #ifndef SPACE_INVADERS_MUSIC_H
 #define SPACE_INVADERS_MUSIC_H
 
@@ -21,8 +25,8 @@
 
 
 typedef struct {
-  int freq;
-  int duration;
+    int freq;
+    int duration;
 } note_t;
 
 /**

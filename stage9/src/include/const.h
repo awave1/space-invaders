@@ -30,7 +30,6 @@
 /* model constants */
 #define MODEL_DEBUG false
 
-
 /* 
  * Spaceship / Player constants
  */
@@ -72,7 +71,6 @@
 #define SCOREBOX_P1_X 559
 #define SCOREBOX_P2_X 89
 #define SCOREBOX_Y 13
-
 #define MAX_SCORE 9999
 
 /* System Constants */
@@ -85,6 +83,5 @@
 #define SELECTION_1Y 247
 #define SELECTION_2Y 293
 #define SELECTION_3Y 337
-
 
 #endif /* SPACE_INVADERS_CONSTANTS_H */

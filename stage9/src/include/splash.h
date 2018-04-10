@@ -1,5 +1,5 @@
 /*
- *  File: space.h
+ *  File: splash.h
  *  Authors: Artem Golovin, Daniel Artuso
  */
 

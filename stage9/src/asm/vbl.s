@@ -1,8 +1,5 @@
-; 
-; 
-; 
-; 
-; 
+; File: 	vbl.s
+; Author: 	Artem Golovinm, Daniel Artuso
 
 	xdef	_vbl_isr
 	xref	_vbl_req

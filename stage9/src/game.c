@@ -1,4 +1,9 @@
+/**
+ *  File: game.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/game.h"
+
 
 const uint8 second_buffer[32256]; /*Second Screen for double buffering */
 
@@ -11,23 +16,26 @@ extern int G_MUSIC_TIMER;
 extern int G_KEY_REPEAT_TICKS;
 extern bool key_repeat;
 
+bool game_is_running = true;
 
-void process_async_events(Model *model) {
+int player_count = 1;
+
+void process_async_events(Model* model) {
   unsigned long input;
   if (has_user_input()) {
-    if (key_repeat && G_KEY_REPEAT_TICKS >= 2) {
-      input = get_user_input();
-      on_spaceship_move(&model->player, input);
-      G_KEY_REPEAT_TICKS = 0;
-    }
-    if (input == ESC_KEY) {
-      on_game_over(model);
-      clear_interrupts();
-    }
+    input = get_user_input();
+
+    if (input != MOUSE_MOVE_CODE) {
+      if (input == ESC_KEY)
+        game_is_running = false;
+
+      if (key_repeat)
+        on_spaceship_move(&model->player, input);
+    } 
   }
 }
 
-void process_sync_events(Model *model) {
+void process_sync_events(Model* model) {
   int prev_score = model->scorebox.score;
 
   if (G_GAME_TIMER > 0) {
@@ -60,10 +68,8 @@ void process_sync_events(Model *model) {
   }
 }
 
-/*get base function*/
-uint8 *get_base(uint8 *second_buffer) {
-  /*make sure byte aligned*/
-  uint8 *base;
+uint8* get_base(uint8 *second_buffer) {
+  uint8* base;
   uint16 difference;
   base = second_buffer;
   difference = (int) base;
@@ -75,18 +81,14 @@ uint8 *get_base(uint8 *second_buffer) {
 void game_loop() {
   Model model;
   bool swap_screens = true;
-  void *screen2;
   uint16* base;
-  /*unsigned long prev_call = get_time();*/
+  uint16* base2 = (uint16*) get_base(second_buffer);
   long old_ssp;
-  bool game_is_running = true;
 
   base = get_video_base();
 
   setup_game(&model, base);
-
-  screen2 = get_base(second_buffer);
-  clear_qk(screen2);
+  clear_qk(base2);
 
   start_music();
   while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
@@ -107,21 +109,34 @@ void game_loop() {
           set_video_base(base);
 
         } else {
-          clear_game(screen2);
-          render(&model, screen2);
-          set_video_base(screen2);
+          clear_game(base2);
+          render(&model, base2);
+          set_video_base(base2);
         }
         G_RENDER_REQUEST = false;
         swap_screens = !swap_screens;
       }
     } else {
-      clear_interrupts();
       game_is_running = false;
     }
   }
 
-  render(&model, base);
   set_video_base(base);
+
+  show_game_over(base);
+  
+  clear_ikbd_buffer();
+
+  clear_qk(base);
+  render_splashscreen((uint32*) base);
+}
+
+void show_game_over(uint16* base) {
+  bool game_over_screen_flag = false;
+  clear_game(base);
+  render_game_over((uint32*) base);
+  while (!game_over_screen_flag)
+    game_over_screen_flag = has_user_input();
 }
 
 void clear_interrupts() {
@@ -129,7 +144,7 @@ void clear_interrupts() {
   remove_vectors();
 }
 
-void setup_game(Model *model, void *base) {
+void setup_game(Model* model, void* base) {
   disable_cursor();
   on_game_start(model);
   clear_qk(base);

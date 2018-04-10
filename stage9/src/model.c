@@ -1,3 +1,7 @@
+/**
+ *  File: model.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/model.h"
 
 /*
@@ -25,7 +29,7 @@ void spaceship_shoot(Spaceship *spaceship) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (spaceship->shot_count == 0 &&
-        spaceship->shot_count < SPACESHIP_MAX_LASERS) {
+      spaceship->shot_count < SPACESHIP_MAX_LASERS) {
       if (!spaceship->shots[i].is_active) {
         spaceship->shots[i].x = spaceship->x - 2;
         spaceship->shots[i].y = spaceship->y - 8;
@@ -212,7 +216,7 @@ void move_shot(Shot *shot, Model *model) {
   _update_shot_hitbox(&shot->hitbox, shot->y);
 
   if (shot->y <= SCOREBOX_Y + 8 ||
-      shot->y >= model->player.hitbox.bottom_right_y) {
+    shot->y >= model->player.hitbox.bottom_right_y) {
     shot->is_active = false;
     if (shot->type == spaceship_laser)
       model->player.shot_count -= 1;

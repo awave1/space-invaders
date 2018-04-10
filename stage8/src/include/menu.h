@@ -23,7 +23,11 @@
 
 void menu();
 
+<<<<<<< HEAD
 void process_keyboard_choice();
+=======
+void process_menu_choice();
+>>>>>>> origin/stage9
 
 void select_option(int choice);
 

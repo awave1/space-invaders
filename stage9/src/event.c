@@ -1,3 +1,7 @@
+/**
+ *  File: event.c
+ *  Authors: Artem Golovin, Daniel Artuso
+ */
 #include "include/event.h"
 
 /*
@@ -67,7 +71,7 @@ void on_bomb_hit_player(Model *model) {
   bool collided = false;
   for (i = 0; i < model->armada.shot_count && !collided; i++) {
     if (model->armada.shots[i].is_active &&
-        bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
+      bomb_collides_with_spaceship(&model->player, &model->armada.shots[i])) {
       explosion_effect(false);
       model->player.is_alive = false;
       on_game_over(model);
@@ -82,6 +86,11 @@ void on_game_start(Model *model) {
 
 void on_game_over(Model *model) {
   game_over(model);
+}
+
+void on_game_exit() {
+  stop_sound();
+  clear_interrupts();
 }
 
 void on_next_wave(Model *model) {
