@@ -54,13 +54,8 @@ Rm bin\*.o ; Rm *.tos ; make
 
 ## Notes, missing features, and known bugs
 
-The latest changes are located in `stage6` folder.
-**Things that are not implemented yet**:
-
-* Wave functionality - At this moment there is only one wave in the game and the game is finished when all aliens are destroyed
-* Aliens do not change their speed as the game progresses
-* Shot delay for aliens is not implemented yet
+The latest changes are located in `stage10` folder. `stage10_with_multiplayer_beta_` contains beta version of multiplayer. Multiplayer is based on players taking turns.
 
 **Known bugs**:
 
-* If `ctrl-c` is pressed during the game, the Atari ST VM might freeze and will require a reboot. Instead, use `esc` to stop the game.
+* Sometimes upon exit, game will not clear the whole keyboard buffer that it used and will keep printing newlines. Can be stopped by pressing `esc` key
