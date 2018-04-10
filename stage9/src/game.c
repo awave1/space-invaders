@@ -18,7 +18,7 @@ extern bool key_repeat;
 
 bool game_is_running = true;
 
-int player_count = 1;
+int player_count = 2;
 
 void process_async_events(Model* model) {
   unsigned long input;
@@ -84,44 +84,49 @@ void game_loop() {
   uint16* base;
   uint16* base2 = (uint16*) get_base(second_buffer);
   long old_ssp;
+  int player;
 
-  base = get_video_base();
+  for (player = 0; player < player_count; player++) {
+    base = get_video_base();
 
-  setup_game(&model, base);
-  clear_qk(base2);
+    setup_game(&model, base);
+    clear_qk(base2);
 
-  start_music();
-  while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
-    process_async_events(&model);
-    process_sync_events(&model);
+    start_music();
+    while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
+      process_async_events(&model);
+      process_sync_events(&model);
 
-    if (update_music(G_MUSIC_TIMER))
-      G_MUSIC_TIMER = 0;
+      if (update_music(G_MUSIC_TIMER))
+        G_MUSIC_TIMER = 0;
 
-    if (model.armada.alive_count == 0)
-      on_next_wave(&model);
+      if (model.armada.alive_count == 0)
+        on_next_wave(&model);
 
-    if (!model.is_game_over) {
-      if (G_RENDER_REQUEST) {
-        if (swap_screens) {
-          clear_game(base); /* clears only game part of the screen */
-          render(&model, base);
-          set_video_base(base);
+      if (!model.is_game_over) {
+        if (G_RENDER_REQUEST) {
+          if (swap_screens) {
+            clear_game(base); /* clears only game part of the screen */
+            render(&model, base);
+            set_video_base(base);
 
-        } else {
-          clear_game(base2);
-          render(&model, base2);
-          set_video_base(base2);
+          } else {
+            clear_game(base2);
+            render(&model, base2);
+            set_video_base(base2);
+          }
+          G_RENDER_REQUEST = false;
+          swap_screens = !swap_screens;
         }
-        G_RENDER_REQUEST = false;
-        swap_screens = !swap_screens;
+      } else {
+        game_is_running = false;
       }
-    } else {
-      game_is_running = false;
     }
-  }
 
-  set_video_base(base);
+    set_video_base(base);
+    show_game_over(base);
+    game_is_running = true;
+  }
 
   show_game_over(base);
   
