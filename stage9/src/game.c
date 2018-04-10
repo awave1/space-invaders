@@ -129,10 +129,14 @@ void game_loop() {
 
   clear_qk(base);
   render_splashscreen((uint32*) base);
+  /* set this flag to true, so we can start playing again */
+  game_is_running = true;
 }
 
 void show_game_over(uint16* base) {
   bool game_over_screen_flag = false;
+
+  stop_sound();
   clear_game(base);
   render_game_over((uint32*) base);
   while (!game_over_screen_flag)
