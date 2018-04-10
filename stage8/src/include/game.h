@@ -28,14 +28,14 @@ void game_loop();
  * 
  * @param model - Game model
  */
-void process_async_events(Model *model);
+void process_async_events(Model* model);
 
 /**
  * Process all sync events
  * 
  * @param model - Game model
  */
-void process_sync_events(Model *model);
+void process_sync_events(Model* model, int player);
 
 /**
  * Set up the game, clear the screen and draw the initial state of the game
@@ -43,7 +43,7 @@ void process_sync_events(Model *model);
  * @param model - Game model
  * @param base  - Screen
  */
-void setup_game(Model *model, void *base);
+void setup_game(Model* model, void* base);
 
 /**
  * Get the system time

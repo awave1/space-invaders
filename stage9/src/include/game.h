@@ -16,7 +16,8 @@
 #include "clear.h"
 #include "video.h"
 
-extern int player_num;
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
 
 /**
  * Game loop, that processes async/sync events and handles double buffering
@@ -35,15 +36,16 @@ void process_async_events(Model* model);
  * 
  * @param model - Game model
  */
-void process_sync_events(Model* model);
+void process_sync_events(Model* model, int player);
 
 /**
  * Set up the game, clear the screen and draw the initial state of the game
  * 
- * @param model - Game model
- * @param base  - Screen
+ * @param model        - Game model
+ * @param base         - Screen
+ * @param player_count - number of players
  */
-void setup_game(Model* model, void *base);
+void setup_game(Model* model, void *base, int player_count);
 
 /**
  * Removes the installed vectors and cleard ikbd buffer 
@@ -52,8 +54,17 @@ void clear_interrupts();
 
 /**
  * Shows game over screen to the player 
+ * 
+ * @param base - screen
  */
-void show_game_over();
+void show_game_over(uint16* base);
+
+/**
+ * Shows notification with next player
+ * 
+ * @param base - screen
+ */
+void show_next_player(uint16* base);
 
 /**
  * Get the 256 byte aligned base
@@ -62,5 +73,15 @@ void show_game_over();
  * @return uint8* - 256 byte aligned screen base
  */
 uint8* get_base(uint8 *second_buffer);
+
+/**
+ * Starts the game with single player
+ */
+void start_single_player();
+
+/**
+ * Starts the game with 2 players, each player take turns
+ */
+void start_multiplayer();
 
 #endif /* SPACE_INVADERS_GAME_LOOP */

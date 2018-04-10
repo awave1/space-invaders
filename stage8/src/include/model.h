@@ -99,7 +99,7 @@ void move_spaceship(Spaceship *spaceship, direction_t direction);
  * 
  * @param spaceship - Spaceship
  */
-void spaceship_shoot(Spaceship *spaceship);
+void spaceship_shoot(Spaceship* spaceship);
 
 /**
  * Initialize spaceship model

@@ -34,11 +34,11 @@ void process_menu_choice() {
         case UP_KEY:
           if (choice > MENU_CHOICE_START_1_PLAYER)
             choice--;
-              break;
+          break;
         case DOWN_KEY:
           if (choice < MENU_CHOICE_EXIT)
             choice++;
-              break;
+          break;
         default:
           break;
       }
@@ -66,11 +66,11 @@ void select_option(int choice) {
   switch (choice) {
     case MENU_CHOICE_START_1_PLAYER:
       MENU_STATE = MENU_CHOICE_START_1_PLAYER;
-          game_loop();
-          stop_sound();
-          break;
+      start_single_player();
+      break;
     case MENU_CHOICE_START_2_PLAYERS:
       MENU_STATE = MENU_CHOICE_START_2_PLAYERS;
+      start_multiplayer();
     case MENU_CHOICE_EXIT:
     default:
       MENU_STATE = MENU_CHOICE_EXIT;

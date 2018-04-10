@@ -41,7 +41,7 @@ void on_bomb_move(Model *model) {
   }
 }
 
-void on_laser_hit_alien(Model *model) {
+void on_laser_hit_alien(Model* model, int player) {
   int i, row, col;
   bool collided = false;
   Alien *alien;
@@ -56,7 +56,11 @@ void on_laser_hit_alien(Model *model) {
           destroy_alien(alien, shot, &model->armada);
           reset_shot(shot, model);
           explosion_effect(true);
-          update_scorebox(&model->scorebox, alien->score_val);
+
+          if (player == PLAYER_ONE)
+            update_scorebox(&model->scorebox, alien->score_val);
+          else if (player == PLAYER_TWO)
+            update_scorebox(&model->scorebox2, alien->score_val);
 
           /* break out of all loops since collision happened */
           collided = true;
@@ -80,8 +84,8 @@ void on_bomb_hit_player(Model *model) {
   }
 }
 
-void on_game_start(Model *model) {
-  init_model(model);
+void on_game_start(Model *model, int player_count) {
+  init_model(model, player_count);
 }
 
 void on_game_over(Model *model) {

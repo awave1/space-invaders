@@ -35,7 +35,7 @@ void process_async_events(Model* model) {
   }
 }
 
-void process_sync_events(Model* model) {
+void process_sync_events(Model* model, int player) {
   int prev_score = model->scorebox.score;
 
   if (G_GAME_TIMER > 0) {
@@ -47,7 +47,7 @@ void process_sync_events(Model* model) {
       G_SHOT_TIMER = 0;
     }
 
-    on_laser_hit_alien(model);
+    on_laser_hit_alien(model, player);
     on_bomb_hit_player(model);
 
     if (model->armada.alive_count >= 20 && G_ARMADA_MOVE_TIMER >= 3) {
@@ -86,16 +86,15 @@ void game_loop() {
   long old_ssp;
   int player;
 
-  for (player = 0; player < player_count; player++) {
-    base = get_video_base();
-
-    setup_game(&model, base);
-    clear_qk(base2);
+  base = get_video_base();
+  clear_qk(base2);
+  setup_game(&model, base, player_count);
+  for (player = 1; player <= player_count; player++) {
 
     start_music();
     while (game_is_running && !model.is_game_over || model.scorebox.score >= MAX_SCORE) {
       process_async_events(&model);
-      process_sync_events(&model);
+      process_sync_events(&model, player);
 
       if (update_music(G_MUSIC_TIMER))
         G_MUSIC_TIMER = 0;
@@ -107,12 +106,12 @@ void game_loop() {
         if (G_RENDER_REQUEST) {
           if (swap_screens) {
             clear_game(base); /* clears only game part of the screen */
-            render(&model, base);
+            render(&model, base, player_count);
             set_video_base(base);
 
           } else {
             clear_game(base2);
-            render(&model, base2);
+            render(&model, base2, player_count);
             set_video_base(base2);
           }
           G_RENDER_REQUEST = false;
@@ -122,17 +121,18 @@ void game_loop() {
         game_is_running = false;
       }
     }
+    stop_sound();
 
     set_video_base(base);
-    if (player != player_count)
-      show_start_player(base);
+    if (player_count == 2 && player == PLAYER_ONE) {
+      show_next_player(base);
+      clear_ikbd_buffer();
+      on_next_wave(&model);
+    }
     game_is_running = true;
   }
 
   show_game_over(base);
-  
-  clear_ikbd_buffer();
-
   clear_qk(base);
   render_splashscreen((uint32*) base);
 }
@@ -143,6 +143,8 @@ void show_game_over(uint16* base) {
   render_game_over((uint32*) base);
   while (!has_input)
     has_input = has_user_input();
+  
+  clear_ikbd_buffer();
 }
 
 void show_next_player(uint16* base) {
@@ -158,9 +160,19 @@ void clear_interrupts() {
   remove_vectors();
 }
 
-void setup_game(Model* model, void* base) {
+void setup_game(Model* model, void* base, int player_count) {
   disable_cursor();
-  on_game_start(model);
+  on_game_start(model, player_count);
   clear_qk(base);
-  render(model, base);
+  render(model, base, player_count);
+}
+
+void start_single_player() {
+  player_count = 1;
+  game_loop();
+}
+
+void start_multiplayer() {
+  player_count = 2;
+  game_loop();
 }

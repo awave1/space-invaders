@@ -57,7 +57,7 @@ void on_alien_shoot(Model *model);
  * 
  * @param model - Game model
  */
-void on_laser_hit_alien(Model *model);
+void on_laser_hit_alien(Model *model, int player);
 
 /**
  * Event that checks if alien bomb hit spaceship.
@@ -73,7 +73,7 @@ void on_bomb_hit_player(Model *model);
  * 
  * @param model - Game model
  */
-void on_game_start(Model *model);
+void on_game_start(Model *model, int player_count);
 
 /**
  * Event that is called when the game is paused.

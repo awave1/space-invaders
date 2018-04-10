@@ -84,6 +84,7 @@ typedef struct Model {
     Spaceship player;
     Armada armada;
     Scorebox scorebox;
+    Scorebox scorebox2;
 } Model;
 
 /* spaceship functions */
@@ -188,13 +189,15 @@ void reset_shot(Shot* shot, Model* model);
  */
 void update_scorebox(Scorebox* scorebox, int alien_score);
 
+void init_scorebox(Model* model, int player_count);
+
 /* model functions */
 /**
  * Initialize the whole game model. This function calls other init functions
  * 
  * @param model - Game model
  */
-void init_model(Model* model);
+void init_model(Model* model, int player_count);
 
 /**
  * Set game state to "game over"

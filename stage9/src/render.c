@@ -4,12 +4,12 @@
  */
 #include "include/render.h"
 
-void render(Model *model, void *base) {
-  render_spaceship(&model->player, (uint16 *) base);
-  render_armada(&model->armada, (uint16 *) base);
+void render(Model* model, void *base, int player_count) {
+  render_spaceship(&model->player, (uint16*) base);
+  render_armada(&model->armada, (uint16*) base);
   render_shots(model->armada.shots, alien_bomb, base);
   render_shots(model->player.shots, spaceship_laser, base);
-  render_scoreboard(&model->scorebox, (uint8 *) base);
+  render_scoreboard(model, (uint8*) base, player_count);
 }
 
 void render_spaceship(const Spaceship *spaceship, uint16 *base) {
@@ -53,9 +53,13 @@ void render_shots(const Shot shots[], shot_t shot_type, uint16 *base) {
 }
 
 /*change base size if sprite different*/
-void render_scoreboard(const Scorebox *scorebox, uint8 *base) {
-  print_string(base, scorebox->x, scorebox->y - 8, "Score");
-  print_num(base, scorebox->x, scorebox->y, scorebox->score);
+void render_scoreboard(const Model* model, uint8* base, int player_count) {
+  print_string(base, model->scorebox.x - 3, model->scorebox.y - 8, "P1 Score");
+  print_num(base, model->scorebox.x - 3, model->scorebox.y, model->scorebox.score);
+  if (player_count == 2) {
+    print_string(base, model->scorebox2.x - 3, model->scorebox2.y - 8, "P2 Score");
+    print_num(base, model->scorebox2.x - 3, model->scorebox2.y, model->scorebox2.score);
+  }
 }
 
 void render_splashscreen(uint32* base) {

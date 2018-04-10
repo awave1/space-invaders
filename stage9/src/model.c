@@ -25,7 +25,7 @@ void move_spaceship(Spaceship *spaceship, direction_t direction) {
   spaceship->hitbox.bottom_right_x = spaceship->x + SPRITE_SIZE;
 }
 
-void spaceship_shoot(Spaceship *spaceship) {
+void spaceship_shoot(Spaceship* spaceship) {
   int i;
   for (i = 0; i < SPACESHIP_MAX_LASERS; i++) {
     if (spaceship->shot_count == 0 &&
@@ -140,7 +140,7 @@ void move_armada(Model *model) {
 
         armada->move_direction = left;
       }
-          break;
+      break;
     case left:
       if (new_top_left_x__left >= 0) {
         _move_aliens(&model->armada, left);
@@ -153,7 +153,7 @@ void move_armada(Model *model) {
 
         armada->move_direction = right;
       }
-          break;
+      break;
     default:
       break;
   }
@@ -181,11 +181,11 @@ void init_armada(Armada *armada) {
       case 1:
       case 2:
         score = ALIEN_B_SCORE;
-            break;
+        break;
       case 3:
       case 4:
         score = ALIEN_A_SCORE;
-            break;
+        break;
     }
 
     for (col = 0; col < ALIENS_COLS; col++) {
@@ -251,22 +251,27 @@ void update_scorebox(Scorebox *scorebox, int alien_score) {
     scorebox->score = MAX_SCORE;
 }
 
-void init_scorebox(Scorebox *scorebox) {
-  scorebox->score = 0;
-  scorebox->x = SCOREBOX_P1_X;
-  scorebox->y = SCOREBOX_Y;
+void init_scorebox(Model* model, int player_count) {
+  model->scorebox.score = 0;
+  model->scorebox.x = SCOREBOX_P1_X;
+  model->scorebox.y = SCOREBOX_Y;
+  if (player_count == 2) {
+    model->scorebox2.score = 0;
+    model->scorebox2.x = SCOREBOX_P2_X;
+    model->scorebox2.y = SCOREBOX_Y;
+  }
 }
 
 
 /*
  * Model functions
  */
-void init_model(Model *model) {
+void init_model(Model* model, int player_count) {
   model->is_playing = true;
   model->is_game_over = false;
   init_armada(&model->armada);
   init_spaceship(&model->player);
-  init_scorebox(&model->scorebox);
+  init_scorebox(model, player_count);
 }
 
 void game_over(Model *model) {

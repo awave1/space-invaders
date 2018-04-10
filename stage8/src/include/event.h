@@ -20,7 +20,7 @@
  * @param spaceship - Spaceship model
  * @param key - keycode of button being pressed
  */
-void on_spaceship_move(Spaceship *spaceship, unsigned long key);
+void on_spaceship_move(Spaceship* spaceship, unsigned long key);
 
 /**
  * Event that moves armada of aliens.
@@ -28,35 +28,35 @@ void on_spaceship_move(Spaceship *spaceship, unsigned long key);
  * 
  * @param model - Game model
  */
-void on_armada_move(Model *model);
+void on_armada_move(Model* model);
 
 /**
  * Event that moves spaceship's laser.
  * 
  * @param model - Game model
  */
-void on_laser_move(Model *model);
+void on_laser_move(Model* model);
 
 /**
  * Event taht moves alien bombs.
  * 
  * @param model - Game model
  */
-void on_bomb_move(Model *model);
+void on_bomb_move(Model* model);
 
 /**
  * Event that makes alien shoot bombs.
  * 
  * @param model - Game model
  */
-void on_alien_shoot(Model *model);
+void on_alien_shoot(Model* model);
 
 /**
  * Event that checks if spaceship's laser collided with an alien.
  * 
  * @param model - Game model
  */
-void on_laser_hit_alien(Model *model);
+void on_laser_hit_alien(Model* model, int player);
 
 /**
  * Event that checks if alien bomb hit spaceship.
@@ -64,7 +64,7 @@ void on_laser_hit_alien(Model *model);
  * 
  * @param model - Game model
  */
-void on_bomb_hit_player(Model *model);
+void on_bomb_hit_player(Model* model);
 
 /**
  * Event that is called once before the game started.
@@ -72,7 +72,7 @@ void on_bomb_hit_player(Model *model);
  * 
  * @param model - Game model
  */
-void on_game_start(Model *model);
+void on_game_start(Model* model);
 
 /**
  * Event that is called when the game is paused.
@@ -80,21 +80,21 @@ void on_game_start(Model *model);
  * 
  * @param model - Game model
  */
-void on_game_pause(Model *model);
+void on_game_pause(Model* model);
 
 /**
  * @brief 
  * 
  * @param model 
  */
-void on_game_over(Model *model);
+void on_game_over(Model* model);
 
 /**
  * Event that is called when the next wave needs to be generated
  * 
  * @param model - Game model
  */
-void on_next_wave(Model *model);
+void on_next_wave(Model* model);
 
 /**
  * Checks, if user entered a character
