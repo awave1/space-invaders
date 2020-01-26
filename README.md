@@ -1,12 +1,13 @@
-# Space Invaders
+<h1 align="center">Welcome to Space Invaders 👋</h1>
+<p>
+  <a href="https://twitter.com/awaveawave" target="_blank">
+    <img alt="Twitter: awaveawave" src="https://img.shields.io/twitter/follow/awaveawave.svg?style=social" />
+  </a>
+</p>
 
-## Authors: Artem Golovin, Daniel Artuso
-
-Space Invaders game implemented in C and m68k assembly
+> Space Invaders for Atari ST. Implemented in C and m68k
 
 ## Project Overview
-
-Each stage has similar folder structure.
 
 ```bash
 .
@@ -39,8 +40,11 @@ Each stage has similar folder structure.
 
 All `.o` files are compiled into `bin` directory and `.tos` executable is saved in the root of stage.
 
-### Compilation Process
-If no previous `.o` files or `.tos` executables were compiled in the stage folder, to comile the game, simply run:
+## Development / Compilation Process
+
+The project is meant to compile directly on Atari ST emulator.
+
+To comile the game, simply run:
 
 ```bash
 make
@@ -52,10 +56,22 @@ For future compilations, run the following command:
 Rm bin\*.o ; Rm *.tos ; make
 ```
 
-## Notes, missing features, and known bugs
+## Authors
 
-The latest changes are located in `stage10` folder. `stage10_with_multiplayer_beta_` contains beta version of multiplayer. Multiplayer is based on players taking turns.
+👤 **Artem Golovin**
 
-**Known bugs**:
+- Website: https://temagolovin.dev/
+- Twitter: [@awaveawave](https://twitter.com/awaveawave)
+- Github: [@awave1](https://github.com/awave1)
 
-* Sometimes upon exit, game will not clear the whole keyboard buffer that it used and will keep printing newlines. Can be stopped by pressing `esc` key
+👤 **Daniel Artuso**
+
+- Github: [@dartuso](https://github.com/dartuso)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+---
+
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
