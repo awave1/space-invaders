@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to Space Invaders 👋</h1>
+<h1 align="center">Space Invaders 👾</h1>
 <p>
   <a href="https://twitter.com/awaveawave" target="_blank">
     <img alt="Twitter: awaveawave" src="https://img.shields.io/twitter/follow/awaveawave.svg?style=social" />
